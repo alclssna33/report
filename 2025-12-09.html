@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Stock Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: { 850: '#1e293b', 900: '#0f172a' }
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+      .fade-in { animation: fadeIn 0.3s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased min-h-screen p-4 pb-20">
+    
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto mb-8 border-b border-slate-800 pb-4">
+        <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="p-2 bg-blue-600 rounded-lg shadow-lg shadow-blue-500/20">
+                    <i data-lucide="file-spreadsheet" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-white hidden sm:block">K-Stock Theme Analysis Report</h1>
+                    <h1 class="font-bold text-xl tracking-tight text-white sm:hidden">K-Stock Report</h1>
+                    <p class="text-xs text-slate-400">Generated on 2025-12-09</p>
+                </div>
+            </div>
+
+            <!-- Promotional Link Area -->
+            <div class="flex-1 flex justify-center px-2 sm:px-8">
+                <a href="https://cafe.naver.com/anesinformation" target="_blank" rel="noreferrer" class="group flex items-center gap-2 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 hover:from-yellow-500/20 hover:to-orange-500/20 border border-yellow-500/20 hover:border-yellow-500/40 px-4 py-2 rounded-xl transition-all duration-300">
+                    <span class="font-bold text-yellow-400 group-hover:text-yellow-300 text-sm sm:text-base whitespace-nowrap">투자도 개비공과 함께!</span>
+                    <span class="text-slate-600 hidden sm:inline">-</span>
+                    <span class="text-slate-300 group-hover:text-white text-xs sm:text-sm font-medium flex items-center gap-1 whitespace-nowrap">
+                        개비공 바로가기
+                        <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                    </span>
+                </a>
+            </div>
+
+            <div class="text-xs text-slate-500 shrink-0">
+                <span class="bg-slate-800 px-3 py-1 rounded-full border border-slate-700 whitespace-nowrap">
+                    Items: <span class="text-white font-bold">29</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Table Container -->
+    <main class="max-w-7xl mx-auto">
+        <div class="bg-slate-800/40 rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-800/90 text-slate-400 text-xs uppercase tracking-wider sticky top-0 z-10 backdrop-blur-md shadow-sm">
+                        <tr>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Stock Info</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[180px]">
+                                <button onclick="toggleSort()" id="sortBtn" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                    Theme <i data-lucide="list-filter" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[220px]">Market Leader & Peers</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Recent News</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Links</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-700/50">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Data & Script -->
+    <script>
+        // Embed Data
+        const stocks = [{"id":"16cf7169-7567-4b54-acc1-724863984da7","code":"039860","name":"나노엔텍","changeRate":29.92,"volume":16909690,"rawOHLC":"3065 3995 3060 3995","ohlc":{"open":3065,"high":3995,"low":3060,"close":3995},"status":"COMPLETE","analysis":{"theme":"Bio-Robotics & Automated Cell Analysis","leader":"나노엔텍","promising":["랩지노믹스","씨젠"],"newsItems":[{"title":"나노엔텍, '셀 바이오 2025' 참가…세포 대량 분석 자동화 로봇 첫 공개","summary":"- 나노엔텍은 세계 최대 세포생물학 학술대회인 '셀 바이오 2025'에서 차세대 바이오 로봇 'EVE-HT A26' 시제품을 공개했다.\n- 이 로봇은 세포 전처리부터 계수, 분석까지 전 과정을 자동화하며, 96개 대량 샘플을 15분 만에 처리할 수 있다.\n- 글로벌 제약사들의 요청으로 개발되었으며, 내년 1분기 공식 출시 후 CDMO 공정 등 다양한 분야에 활용될 예정이다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH-4oeOjQRUTYcUW_8Gm-KqOgcs3i-MqpEW0Mug20dxFlsxzyxjmTb_5HS46aRxL1iKPV-eFWOsuzrpbXrwu7ypKW7eM32G2a-vlhCqPON0p0c-o0ZB7G1bCXp-6eJnYhhb89_NtB1KCYVVgLwO1tZOdaC-TGgILA=="},{"title":"[특징주] 나노엔텍, 차세대 바이오 로봇 첫 공개에 15%대 강세","summary":"- 나노엔텍이 글로벌 학회에서 차세대 바이오 로봇을 처음 공개한다는 소식에 주가가 전 거래일 대비 14.96% 급등하며 강세를 보였다.\n- 이 바이오 로봇은 최대 96개 샘플을 연구자 개입 없이 약 15분 만에 처리 가능하여 항체치료제, 세포치료제 등 다양한 분야에 활용될 수 있다.\n- 회사 측은 이번 학회 참여를 통해 글로벌 파트너십을 확대하고 초기 레퍼런스 확보에 주력할 방침이다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHY3d6wq2gWNweGVMoAK4roJEVpVhCV8IpKaWtGJ78ndIodKSNNx45vKbzWp2du-S5KGYezriLzSZS6DvBhwswbavppXsH1iTK6gBySPziXa3c_0DFzjZyqigqejjOOLA4ZP-hW5uv-tPv3EGjaApOG0V5i8igutvIjCqpeyXQbf7mFzcYJnHdhB1dYj-xxce-yv1atb1lqmtKN1cEfnvnCPkivnvv0eYOGV-lzIND5OFvkQ3CWHj36V-mgBx0_VbzLQvXqdzpA-IhzjAxN01moMsYxrqc7qMg="}]}},{"id":"ba5de1d9-7cfa-4dd2-90dc-755addde9b57","code":"002230","name":"피에스텍","changeRate":29.78,"volume":1363707,"rawOHLC":"4175 5360 4175 5360","ohlc":{"open":4175,"high":5360,"low":4175,"close":5360},"status":"COMPLETE","analysis":{"theme":"스마트그리드 및 신재생에너지 인프라","leader":"LS ELECTRIC (엘에스일렉트릭)","promising":["비츠로셀","광명전기"],"newsItems":[{"title":"[분석] 영업익 24% 퀀텀 점프… 피에스텍, PER 13배 저평가 매력에 상한가 직행","summary":"- 피에스텍 주가가 전일 대비 29.78% 상승하며 상한가를 기록했다.\n- 전력기기 산업 호황에 따른 실적 개선과 스마트미터 기술 부각, 저평가된 밸류에이션이 주가 상승의 주요 요인이다.\n- 태양광 EPC 등 신재생 에너지 포트폴리오 확장과 글로벌 스마트미터 시장 진출 가속화로 사업 다각화를 추진 중이다.","date":"오늘","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOFHWff95pRghiUnuNdT8D0FOy0fnoES1cyuI46ELsMRAkdd7b6_mfQV5oe7Vk3TYcdS6g-oeqzVKFt6PpusnpepVKUH5nvb2vBPBv39AYd9NbL0AV9nJD68iQq_91vv9OATlQCzyyaBs96-nB8WTWRJupWSP7UGznDEA="},{"title":"[9일 특징주] HD현대중공업, 인도 조선소 설립 추진에 6%↑","summary":"- 피에스텍은 12월 9일 코스닥 시장에서 상한가를 기록한 종목 중 하나이다.\n- 주요 관련 테마로는 스마트미터, 전력량계, 스마트그리드, 태양광, 전력인프라 등이 언급되었다.\n- 실적 호전과 신재생 에너지 사업 가시화 등 펀더멘털 개선이 동반된 상승으로 평가된다.","date":"오늘","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFV4sWDm2LDnBIDvzbjBojO4XPGzoup686HYPuMz7Hrz1gs7217qmtlmLqBVLzEGsS1k2gGsSGlSaJYf_7iCwY7dXK6suQpJq6Pb9Xr0RjURDygCwdApOQtPrEQn7n2St4KqO9f0qRhd2xal6FkoeSw6rLDTRxp8Bg3"}]}},{"id":"825ac262-37f7-4ea6-88be-3bfa68d79f87","code":"012610","name":"경인양행","changeRate":18.25,"volume":26653297,"rawOHLC":"3225 4200 3225 3855","ohlc":{"open":3225,"high":4200,"low":3225,"close":3855},"status":"COMPLETE","analysis":{"theme":"반도체 소재 (포토레지스트 및 전자재료)","leader":"동진쎄미켐","promising":["켐트로스","솔브레인"],"newsItems":[{"title":"경인양행, '반도체 핵심 소재' 부각에 52주 신고가 - 뉴스티앤티","summary":"- 경인양행 주가가 반도체 필수 소재인 포토레지스트 핵심 원재료 공급망으로서의 가치 재평가로 52주 신고가를 경신했습니다.\n- 회사는 포토레지스트 핵심 원재료 분야에서 전 세계 공급망의 약 30%를 점유하며 소재 국산화 및 공급망 다변화 수혜주로 부각되었습니다.\n- 다만, 주가 급등에 따른 밸류에이션 부담과 2025년 3분기 영업이익 및 당기순이익 감소는 투자 유의점으로 지적됩니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGRLNdE7j875uoGYX1zwY3HNbu50vFy7jXZ5-ugKVsigZpFyWCvhFfuogDZsTq_UrJ68CIp9FbJuptFC_HCxs9fAz3iqdgIWYjvF3ZnSR5JVNVxcy0x1uL-2nzRHxvtFoZYRp6fN3srAciTWx96PbG95TCF_w=="},{"title":"[분석] PER 7배에 PBR 0.47배... 경인양행, 전자재료 체질 개선으로 18% 급등 - 톱스타뉴스","summary":"- 경인양행 주가가 전자재료 사업으로의 포트폴리오 확장 기대감에 힘입어 18% 급등했습니다.\n- 작년 적자에서 벗어나 올해 흑자 전환이 확실시되는 실적 턴어라운드가 주가 상승의 견고한 지지대가 되고 있습니다.\n- 주가는 지난 6개월간의 하락 추세선을 강하게 돌파하며 이동평균선 정배열 초기 국면에 진입했습니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZwvCcmu39IC2hAd9WHt8q6zCiV_CdctLKZ_gEB1M2DMzkmbY4YBRTI-5eXIxwnOLgINq1tEB0N382CNIMeQFE7l1TpcG2HtVBiiIlDeTcUXE-5Z9plmxA_HoX68ZQhm0coRC-KdkU4G2R1nj0234asqHtgI0OXO3sSVM="}]}},{"id":"5c8b3546-c8f1-4b00-95f5-b64da05e2519","code":"472850","name":"폰드그룹","changeRate":17.85,"volume":1470230,"rawOHLC":"8740 10660 8700 10300","ohlc":{"open":8740,"high":10660,"low":8700,"close":10300},"status":"COMPLETE","analysis":{"theme":"K-패션/뷰티 및 브랜드 라이선싱 (K-Fashion/Beauty & Brand Licensing)","leader":"Not explicitly identified in search results","promising":[],"newsItems":[{"title":"폰드그룹, 무상증자에 주가급등…패션·뷰티 시너지로 '밸류 리레이팅'","summary":"- 폰드그룹은 보통주 1주당 0.78주를 배정하는 무상증자를 결정했습니다.\n- 이는 주식 유동성 증대 및 주주가치 제고를 위한 목적입니다.\n- 이커머스 확장, 수출 본격화, 주주환원 강화가 주가 급등의 배경으로 분석됩니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJOSNyfD-sWzBNqx8lzeM4KtziCV-rYqJbbmr9MX4_aCNukzPq3OOrPIDBVcDnmXE5LAhRwruOlZI7o3sAUgPnByIckqW497oinpSq-jVb-AFjynV-CnFipOWkUoSOujDMLYWkwrX1AcqRk_wGgbSmQkvZzQ=="},{"title":"폰드그룹, 2500만주 무상증자…주식수 5700만주로","summary":"- 폰드그룹은 무상증자를 통해 발행주식총수를 약 5,757만주로 확대합니다.\n- 패션 본업 성장과 뷰티 자회사 '모스트' 실적 반영으로 3분기 실적이 크게 개선되었습니다.\n- 뷰티 유통 플랫폼 및 라이브커머스 인수로 자체 유통 채널을 확보하여 향후 성장세가 기대됩니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEh3K8fyGrXE7dMppyM0TyfNulSuYVdeTVdToxt8pxqoq_tokbF73ENouJbkKGKyRi0zwc4yk_-EZJlR2Oqp-KeYLOvWCZP8rCxDW3c0kAJYDbG11lHiMnAzWZW_zo2-HlZOrmIEhmNWmuFk8DZkdfHaZeHKg=="}]}},{"id":"ede5d02d-ecd5-4885-9721-4e4edeed0986","code":"014970","name":"삼륭물산","changeRate":15.12,"volume":5942642,"rawOHLC":"7320 9100 7170 8450","ohlc":{"open":7320,"high":9100,"low":7170,"close":8450},"status":"COMPLETE","analysis":{"theme":"Unknown","leader":"Unknown","promising":[],"newsItems":[]}},{"id":"37c3ab4b-0efc-4466-9099-08ffbf9948d6","code":"457190","name":"이수스페셜티케미컬","changeRate":14.96,"volume":3125063,"rawOHLC":"58500 69500 58000 68400","ohlc":{"open":58500,"high":69500,"low":58000,"close":68400},"status":"COMPLETE","analysis":{"theme":"전고체 배터리 (All-solid-state battery)","leader":"이수스페셜티케미컬","promising":["한농화성","삼성SDI"],"newsItems":[{"title":"[분석] 1억불 수출탑 및 생산 증설… 이수스페셜티케미컬 전고체 테마 강세 흐름","summary":"- 이수스페셜티케미컬 주가가 전일 대비 12.62% 상승하며 전고체 배터리 테마에서 강세를 보였습니다.\n- 황화리튬 상업화 및 글로벌 공급망 확대가 주가 상승의 핵심 요인으로 작용했습니다.\n- 동사는 황화물계 고체 전해질 원료 공급사로서 테마 내 가장 높은 민감도를 보이며 대장주 격으로 움직입니다.","date":"2025-12-08","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7FxHhPYw_rJyxVep_BxZY0p17Nwpu4zmJP-naaTWnxwIAqyHhujqZX_UBtNpAqATO5HrysLzxHovJwYKawbObJtaQ1l2iz2d0Y2isBXxFPpYd8k2DXpprmpoEoneHpUwcoxiZv0qDXUzqI2_JDy6dNY17Ozlmn44t2Zg="},{"title":"[오늘의 급등주] 이수스페셜티케미컬, 2차전지 반등 전망에 강세","summary":"- 이수스페셜티케미컬은 2차전지 주가 반등 전망과 '1억불 수출의 탑' 수상 소식에 강세를 보였습니다.\n- 회사는 전고체 배터리 핵심 원료인 황화리튬 생산 설비를 건설 중이며, 정밀화학 제품 수출도 호조를 보였습니다.\n- 2024년 매출액 3321억 원, 142억 원 흑자를 기록하며 성장세를 이어가고 있습니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdOtedon2xOK5URKQWOJ_R8yWPJTodD50JfhFDSVnoMRV0025Ze3j8EUOwA6TchnmB3Vvf4Jt5g5mYFKuIpkRNCVJqkigtShSgtyEOp9MtxNaAJOYew2E-JbSRC-l2TRJk"}]}},{"id":"a76f6e70-c73f-42d7-bb17-d5580df52d9a","code":"170920","name":"엘티씨","changeRate":14.09,"volume":470962,"rawOHLC":"16030 18420 15900 18300","ohlc":{"open":16030,"high":18420,"low":15900,"close":18300},"status":"COMPLETE","analysis":{"theme":"반도체/디스플레이 소재","leader":"N/A","promising":[],"newsItems":[]}},{"id":"34ab059b-5370-4400-a3b0-f1f7109ee73e","code":"080420","name":"모다이노칩","changeRate":11.23,"volume":1894800,"rawOHLC":"1749 2265 1699 1942","ohlc":{"open":1749,"high":2265,"low":1699,"close":1942},"status":"COMPLETE","analysis":{"theme":"휴대폰 부품 (Mobile Phone Components)","leader":"LG이노텍","promising":["인터플렉스","KH바텍","엠씨넥스"],"newsItems":[{"title":"모다이노칩, 9억 규모 자사주 취득 결정","summary":"- 모다이노칩이 주가 안정 및 주주가치 제고를 위해 9억 원 규모의 자사주 취득을 결정했습니다.\n- 취득 예정 기간은 2025년 12월 10일부터 2026년 3월 9일까지입니다.\n- 이는 회사의 주주 친화 정책의 일환으로 해석됩니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE5GG-5PaIy3FkpoLBFNz1iLxyn_GK3NIRMoRlOyen0GTBn92lDq38AnpshdOuMjmEEVSpPTntRlQV8YZq7QCIU_8pVKfKwk98IhydfxoyWPbAnu47S69Ws4WvGbw4VfVMUQGNalpXsS0PNcrcnYZXTjKhIjY1qT2PVd-8mAgAS0eY6xXUNzzdj4rUgqi8M222QBwxV6uEt2DP7lkaJxtkv02Z7sz6TNkikXEny5J0="},{"title":"모다이노칩, +29.73% 상한가","summary":"- 모다이노칩 주가가 전일 대비 29.73% 상승하며 상한가를 기록했습니다.\n- 주가는 2,265원에 거래를 마쳤으며, 이는 최근 자사주 취득 결정 등의 긍정적 소식에 영향을 받은 것으로 보입니다.\n- 최근 일주일간 외국인은 137주를 순매도했으나, 기관은 특별한 동향을 보이지 않았습니다.","date":"Recent","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-mOM9VisnjIotAw0fPsn4XAdQec8s-h-EbwDm3IF6inotWLDL5-fRq6ckX2l07ne99hnf1es9RH4NUDEpKZysoAxSVVTpPMI8DdBkfJ23aMto5NVe4sZk3H8zzMgirAkoFoA9UI_TanxYOgRqI9GVtBuHhow4SrXsLj-mDrB6r-l0_ez3bMOAiq3jj14XFFznjE8="}]}},{"id":"821c6a6d-c2fa-4fc2-b501-7544b5088659","code":"056090","name":"시지메드텍","changeRate":9.83,"volume":15424381,"rawOHLC":"1133 1308 1130 1251","ohlc":{"open":1133,"high":1308,"low":1130,"close":1251},"status":"COMPLETE","analysis":{"theme":"의료기기 (Medical Devices) / 척추 의료기기 (Spine Medical Devices)","leader":"시지바이오","promising":["오스테오닉","엘앤케이바이오"],"newsItems":[{"title":"시지메드텍, 장 초반 상한가…수급 급증 속 기술적 반등세 강화 - 포인트데일리","summary":"- 시지메드텍 주가가 12월 9일 장 초반 상한가를 기록하며 시장의 주목을 받았다.\n- 뚜렷한 기업 이벤트 없이 거래량 폭증과 함께 기술적 반등세가 강화되는 양상이다.\n- 의료기기 및 헬스케어 관련 종목들이 동반 강세를 보이며 섹터 전반에 수급이 유입되고 있다.","date":"2025.12.09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG4JYatOX_6tudY2VqrT_bJuXs6rcmZPzPibz7zBgnUM7z7gFBrMZfR2o0j7_4D_gOY1eDAuxaC3wNZha9CzB38JL9oPvINmk6hgdcncnE2qcS0VvCd8LTEDdUUkik70kBCQ-THUhmfr15LjaYAu4KgONYqQH-kLmR4ZA=="},{"title":"시지바이오, 북미척추학회서 최소침습 포트폴리오 대거 소개 - 한국면세뉴스","summary":"- 시지바이오가 북미척추학회(NASS)에 참가하여 시지메드텍과 함께 척추 치료 솔루션을 선보였다.\n- 3D 환자맞춤형 척추 케이지, 익스팬더블 AH 케이지 등 다양한 척추 수술용 임플란트 및 고정 기기를 전시했다.\n- 중남미, 인도, 레바논 의료진들이 참여한 워크숍에서 한국의 최소침습 술기에 높은 관심을 보였다.","date":"2025.12.05","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEp1Be4iUesOdFuzX3kcfyI_r51rQpOX7R_ae__vUqIY_DAtj6AaTxThKjmjtQqOi-ZB9Jlv-GOzgrPXULasw140rvbGv-3LOP9pPO7fHZqPpC0wNM9gv2ZOy95Y7LcPCPEHvsVd55AqCSEwz7U0OjLho0gl8U="}]}},{"id":"0befb308-c3de-437c-93c4-bf33e89d0a3e","code":"041960","name":"코미팜","changeRate":9.77,"volume":763079,"rawOHLC":"6500 7210 6490 7190","ohlc":{"open":6500,"high":7210,"low":6490,"close":7190},"status":"COMPLETE","analysis":{"theme":"동물용 의약품/백신 및 ASF 백신 개발","leader":"이글벳","promising":["대성미생물","중앙백신"],"newsItems":[{"title":"코미팜, +7.63% 52주 신고가","summary":"- 코미팜(041960)이 전일 대비 7.63% 상승한 7,050원에 거래되며 52주 신고가를 경신했습니다.\n- 이 종목은 동물백신·방역 테마에 연관되어 있습니다.\n- 최근 1주일간 외국인과 기관은 순매도했으나, 주가는 0.61% 하락했습니다.","date":"2025.12.09. 10:56","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQENnNZP7XIMhyROxo2N4YdQ51M8MldKyyWBjQMFbq3pQjat4IhrJ2DXBsmb7vqNZZzGFVK-k_FE3DvXsfieIrYdtXycP5aQh4GedB8MTDD75CtXPH9DOP_HrJGF9rHtM5eEGOEg1BD2Jy7yxA9gVKWtoD6sEvRsAcolMj6WulB3MIhqAg4cZEY="},{"title":"\"무주공산 ASF 백신시장\"…코미팜, 내년 상용화해 선점","summary":"- 코미팜은 아프리카돼지열병(ASF) 백신 시장을 선점하기 위해 내년 상용화를 목표로 하고 있습니다.\n- 현재 ASF 백신 시장은 경쟁이 치열하지 않아 코미팜에게는 시장 선점의 기회가 될 수 있습니다.\n- 회사의 ASF 백신 개발에 대한 기대감이 주가에 긍정적인 영향을 미칠 것으로 예상됩니다.","date":"12월 09일","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETT7N331kC5Ed8zrfxk-X7O4thzJJWiE75cYhjyjwUMJQNm8ixOQnprSj0CDa8_wGU6hWWbP_xnSZo2RLqnYZoBKLnyU7_UZS-ZACx5WDqG0Ljr2gDfMkOLXh7gBG64-2BBw=="}]}},{"id":"ad207e58-5f4b-4215-83c7-2cdf476ecfbe","code":"071970","name":"HD현대마린엔진","changeRate":9.73,"volume":623330,"rawOHLC":"81300 90300 81000 90200","ohlc":{"open":81300,"high":90300,"low":81000,"close":90200},"status":"COMPLETE","analysis":{"theme":"조선기자재 및 친환경 선박 엔진","leader":"HD현대마린엔진","promising":["한화엔진","STX엔진","현대힘스"],"newsItems":[{"title":"[분석] 영업이익률 18% 육박… HD현대마린엔진, 조선기자재주 재평가 흐름","summary":"- HD현대마린엔진의 2025년 예상 영업이익률은 16%를 상회하며, ROE는 28.34%로 업계 최상위권 수익성을 입증하고 있습니다.\n- 주력 제품이 디젤 엔진에서 마진율 높은 LNG 및 LPG 이중연료 엔진으로 교체되며 이익 체력이 강화되었고, 3분기 영업이익률이 18%에 육박했습니다.\n- 통합 HD현대중공업 출범에 따른 그룹사 시너지 효과와 케이조선, HJ중공업과의 대규모 엔진 공급 계약으로 수주 모멘텀이 지속되고 있습니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElYEUM8E1ccSIVldzG657yfp_vUw6ns2R3Lx3q8bUSjeAukZvtoQHk4HwzWjYh8sOItEGMZIwoaWNyTgju5bcgwO1BWnPqOBprEsNtj0vfc4UboQ4zIhdIFdmSblDNUkb_SyIoLZMDgUXZ7CWRCMWFymaikh9Pn4y8LQ=="},{"title":"유료 코스피 하락·코스닥 상승 마감...조선·바이오 강세","summary":"- 오늘 시장에서 대형주 조정 속에서도 조선 및 바이오 섹터가 큰 폭으로 상승했습니다.\n- 코스피는 0.2% 하락했으나, 코스닥은 0.3% 상승하며 930선을 회복했습니다.\n- 조선 업종은 HD현대 그룹의 신규 조선소 협약 체결 소식에 힘입어 HD현대마린엔진 등이 크게 올랐습니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFadceaSg8gNRzpMVSqcqhQxhRDxuc_7Mei0Xhktzr-uBqjWLLbHTgKtWhaiHJMECch9lc7QFGqFvcIN87HpcqxEirs8WlWNcREalnpO3QbSUUnzQOoI5W_CHljo4ByczaUHQBCeMYkpZejjciyW_W5oCKIEchEH_rCQaJAzb0="}]}},{"id":"44b0494a-9be0-4300-b63b-af554061faaa","code":"475150","name":"SK이터닉스","changeRate":9.27,"volume":1187229,"rawOHLC":"19670 21350 19330 21100","ohlc":{"open":19670,"high":21350,"low":19330,"close":21100},"status":"COMPLETE","analysis":{"theme":"Renewable Energy (신재생에너지) - Wind Power & ESS","leader":"SK이터닉스","promising":["LS마린솔루션","대명에너지"],"newsItems":[{"title":"SK이터닉스, 풍백 육상풍력 발전단지 준공식 개최","summary":"- 신재생에너지 기업 SK이터닉스는 75MW 규모의 풍백 육상풍력 발전단지 준공식을 개최했다.\n- 이 발전단지는 대구 군위 삼국유사면과 경북 의성 춘산면 일대에 위치하며, 총 사업비는 약 2150억원 규모이다.\n- 이번 준공은 SK이터닉스의 신재생에너지 사업 역량을 강화하는 중요한 이정표가 될 것으로 보인다.","date":"2025-12-04","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6uGgjPZ_jOpAgHC_fVwXYA7ogk2YiXqNoZE0Gvtfn2AESwcBYGX-MI8K5swqWaeC81o43QF6bJifHbRFxsF9B1VtN15VohhtrChMMqEZ7gd1zevRN3R_g2pHDlOhcaVdRzlCBL53dPRKnWPACGPm8is0SPcQMN7wexiz03Ikw"},{"title":"[리포트 브리핑]SK이터닉스, '본업 이상 無. 밸류에이션 매력에 주목' Not Rated - 키움증권","summary":"- 키움증권은 SK이터닉스에 대해 2025년 4분기 역대 최대 실적을 전망하며, 솔라닉스 사업의 속도와 잠재력에 주목했다.\n- 2025년 영업이익 527억원(+40%YoY), 2026년 영업이익 738억원(+40%YoY)을 예상하며 견조한 본업을 강조했다.\n- 현재 주가는 2026년 PER 13배 수준으로, 밸류에이션 매력적인 구간에 진입했다고 분석했다.","date":"2025-12-03","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHweejAVuxpIZEK4PGlqLs72AEXEp5yEMVBbIjbraq_00XnMUF2ieK_fi0rkqTsK28vkKOQSIFov8nN5Gehdsmu1F6HCTPTrlq1KCqp-75aBwurA_lANvxmPgxJTI_-O_qFrigpZz4="}]}},{"id":"817d2f07-8ad7-434a-b2bc-c4c3e7cd4c3c","code":"082920","name":"비츠로셀","changeRate":8.15,"volume":610351,"rawOHLC":"35000 39350 34950 38500","ohlc":{"open":35000,"high":39350,"low":34950,"close":38500},"status":"COMPLETE","analysis":{"theme":"스마트그리드 및 리튬일차전지","leader":"비츠로셀","promising":["한화에어로스페이스","LIG넥스원"],"newsItems":[{"title":"\"비츠로셀, 4분기 최대 실적 임박…무상증자·배당 재평가 \" [모닝 리포트]","summary":"- 비츠로셀은 고마진 제품 믹스 확대, 인수 효과, 우호적인 환율 영향으로 4분기 최대 실적을 달성할 것으로 전망됩니다.\n- 기업가치 제고 계획 발표와 최근 무상증자 공시를 통해 주주가치 제고 정책을 강화하고 있습니다.\n- 2026년부터 스마트그리드향 매출 증가, Innova 실적 반영, 앰플·열전지 제품 고성장으로 중장기 실적 성장이 기대됩니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHxwlzQoWJlPE-lwU_kEIfTE3gGg_TcUuMMCwhUqfjenwWEl6NOwE_EnwYr85-egdFVTSXg9qAQzcCuT9Dy7Mh2yisOWG0DEKZoB-1XwndpXlHxFPhTOstfUyqr2y7RrPkEDGilbth2Qp0Jvg=="}]}},{"id":"d27c6589-3118-4ca1-b3c4-ac63915e726b","code":"039440","name":"에스티아이","changeRate":7.66,"volume":2414981,"rawOHLC":"27550 30250 26000 28800","ohlc":{"open":27550,"high":30250,"low":26000,"close":28800},"status":"COMPLETE","analysis":{"theme":"반도체 (Semiconductor) - 전력반도체 장비 및 소재","leader":"삼성전자 (Samsung Electronics)","promising":["SK하이닉스 (SK Hynix)","한미반도체 (Hanmi Semiconductor)","원익IPS (Wonik IPS)"],"newsItems":[{"title":"에스티아이, 차세대 전력반도체 장비 수주 성공","summary":"- 에스티아이가 차세대 전력반도체용 방열 부품 제조 장비 개발에 성공하며 글로벌 시장에 진출했습니다.\n- 중국 주요 전력반도체 제조사와 약 6,650만 달러 규모의 생산라인 구축 계약을 체결했습니다.\n- 이번 신제품은 전력반도체 모듈의 신뢰성과 효율을 결정짓는 방열 공정을 고도화한 장비입니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8dSxvIbgLC5qonXu6Oy5npzusH34dMRQiq4MTzocgnztSjfgyRjL2vzWVloZpvl_iamtnKSAFe0HqW793mizMry0MGBjBGoIbOnNmPKUTYs5O4JvTqcjIIDVX53IOAmc9AoLmR3yxOaJ2gIXF"},{"title":"에스티아이 '전력반도체 핵심 장비 수주…글로벌 시장 본격 진출'","summary":"- 에스티아이가 전력반도체용 방열 부품 제조 장비 개발에 성공하여 고부가가치 전력반도체 장비 사업을 확대합니다.\n- 중국 주요 전력반도체 제조사와 합자 법인 설립 및 약 6,650만 달러 규모의 장비 구매 계약을 체결했습니다.\n- 발열 관리가 전력반도체 성능, 수명, 안정성의 핵심 요인으로 부상하며 해당 장비의 중요성이 강조됩니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFqwgN3Ktmohu36gJOpp2yFpUgTnylIZi_PFi_KjUPs98Jk9KZiOC830LVsUmTi3QUIr5kz5KYeKBHmYg8ukJ2IIEn1RWBfAFf-6P8o_nb-IbKyLgB5m4NkWD8k6XkYMhbjE5DdQik="}]}},{"id":"f86f5bd1-9bd5-431d-aa1d-be094efdeb1c","code":"041830","name":"인바디","changeRate":7.24,"volume":109402,"rawOHLC":"29750 32450 29700 31850","ohlc":{"open":29750,"high":32450,"low":29700,"close":31850},"status":"COMPLETE","analysis":{"theme":"디지털 헬스케어 / 데이터·AI 기반 헬스 플랫폼","leader":"인바디 (InBody)","promising":["네이버 (Naver)"],"newsItems":[{"title":"[스코프노트] 인바디: 하드웨어 기업에서 데이터·구독 플랫폼 기업으로 전환","summary":"- 인바디는 하드웨어 제조사에서 데이터 및 구독 플랫폼 기업으로 전환하며 디지털 헬스케어 생태계 구축을 목표로 하고 있습니다.\n- 회사는 7분기 연속 분기 최대 매출을 달성하며 안정적인 성장을 보였으며, 특히 멕시코 등 해외 시장에서 높은 성장세를 기록했습니다.\n- 네이버는 인바디 지분 8.5%를 인수하여 글로벌 B2C 헬스케어 시장 및 데이터 기반 서비스 협력을 추진, 인바디의 데이터와 네이버의 AI 및 소프트웨어 플랫폼을 결합할 예정입니다.","date":"4 days ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEP5t7vyEMvKHlZ--T4jP-sWNlpklm15DibNoeCO08QDegIXtLTM8wNVXtH5ZFEvhDsat5kOblgAIadmgZoep9XAfXOG1G9HH9-P_sgJ3kAMcC0gXe13UoZbkuwaJ85ly8dh1JgJkhKlR74PEUNWYXf3AM9cpyt_6RdfJhqhaRGHhqeAU1mi97p2VyWSBFOLH-ydpF8_V4TXXeDf11bbd-DKzzRYBFhW0NqZ_XXhmZnD30q9K5ABFIBIGDCqIs3828NGP_Jh785fZW5WumeRIEHJ_E1k79hF48="}]}},{"id":"59ddb001-65af-49b3-bc45-8a65e42be8cc","code":"249420","name":"일동제약","changeRate":6.64,"volume":4377632,"rawOHLC":"29500 30600 28850 29700","ohlc":{"open":29500,"high":30600,"low":28850,"close":29700},"status":"COMPLETE","analysis":{"theme":"비만치료제 (Obesity Treatment)","leader":"일동제약 (Ildong Pharmaceutical)","promising":["유한양행","한미약품"],"newsItems":[{"title":"일동제약 치질 치료제 '푸레파' 시리즈로 입체적 치질 치료","summary":"- 일동제약이 치질 치료제 '푸레파' 시리즈를 출시하여 입체적인 치료를 제공한다.\n- 이 시리즈는 먹는 약, 연고, 좌약 등 다양한 제형으로 구성되어 있다.\n- 환자 개개인의 증상과 상황에 맞춰 효과적인 치료를 가능하게 한다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEW2sBZCaW6qP9VFCEh3MW3MBk72bFpsRKfxM9qapakh3iVe6yK8EwjRMrCMLKxKRC9c60kdx9pvq6vEf2qKRfIeTc5A7unjKP3PpBzIuoWdNGm8eIrUThcYFTnT-T5ie-lM2RT6VFXi3bmWfJWpZaH_wbX"},{"title":"일동제약 치질 치료제 '푸레파 시리즈', 먹는 약·연고·좌약 등 다양한 제형 구성","summary":"- 일동제약의 '푸레파 시리즈'는 치질 치료를 위한 다각적인 접근을 제시한다.\n- 경구용, 국소 도포용, 좌약형 등 여러 제형의 제품으로 구성된다.\n- 환자들의 복용 편의성과 증상별 맞춤 치료를 강화하는 데 중점을 뒀다.","date":"Today"}]}},{"id":"ef81228e-e329-40a8-a6bc-390abb70eb73","code":"161580","name":"필옵틱스","changeRate":6.57,"volume":904304,"rawOHLC":"43550 44600 42500 43800","ohlc":{"open":43550,"high":44600,"low":42500,"close":43800},"status":"COMPLETE","analysis":{"theme":"유리기판 (Glass Substrate)","leader":"SKC","promising":["켐트로닉스","삼성전기","HB테크놀러지"],"newsItems":[{"title":"삼성 훈풍?... 필옵틱스 등 유리기판주 '장중 활짝'","summary":"- 국내 반도체주가 미국 AI 거품 논란 진정으로 강세를 보이며 지수 상승을 주도하고 있다.\n- 삼성전자와 SK하이닉스 등 주요 반도체 기업들이 상승세를 기록 중이다.\n- 필옵틱스를 포함한 유리기판 관련주들도 삼성전기, 한빛레이저와 함께 강세를 나타내고 있다.","date":"2025.12.09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgrW7_uo0pSfwSHjHGJWP0sFS9DQzvF8mqfiVUlMA9n5A0P8Vq4vNs6xLPIiGxGYQI9pKs0wPhydUCeT1gJ6w2A4nl2c4hWgse2WjsFOKPTRnQRDBUWW5EG69y8MO5kC5kxc1KWCkc-O5bwlbRYNylF64noPC_G-dH6Fk="},{"title":"유리기판 관련주 & 테마주 10종목 총정리 [2025년 최신]","summary":"- 필옵틱스는 반도체 패키징용 글라스 기판 절단 장비, 레이저 글라스관통전극(TGV) 장비 등을 개발 중이다.\n- 삼성전기는 유리기판 기술 개발을 진행하며 2026년 이후 양산을 목표로 하고 있다.\n- HB테크놀러지는 유리기판 검사 장비 개발에 주력하며 차세대 반도체 시장에서 중요한 역할을 하고 있다.","date":"2025-12-05","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHnPgyonojJ2VJA11XnAP2cv3lCucGir-mT4Fe8tKP6pGdVWddOr2bEle899Exh4fc-9SsZXiUaEOLZ1sI5JeBkOvGXiFaObYNOVxy561lck2Q6Nr9C6YAzpneNF5Oa6FRvbqo_iKSfmvPWWiOPnUCYaNTl"}]}},{"id":"a4e575b3-cdee-4549-8b80-bea654b86ce2","code":"125020","name":"티씨머티리얼즈","changeRate":6.09,"volume":799205,"rawOHLC":"3500 3520 3280 3395","ohlc":{"open":3500,"high":3520,"low":3280,"close":3395},"status":"COMPLETE","analysis":{"theme":"전력 인프라 (Power Infrastructure)","leader":"티씨머티리얼즈","promising":["LS에코에너지","대한전선","LS ELECTRIC"],"newsItems":[{"title":"전력망 투자 폭증…티씨머티리얼즈가 수혜 1순위로 꼽히는 이유","summary":"- 티씨머티리얼즈의 주가가 전력 인프라 투자 확대의 주요 수혜 기업으로 주목받으며 강세를 보였다.\n- 이 회사는 국내 최초 해저케이블 소재용 에나멜 동선 및 초고압 전력케이블용 에나멜 동선 제조 기술을 국산화하여 공급망 안정성과 가격 경쟁력을 확보했다.\n- 코스닥 상장 이후 해외 수주 확대 가능성이 열리며 구리 소재 기반의 장기 성장 전략이 구체화되고 있다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEywMgJGegSD7KSTL0m7JK9-QpjdsmPjZbzI08FdxKHbYh3E_hzIhCLz5NRp6y0jBDNi0H9eTav4GB4PJgOlTVs4ZtbLITxbkxjN8cUXycntJEIwubG2RRp7OunYVX5Hr556ZDUHxcEqJ7kJQIF-cOifYjNOa_t3ImzyjU="}]}},{"id":"3776d197-646f-4c87-8d5d-875724431832","code":"054540","name":"삼영엠텍","changeRate":6.05,"volume":4741595,"rawOHLC":"14500 16300 14260 15430","ohlc":{"open":14500,"high":16300,"low":14260,"close":15430},"status":"COMPLETE","analysis":{"theme":"조선기자재 및 플랜트 기자재 (Shipbuilding and Plant Equipment)","leader":"삼영엠텍 (Key player in the theme)","promising":["태웅","세진중공업"],"newsItems":[{"title":"삼영엠텍, 장중 7%대 급락…수급 변동 속 단기 조정 국면 진입","summary":"- 삼영엠텍은 산업용 플랜트 제작 및 기자재 기업입니다.\n- 조선·중공업 등 대형 산업 프로젝트 수요와 연계되어 있습니다.\n- 글로벌 선박·플랜트 시장 회복 속도가 향후 주가 방향성에 영향을 줄 수 있습니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwq37vPerRabhhpn0k4NI7CJviha4VkDGnYE3XvHY2sZ8vV42VPJp0dsbed6lpssKoEhQBcf7BfOx2djfDKnubnfpez5OxQpKlSrgnrOAc2-onWRWNTp6n9uXSXpGYJ7cd8l7OV32k4XOZIi1ADSR1dsBARnzqVdfjCw=="},{"title":"삼영엠텍, +4.12% 상승폭 확대","summary":"- 삼영엠텍의 주가가 전일 대비 4.12% 상승하며 상승폭을 확대했습니다.\n- 회사는 풍력 관련 테마와도 연관되어 있습니다.\n- 최근 1주일간 외국인과 기관은 삼영엠텍 주식을 순매도했습니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQER2T9rjcww6wnIOKeSdMWEF3QdM330l0O6PjPy8RBTLN_TFrEy5BfS7fCSVHa6uiLhSQsvbOUH6C2cnRHm4qWU8qS1pNssSP8NQvx5avmlyuOUZmfZ7MHtpmGoq7yh8VcezjMh5vzDC9KHOnxW3zKy9PqGNXCw6OXq-iM3FXF2L9iCnfYB-vTCRfLN4jkGwOOfrwQu_kiy"}]}},{"id":"7b8d0a06-606b-4b2f-93ad-e83879fef627","code":"004310","name":"현대약품","changeRate":5.94,"volume":36848618,"rawOHLC":"7540 8290 6790 6960","ohlc":{"open":7540,"high":8290,"low":6790,"close":6960},"status":"COMPLETE","analysis":{"theme":"탈모 치료제","leader":"현대약품","promising":["TS트릴리온","인벤티지랩"],"newsItems":[{"title":"미국·유럽 승인 신청 준비…현대약품, 글로벌 시장 진출 박차","summary":"- 현대약품 주가가 코스모 파마슈티컬스와의 협력으로 남성형 탈모 신약 개발 성과에 초강세를 보였습니다.\n- 신약 후보물질은 임상 3상에서 효과와 안전성을 확인했으며, 미국·유럽 승인 신청을 준비 중입니다.\n- 현대약품은 단순 유통사를 넘어 신약 개발 및 상업화까지 아우르는 종합 제약사로 성장할 것으로 전망됩니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzFCrcWiJWtUycaihPzjbpTywb5DYxmOTmeSDNsS3IKC_fMtTSXGvabI5FLLBPPPR3Jwx7WSn8vcb_0PU1OFc4UZJfAt_IhP7tfsiOf4-r1Hiu9kgOpg8S27IAOjrF7i04o2zS-_yEJCz4fJgwIL2X"},{"title":"[특징주] 현대약품 '2연상' 가나...남성형 탈모 신약 임상 호재에 강세","summary":"- 현대약품 주가가 남성형 탈모 신약 임상 호재에 힘입어 이틀 연속 상한가를 기록했습니다.\n- 이탈리아 코스모파마슈티컬스의 탈모 치료 신약 '클라스코테론' 5% 용액이 임상 3상에서 유의미한 효과를 입증했습니다.\n- 현대약품이 해당 제품의 국내 유통권을 가지고 있어 투자 심리가 집중되었습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbUQU9wAoqkTNirVexxIGNoieGgyVDI30LvyC_w47nk5bKDbX71_JoK_tNXo-X4cKaSeODHtRyP0XSLQl8zvnPn7X1fc-6_6Y-ybqLvGQg436_rAA4ykh4ZuzHnJ5Cno-FU1PPkBJSPKcdI2yqPcax6msDhNtVqUTB60RC"}]}},{"id":"aad91462-4a00-488d-97ca-caf72eef1f61","code":"278280","name":"천보","changeRate":5.59,"volume":165142,"rawOHLC":"69600 70600 66600 68000","ohlc":{"open":69600,"high":70600,"low":66600,"close":68000},"status":"COMPLETE","analysis":{"theme":"2차전지 전해액 (Secondary Battery Electrolyte)","leader":"엔켐 (Enchem)","promising":["솔브레인 (Soulbrain)","동화기업 (Dongwha Enterprise)"],"newsItems":[]}},{"id":"312cab1a-ac63-4959-8c64-102b53609c26","code":"038500","name":"삼표시멘트","changeRate":5.33,"volume":10603842,"rawOHLC":"3140 3455 3130 3260","ohlc":{"open":3140,"high":3455,"low":3130,"close":3260},"status":"COMPLETE","analysis":{"theme":"시멘트/건자재 (Cement/Construction Materials)","leader":"성신양회","promising":["한일시멘트","아세아시멘트"],"newsItems":[{"title":"삼표시멘트, +7.43% 상승폭 확대","summary":"- 삼표시멘트 주가가 전일 대비 7.43% 상승하며 3,325원에 거래되고 있다.\n- 이는 건자재 - 시멘트·레미콘·콘크리트 테마의 상승세에 따른 것으로 분석된다.\n- 최근 1주일간 외국인은 190,043주, 기관은 32,192주를 순매수했다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRuKeSLIpEMFpD7J5x-U-g_T9gpsDZSl9CeNvK_uQlnMa8Qc6R1pmmc4_qTanEEjX79QT1886I2h1gTZZLb3g1e80cVzVwPgobXWWTPNdHI4N7l0dS5fk6OseYLg3d430A0pI4MdOIilr5Rujaq33RZ82TDvJAnjQqt2vZdQ2HEhW7HMA7hos_BoHLDtNtrEoCdqa9Eqzz"},{"title":"'K시멘트'가 무너진다[우보세]","summary":"- 한국 시멘트 산업은 과거 국토 재건과 경제 성장에 핵심적인 역할을 수행했다.\n- 최근 건설경기 하락, 건자재 가격 인상, 고금리 등으로 시멘트 수요가 감소하고 있다.\n- 삼표시멘트 역시 2025년 3분기 누적 매출액, 영업이익, 당기순이익이 전년 대비 감소했다.","date":"2025-12-08","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOeTwKSYAoAI7cJ-znLZG359r647u4x4GvsVbcyMx05Vlpb_qkxaMzpfX-XeKhQZ5ipN6vy--hKAG1MFPl4gAHp9v5Tqgt_i_HuOP9b0So8FytWKr_-8R74gZ3D7D4FEcTwNrRJprwt7f68VniCNGW9HyM"}]}},{"id":"a75607cf-f3ca-4f92-adbf-fa6569923bdc","code":"247540","name":"에코프로비엠","changeRate":5.08,"volume":2222927,"rawOHLC":"170300 189000 169100 182100","ohlc":{"open":170300,"high":189000,"low":169100,"close":182100},"status":"COMPLETE","analysis":{"theme":"2차전지 (Secondary Battery)","leader":"에코프로 (Ecopro)","promising":["에코프로비엠 (Ecopro BM)","LG에너지솔루션 (LG Energy Solution)","포스코퓨처엠 (POSCO Future M)"],"newsItems":[{"title":"특징주, 에코프로비엠-2차전지(나트륨이온) 테마 상승세에 5.7% ↑ - 매일경제","summary":"- 에코프로비엠이 2차전지(나트륨이온) 테마의 강세에 힘입어 전일 대비 5.7% 상승했다.\n- 2차전지(나트륨이온) 테마는 전일 대비 5.37% 상승하며 강세를 보였다.\n- 에코프로비엠은 2차전지 양극소재 생산업체로 알려져 있다.","date":"2025-12-06","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9FwAFLr5lU7A4YhalsMt3BtVjHpHTFXgt-fsL6CxDluATt-mTsPtQhOcF1FZYBdqYVqbUQf3EOqfRa5RH6_cBxAxNgFS-6a_ejtqdcSrPd2RW8TxJ38B_4llIOPgoppkl7A=="},{"title":"에코프로 주가 장중 17%대 급등, 증권가 반등 전망에 2차전지주 강세 - 비즈니스포스트","summary":"- 에코프로 주가가 장중 17%대 급등하며 2차전지주 전반의 강세를 이끌었다.\n- 에코프로비엠, LG에너지솔루션, 포스코퓨처엠 등 주요 2차전지주도 동반 상승했다.\n- 증권가에서는 리튬·코발트 가격 상승 및 ESS 수요 증가를 이유로 2차전지 업종의 반등을 전망했다.","date":"2025-12-08","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGistHuMD0Pahj8IFFLw0c0H7chE4OFhM63uypVjEWayFFD73bSmvYNytkp2DMD1YuF49rBxTh7To3OAuK_oDmUK1RUZGtkyGwi22ax_K98rsGvTq3znOm22rXE2m8oQFx1Yrr_LPmAuX0gNVEQOKm9Lv6fClzBh7r5NCk="}]}},{"id":"3da19b13-c5d1-4cf6-b5f9-b05e7465ed6c","code":"389020","name":"자람테크놀로지","changeRate":4.71,"volume":283782,"rawOHLC":"38600 44400 37600 40000","ohlc":{"open":38600,"high":44400,"low":37600,"close":40000},"status":"COMPLETE","analysis":{"theme":"뉴로모픽 및 차세대 통신 반도체","leader":"넥스트칩 (Nextchip)","promising":["앤씨앤 (NCN)","오픈엣지테크놀로지 (OpenEdge Technology)"],"newsItems":[{"title":"자람테크놀로지, 230억원 규모 공급계약 체결","summary":"- 자람테크놀로지가 230억 5014만원 규모의 XGSPON 주문형반도체(ASIC) 설계 및 공급계약을 체결했습니다.\n- 이는 최근 매출액 221억 7038만원 대비 104%에 해당하는 규모입니다.\n- 계약 기간은 2025년 12월 8일부터 2028년 1월 7일까지이며, 이번 계약은 올해 첫 계약 공시입니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHny4ZoOsNeXfU6PsX-hdxu0CxYUC4k2lzYQsKfC0H7bWvixEp3HaZBQrpIecWmEMPVwIlTqRBI4Nq81pRXw7eYsHvlDIw5B2mQbYRC8TtRUzQ2g3PAWDyxusVngtaHMI1_Vap5lCLOP89QC5UMzLt0mKv7UeKE_OV5vQEV"},{"title":"[강세 토픽] 뉴로모픽 반도체 테마, 넥스트칩 +14.49%, 자람테크놀로지 +5.19%","summary":"- 뉴로모픽 반도체 테마가 전일 대비 3.07% 상승하며 강세를 보였습니다.\n- 넥스트칩이 14.49% 상승하며 테마 상승을 주도했고, 자람테크놀로지는 5.19% 상승했습니다.\n- 뉴로모픽 반도체는 인간 뇌 구조를 모방한 차세대 AI 반도체로, 저전력 고속 연산이 특징입니다.","date":"2025-12-05","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjK-ll_ZXJ8ayusAJFx-7X-1Tjb1PajCt9ak_zArKcvIUiuMsLcbFfK80kogvaULQEjpd20a48_Gs9FtVh6QjIe2LexC9QgznE8CWzK6A5lN6momO3fr7Xe8AmNNHVNAutunDocinqatdIBblT9BbZNXPNTV0ekRAojK5MvyOJols3zNf9dsLM"}]}},{"id":"8304de18-cdf0-4c8f-8b1e-bc9e8575f2fc","code":"089010","name":"켐트로닉스","changeRate":3.22,"volume":2741354,"rawOHLC":"31800 34500 30700 32050","ohlc":{"open":31800,"high":34500,"low":30700,"close":32050},"status":"COMPLETE","analysis":{"theme":"첨단 반도체 소재 (초고순도 PGMEA & 유리기판)","leader":"켐트로닉스","promising":["필옵틱스","삼성전기"],"newsItems":[{"title":"켐트로닉스, 포토레지스트 초고순도 PGMEA 공급 시작…내년 풀가동 예상","summary":"- 켐트로닉스가 포토레지스트 핵심 용제인 초고순도 PGMEA의 공급을 시작했으며, 3분기부터 매출에 반영되고 있습니다.\n- PGMEA는 EUV/ArF 노광 공정의 핵심 소재로, 켐트로닉스는 일본산에 의존하던 시장에서 국산화에 성공했습니다.\n- 회사는 생산 역량을 연간 2만5000t에서 5만t으로 확대할 계획이며, 향후 국내외 파운드리 팹에도 적용이 기대됩니다.","date":"2025-12-09","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEDmAsbr1oJ512WOW1YY5k97e1RKDau68nZijdvVZt0SrIoNbRIpynIiO1PwizzhhGArlNLh3dhK3lH5r-icWhxbW39CDoxDVcOpxSTbqKkATV-5_2UuJIV0E1VBdWbaQvM8mQVEA=="},{"title":"[특징주] 반도체 대형주 오르자 유리 기판 관련주도 상승","summary":"- 켐트로닉스 주가가 1.05% 상승 마감하며 삼성전자, SK하이닉스 등 반도체 대형주 상승에 긍정적인 영향을 받았습니다.\n- 이는 켐트로닉스가 유리 기판 관련 종목으로 시장의 주목을 받았기 때문입니다.\n- 반도체 대형주 상승과 필라델피아 반도체 지수 상승이 주요 이슈로 작용했습니다.","date":"6시간 전","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGcgSoA215pUKhktZtWl4jD8wFOnAEexBdY3aJowuNm7RD66NSlg9GyepKCNkkIzL53XEaCSSxSPa5iIPFr9EUoc9lUAo_yzRVlTzkikCldD0uS_3DAqQdjJH8AMd8SxKbC"}]}},{"id":"4fd192bf-7e27-4b5c-8fff-0a24980132aa","code":"281740","name":"레이크머티리얼즈","changeRate":2.88,"volume":1066475,"rawOHLC":"14330 15500 14210 15000","ohlc":{"open":14330,"high":15500,"low":14210,"close":15000},"status":"COMPLETE","analysis":{"theme":"반도체 소재 및 전고체 배터리 소재 (Semiconductor and Solid-State Battery Materials)","leader":"레이크머티리얼즈 (Lake Materials)","promising":["DNF","켐트로스"],"newsItems":[{"title":"포토레지스트 관련주 TOP10 | 국내 대장주, 수혜주 - 주식스토커","summary":"- 레이크머티리얼즈는 국내 유일의 TMA 제조 기술을 보유한 유기금속 화합물 전문 기업이다.\n- 반도체 ALD/CVD 증착용 전구체를 생산하며, 반도체 노광 공정 관련 고순도 화학소재를 공급한다.\n- 반도체 공정 미세화 및 고적층화 추세에 따라 고순도 전구체 수요가 증가하고 있다.","date":"2025-12-04","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH77uKXA7yyTALHQKEnfEYA3a6-xSGqGq1Xic3NMrjilN_bk31G5cVsgSWSbddCAlOYzAo4SUXfCvqQR9Su0SXY1AWzGVsBH_F4R7eoxh_MJIusRgHv03VRpa99Yj1jK3O2yw=="},{"title":"레이크머티리얼즈 강세 이유와 향 후 주가 전망에 대해 알아 봅니다. {제이엘투자그룹}","summary":"- 레이크머티리얼즈는 반도체와 2차전지 양쪽에서 긍정적인 사업 성장성을 보인다.\n- 특히 자회사를 통해 차세대 전고체 배터리 핵심 원료인 황화리튬(Li2S)을 개발, 양산 플랜트를 완공했다.\n- 국내외 다수의 글로벌 업체에 샘플 테스트를 진행 중이며, 향후 전고체 배터리 시장 개화 시 대규모 증설이 기대된다.","date":"2025-12-07","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjgUN65eWnOw6UFp3mMSBV6Xt9HPtxA50sbTIsAw7WINihK9e2gTlI16FNUNYBJCt3eP9xkjLjK6Vvvn_3AC3NB9fnYvhYy37JyrWzXXRIM0LsenJ1YjG-jlKLPNAdq4OUGVIjSWs="}]}},{"id":"c05b2ee0-7662-458c-8ab1-1bc90d47c6dc","code":"014160","name":"대영포장","changeRate":0.84,"volume":3202094,"rawOHLC":"1070 1160 1060 1083","ohlc":{"open":1070,"high":1160,"low":1060,"close":1083},"status":"COMPLETE","analysis":{"theme":"골판지 및 포장재 (Corrugated Cardboard and Packaging Materials)","leader":"신대양제지 (Shin Dae Yang Paper)","promising":["태림포장 (Taerim Packaging)","삼보판지 (Sambo Paperboard)","한국수출포장 (Korea Export Packaging)"],"newsItems":[{"title":"특징주, 대영포장-골판지 제조 테마 상승세에 22.85% ↑","summary":"- 대영포장 주가가 골판지 제조 테마 상승세에 힘입어 22.85% 급등했습니다.\n- 골판지 제조 테마는 전일 대비 3.02% 상승하며 강세를 보였습니다.\n- 대영포장은 골판지 원단 및 상자 제조업체로, 기관과 외국인이 순매수했습니다.","date":"2025-05-20","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUQLlIG02Vx3ywpR7OXZV33DUDw3-8dfz-OTMVXDBuIYREo1oY6EkpKA8cz0Ks_dFwYw1R2h43mek-JmqBIywjoVvOK71UnuBb2nB2oy3lyYtD3cYUWw2OD6V9Z2kurHoRsQ=="},{"title":"[특징주] 대영포장 급등, '김문수 대선후보 확정' 테마주 랠리 시작되나","summary":"- 대영포장 주가가 김문수 대선후보 확정 가능성으로 29.82% 급등하며 시장의 주목을 받았습니다.\n- 이는 김문수 관련 '대선 테마주'로 분류되어 급등세를 보였습니다.\n- 대선일 확정으로 차기 대권 주자 관련주들의 경쟁이 본격화될 것으로 관측됩니다.","date":"2025-05-12","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEy66A0JvkMzAIctaXbQPPXG4eGmFQxYvVfp1lmNo4ziLYf-l7SJGUfGReNALGLnPBgJTI_0IlgfwRguCvzJk5rYubjcHoDns95vX7BQEzZKbMsNEOimVn-K3ZqaKNk54lwU5BakCHbeVt5FcE2mNlWsPSZyYrF"}]}},{"id":"4e07d2a7-8af9-4a98-aa9d-296f7156db40","code":"298690","name":"에어부산","changeRate":-0.16,"volume":9767793,"rawOHLC":"1885 2060 1816 1897","ohlc":{"open":1885,"high":2060,"low":1816,"close":1897},"status":"COMPLETE","analysis":{"theme":"LCC 산업 재편 및 경쟁력 강화","leader":"진에어","promising":["진에어","에어서울","제주항공","티웨이항공"],"newsItems":[{"title":"메가 LCC 탄생…'통합 진에어' 출범한다","summary":"- 진에어, 에어부산, 에어서울 3개 저비용항공사(LCC)가 통합하여 '메가 LCC'로 출범할 예정이다.\n- 통합 진에어는 2027년 1분기 출범을 목표로 하고 있다.\n- 이는 국내 LCC 시장의 경쟁력 강화 및 효율성 증대를 위한 움직임으로 분석된다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4r4s-ZO7jlRufnbw-SZUJ1fz8bllVLaqPPjI4wj01pdNCtDD-yaBPVtyt1YdaulFZ_gWICUwaA1-swv_8mvv5QwCaJa1l-xWCPc-fxSWapvWL8bSyexJGLlp9loFoUWwseB_yEZ71dLQFsDHGlYmq-nC3"},{"title":"이제 에어부산·서울도 와이파이 된다… LCC 경쟁력 제고","summary":"- 에어부산과 에어서울이 기내 와이파이 서비스를 도입할 예정이다.\n- 이는 LCC의 경쟁력을 높이기 위한 전략의 일환이다.\n- 스타링크 등 초고속 인터넷 서비스 도입을 통해 고객 편의를 증진할 계획이다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGcJtk_SckPG2uYArQm5gaF3XfgBv_5OWoGSUXhGjlPtzyG5MohOjDiu7L9FIgQILb3pGErk8xmxcl9Ceml5eOHAVUJItW6lpftWIwuY0nHGrRpRtNLBpCPJOY2fK0hQfZzFqX3"}]}},{"id":"184295f3-6fe5-4d1d-bb68-89876baded2f","code":"290650","name":"엘앤씨바이오","changeRate":-0.75,"volume":3188948,"rawOHLC":"78800 80000 66400 66600","ohlc":{"open":78800,"high":80000,"low":66400,"close":66600},"status":"COMPLETE","analysis":{"theme":"재생의료 및 의료기기","leader":"정보 없음","promising":[],"newsItems":[{"title":"엘앤씨바이오 (290650). +8.09%, 주담 통화 결과, 특이사항 없음. 수급 측면 외국인/기관 동반 순매수 유입. 일부 의료기기 테마 상승.","summary":"- 엘앤씨바이오 주가가 8.09% 상승했다.\n- 외국인과 기관의 동반 순매수가 유입되었다.\n- 이는 일부 의료기기 테마 상승에 기인한 것으로 보인다.","date":"2025-12-05","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEnB1z6OU54o7feEwjRc4H_PgGRnUkkHjbK-Wb_XXHmfspYIzvZdlfDRDy1wy2s4vAm4ZIUWDwsOVQeiCTBnAgy9q4ERQNNRhT1-2W9Sx61HoByBDR2DL6Dmg=="},{"title":"엘앤씨바이오, ECM 기반 피부재생 신제품 '리투오 파인' 출시","summary":"- 엘앤씨바이오가 ECM 기반 피부재생 신제품 '리투오 파인'을 출시했다.\n- 이 제품은 인간 진피 조직 유래 무세포 동종진피를 적용하여 피부 구조와 기능을 복원하는 데 중점을 둔다.\n- 국내외 시장 보급 확산 및 재생 시술의 새로운 표준으로 자리매김할 것으로 기대된다.","date":"2025-12-05","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHqCv05jPNp6OCe76nIYTmVlgYunoiQpHuAkUl_6Xm7A4OPuG4-y02tIjyvu06jDTu4qiJ7vcrA611N32eLPPXYBFpPvPVKO3IiEZx1DXxu36oq5wFtHxF67A0jtMLi8J8IIQyooU3Y3r6foEcBNAd2bTufSkqK"}]}}];
+        let isThemeSorted = false;
+        let openNewsIds = new Set();
+
+        // Helper Functions
+        const getNaverFinanceUrl = (code) => `https://finance.naver.com/item/main.naver?code=${String(code).trim()}#`;
+        const getNaverSearchUrl = (keyword) => `https://search.naver.com/search.naver?query=${encodeURIComponent(keyword + ' 특징주')}`;
+
+        // Render Function
+        function render() {
+            const tbody = document.getElementById('tableBody');
+            const sortBtn = document.getElementById('sortBtn');
+            
+            // Update Sort Button UI
+            if (isThemeSorted) {
+                sortBtn.classList.add('text-blue-400');
+                sortBtn.title = "Show Original Order";
+            } else {
+                sortBtn.classList.remove('text-blue-400');
+                sortBtn.title = "Group by Theme";
+            }
+
+            // Sort Logic
+            let displayStocks = [...stocks];
+            if (isThemeSorted) {
+                displayStocks.sort((a, b) => {
+                    const aComplete = a.status === 'COMPLETE';
+                    const bComplete = b.status === 'COMPLETE';
+                    if (aComplete && !bComplete) return -1;
+                    if (!aComplete && bComplete) return 1;
+                    if (aComplete && bComplete) {
+                        const themeA = a.analysis?.theme || '';
+                        const themeB = b.analysis?.theme || '';
+                        const cmp = themeA.localeCompare(themeB, 'ko');
+                        if (cmp !== 0) return cmp;
+                    }
+                    return a.name.localeCompare(b.name, 'ko');
+                });
+            }
+
+            // HTML Generation
+            tbody.innerHTML = displayStocks.map(item => {
+                const isUp = item.changeRate > 0;
+                const txtColor = isUp ? 'text-red-400' : item.changeRate < 0 ? 'text-blue-400' : 'text-slate-400';
+                const hasNews = item.analysis?.newsItems?.length > 0;
+                const isNewsOpen = openNewsIds.has(item.id);
+
+                // Row HTML
+                let html = `
+                <tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition-colors ${isNewsOpen ? 'bg-slate-800/30' : ''}">
+                    <td class="p-4 align-top">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg text-slate-100">${item.name}</span>
+                            <span class="text-xs text-slate-500 font-mono">${item.code}</span>
+                            <div class="flex items-center mt-1 font-medium ${txtColor}">
+                                ${isUp ? '<i data-lucide="trending-up" class="w-3 h-3 mr-1 inline"></i>' : ''}
+                                ${item.changeRate.toFixed(2)}%
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="inline-block bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded text-xs font-semibold border border-indigo-500/30">
+                            ${item.analysis.theme}
+                        </div>` : '<span class="text-red-500 text-sm">Error</span>'}
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="text-sm">
+                            <div class="mb-2">
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Leader</span>
+                                <span class="font-semibold text-yellow-400">${item.analysis.leader}</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Promising</span>
+                                <div class="flex flex-wrap gap-1">
+                                    ${item.analysis.promising.map(p => `<span class="bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded text-xs">${p}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                         ${item.analysis ? `
+                         <button 
+                            onclick="toggleNews('${item.id}')"
+                            ${!hasNews ? 'disabled' : ''}
+                            class="flex items-center gap-2 px-3 py-2 rounded-lg border transition-all text-xs font-medium w-full justify-between ${
+                                isNewsOpen 
+                                ? 'bg-blue-600/20 border-blue-500/50 text-blue-300' 
+                                : 'bg-slate-700/30 border-slate-600 text-slate-300 hover:bg-slate-700'
+                            }"
+                         >
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="newspaper" class="w-3.5 h-3.5"></i>
+                                News (${item.analysis.newsItems.length})
+                            </span>
+                            <i data-lucide="${isNewsOpen ? 'chevron-up' : 'chevron-down'}" class="w-3 h-3"></i>
+                         </button>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                        <a href="${getNaverFinanceUrl(item.code)}" target="_blank" class="flex items-center justify-center gap-2 bg-green-600/20 hover:bg-green-600/30 text-green-400 border border-green-600/30 px-3 py-2 rounded-lg text-xs font-medium transition-all group w-full">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                            <span>Naver Chart</span>
+                            <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                        </a>
+                    </td>
+                </tr>
+                `;
+
+                // News Drawer HTML
+                if (isNewsOpen && hasNews) {
+                    html += `
+                    <tr class="bg-slate-800/20 border-b border-slate-700/50 fade-in">
+                        <td colSpan="5" class="p-4 pl-8">
+                            <div class="bg-slate-900/50 rounded-lg p-4 border border-slate-700/50">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-slate-400 text-xs uppercase tracking-wider font-bold flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                        Recent News
+                                    </h4>
+                                    <a href="${getNaverSearchUrl(item.name)}" target="_blank" class="text-[11px] flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors font-medium bg-green-400/10 px-2 py-1 rounded border border-green-400/20 hover:bg-green-400/20">
+                                        View on Naver <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+                                    </a>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4">
+                                    ${item.analysis.newsItems.map(news => `
+                                    <div class="relative pl-4 border-l-2 border-slate-700 hover:border-blue-500 transition-colors">
+                                        <div class="flex items-start justify-between gap-2 mb-1">
+                                            <a href="${news.url || getNaverSearchUrl(item.name)}" target="_blank" class="text-sm font-bold text-blue-400 hover:text-blue-300 leading-snug flex items-start gap-1 group">
+                                                ${news.title}
+                                                <i data-lucide="external-link" class="w-3 h-3 mt-0.5 opacity-50 group-hover:opacity-100"></i>
+                                            </a>
+                                            <span class="text-[10px] text-slate-500 whitespace-nowrap shrink-0 bg-slate-800 px-1.5 py-0.5 rounded">${news.date}</span>
+                                        </div>
+                                        <div class="text-xs text-slate-300 leading-relaxed whitespace-pre-line">${news.summary}</div>
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    `;
+                }
+                return html;
+            }).join('');
+
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        // Event Handlers
+        window.toggleSort = () => {
+            isThemeSorted = !isThemeSorted;
+            render();
+        };
+
+        window.toggleNews = (id) => {
+            if (openNewsIds.has(id)) {
+                openNewsIds.delete(id);
+            } else {
+                openNewsIds.add(id);
+            }
+            render();
+        };
+
+        // Initial Render
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>
