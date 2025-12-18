@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Stock Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: { 850: '#1e293b', 900: '#0f172a' }
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+      .fade-in { animation: fadeIn 0.3s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased min-h-screen p-4 pb-20">
+    
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto mb-8 border-b border-slate-800 pb-4">
+        <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="p-2 bg-blue-600 rounded-lg shadow-lg shadow-blue-500/20">
+                    <i data-lucide="file-spreadsheet" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-white hidden sm:block">K-Stock Theme Analysis Report</h1>
+                    <h1 class="font-bold text-xl tracking-tight text-white sm:hidden">K-Stock Report</h1>
+                    <p class="text-xs text-slate-400">Generated on 2025-12-18</p>
+                </div>
+            </div>
+
+            <!-- Promotional Link Area -->
+            <div class="flex-1 flex justify-center px-2 sm:px-8">
+                <a href="https://cafe.naver.com/anesinformation" target="_blank" rel="noreferrer" class="group flex items-center gap-2 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 hover:from-yellow-500/20 hover:to-orange-500/20 border border-yellow-500/20 hover:border-yellow-500/40 px-4 py-2 rounded-xl transition-all duration-300">
+                    <span class="font-bold text-yellow-400 group-hover:text-yellow-300 text-sm sm:text-base whitespace-nowrap">투자도 개비공과 함께!</span>
+                    <span class="text-slate-600 hidden sm:inline">-</span>
+                    <span class="text-slate-300 group-hover:text-white text-xs sm:text-sm font-medium flex items-center gap-1 whitespace-nowrap">
+                        개비공 바로가기
+                        <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                    </span>
+                </a>
+            </div>
+
+            <div class="text-xs text-slate-500 shrink-0">
+                <span class="bg-slate-800 px-3 py-1 rounded-full border border-slate-700 whitespace-nowrap">
+                    Items: <span class="text-white font-bold">14</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Table Container -->
+    <main class="max-w-7xl mx-auto">
+        <div class="bg-slate-800/40 rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-800/90 text-slate-400 text-xs uppercase tracking-wider sticky top-0 z-10 backdrop-blur-md shadow-sm">
+                        <tr>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Stock Info</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[180px]">
+                                <button onclick="toggleSort()" id="sortBtn" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                    Theme <i data-lucide="list-filter" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[220px]">Market Leader & Peers</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Recent News</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Links</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-700/50">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Data & Script -->
+    <script>
+        // Embed Data
+        const stocks = [{"id":"69a9d17b-f030-4bcb-8b6d-32ff23f616e9","code":"000390","name":"삼화페인트","changeRate":30,"volume":9765251,"rawOHLC":"6390 7930 6290 7930","ohlc":{"open":6390,"high":7930,"low":6290,"close":7930},"status":"COMPLETE","analysis":{"theme":"경영권 분쟁 및 승계 이슈","leader":"삼화페인트 (000390)","promising":[],"newsItems":[{"title":"삼화페인트, 경영권 분쟁 가능성 부각에 상한가 [특징주]","summary":"- 삼화페인트 주가가 김장연 회장의 갑작스러운 별세 소식에 상한가를 기록했다.\n- 김장연 회장의 장녀 지분이 3%대에 불과하며, 공동 창업주 일가가 여전히 20%대 지분을 보유하고 있어 경영권 분쟁 가능성이 부각되었다.\n- 최대주주 별세로 인한 경영승계 및 지배구조 변화 기대감이 주가 상승의 주요 원인이다.","date":"2025.12.18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFM4ghomATDwbDiGjpF9UDt-OC-EwyLq_ZXqGdOVKYHg3L5yrfetwRag8OnW0nOxnVWsckALPngePWRip_INC32WYweFeYcbyeuQVgYolqw90vi9AiA6gGJs_ihCh3cdkK4EuXDW4GSxKnAOh6Vf1sVSk5S"},{"title":"삼화페인트 김장연 회장 돌연 사망…경영권 갈등 촉발?","summary":"- 삼화페인트 김장연 회장이 급성패혈증으로 돌연 사망하여 경영권 승계에 대한 불확실성이 커졌다.\n- 가업승계공제 요건 중 매출 기준에서 탈락하여 세금 부담이 클 것으로 예상된다.\n- 이로 인해 잠재적인 경영권 분쟁 가능성이 시장에서 주목받고 있다.","date":"2025.12.18"}]}},{"id":"8aa9d25b-2d4d-46a8-ac55-f91ed5d2771d","code":"223250","name":"드림씨아이에스","changeRate":29.94,"volume":15192982,"rawOHLC":"5720 7030 5590 7030","ohlc":{"open":5720,"high":7030,"low":5590,"close":7030},"status":"COMPLETE","analysis":{"theme":"오가노이드 (Organoid)","leader":"드림씨아이에스","promising":["티앤알바이오팹","로킷헬스케어","토모큐브"],"newsItems":[{"title":"[특징주]드림씨아이에스, 압도적 실적 기반 오가노이드 대장주 가능성 부각에 강세","summary":"- 드림씨아이에스가 압도적인 실적을 기반으로 오가노이드 분야 대장주로 부각되며 강세를 보였습니다.\n- 회사는 신약 개발 전 과정에 걸친 글로벌 CRO 전문 기업으로, 국내 유일의 원스톱 솔루션을 제공합니다.\n- 안정적인 이익 창출 능력으로 다른 오가노이드 관련 기업들과 차별화되며 저평가 상태로 평가됩니다.","date":"2025-12-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG-enII6VKDhbSOn_dYiNdye1pw_hISWMwmWmQKt15pOOI-CugjbBxQ0Yf2F2dHsUgOrXcXAeF5WCZKN3USXyicM-PFxHcfiH8n4s3yHRtKCECkwJbZqWHYpyNOjmIOm6xCI8Sw8s6BcE568UY3ocs="},{"title":"드림씨아이에스, 로슈·노보·릴리 파트너 본격 인수…오가노이드 대장주에도 심각한 저평가","summary":"- 드림씨아이에스가 로슈, 노보 노디스크 등 글로벌 빅파마 고객사를 보유한 오가노이드 기업 인수로 대장주로 부각될 전망입니다.\n- 국내 유일의 글로벌 CRO 기업으로서 높은 전문성과 진입 장벽을 가진 임상시험수탁 사업을 영위합니다.\n- 3분기 누적 매출액 및 영업이익이 크게 성장했음에도 불구하고 현재 밸류에이션은 심각하게 저평가되어 있습니다.","date":"2025-12-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHC9iS6i65GL1LTiRdZtttq4LHqVHTci3TqZHuU6WAnK4x7WzhXJ84YNx9XihWKIj53EG_xIdGXtPLzjMh9xkQGRCm6P2bzxHmXbQyP01VFaAhL_4IjPZ8Y79ArIBiqHFFH9iKje7QCp4S2CGXKMXCkhla38CW58Q=="}]}},{"id":"306fbe2c-299e-43f2-ab15-4d0f77cb2ad8","code":"100790","name":"미래에셋벤처투자","changeRate":29.93,"volume":13512821,"rawOHLC":"11760 14240 11350 14240","ohlc":{"open":11760,"high":14240,"low":11350,"close":14240},"status":"COMPLETE","analysis":{"theme":"벤처캐피탈 (VC) / 스페이스X IPO 기대감","leader":"미래에셋벤처투자","promising":["아주IB투자","나우IB"],"newsItems":[{"title":"[18일 특징주] 미래에셋벤처투자, 스페이스X IPO 추진 기대에 '상한가'","summary":"- 미래에셋벤처투자가 스페이스X의 기업공개(IPO) 추진 기대감에 힘입어 상한가를 기록했다.\n- 일론 머스크가 이끄는 스페이스X는 내년 하반기 IPO가 전망되며 투자 심리를 자극하고 있다.\n- 아주IB투자, 에이치브이엠, 켄코아에어로스페이스 등 다른 스페이스X 관련 테마주들도 함께 상승세를 보였다.","date":"2025.12.18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEMcupQ2VPDFtDV4BL336srV0Tvmtm68-ZL-pJibPjUA0qyEVHEb89wBOywa21FxwpaWC2-23LqR9OJ44E93949pSYPmT9FHze-FuB5Rfmkvj1FVK2NFnkVwHUlaA2DWKF-0-FkM0b3peFcxOYFt8EFl3OKTqD2MFZs"},{"title":"\"미래에셋벤처투자, 스페이스X IPO 기대감에 재조명\"","summary":"- 한양증권은 스페이스X의 내년 하반기 IPO 가능성과 기업가치 재평가 기대로 미래에셋벤처투자가 수혜를 볼 것으로 분석했다.\n- 미래에셋벤처투자는 2022년과 2023년에 걸쳐 스페이스X에 약 4000억원 규모를 투자하여, 스페이스X의 기업가치 상승 시 실적에 직접 반영될 구조를 보유하고 있다.\n- 스페이스X 외에도 AI 반도체 설계 기업 세미파이브와 글로벌 AI 마케팅 플랫폼 몰로코 등 주요 포트폴리오의 회수 가시성도 높아지고 있다.","date":"2025.12.17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFyIOdYfo6gHLWjS-nKhnZNvYq-9p40kIJoGhUamiacXlQrVF3YWlU1U5VeAmDGF-iNbZ69L-lDTj0NxRNNytl8MHu5xjSWNpOa7mPWmXcx_pHMd-cAUIMYUTAh6hLCiwk2"}]}},{"id":"e76479c4-f8c6-4b43-9eba-9328bd43d085","code":"067830","name":"세이브존I&C","changeRate":29.92,"volume":17500757,"rawOHLC":"3040 4060 3020 4060","ohlc":{"open":3040,"high":4060,"low":3020,"close":4060},"status":"COMPLETE","analysis":{"theme":"자산주 재평가 (부동산 자산 가치 재평가)","leader":"세이브존I&C","promising":["서부T&D","대성산업"],"newsItems":[{"title":"[특징주] 세이브존아이앤씨, 자산주 재평가 속 '초저평가 부동산주'로 급부상하며 상승","summary":"- 세이브존I&C는 시중 유동성 확대와 부동산 가치 재평가 기대감에 '초저평가 자산주'로 부각되며 급등했습니다.\n- 회사는 서울·수도권 핵심 상권에 알짜 부동산을 다수 보유하고 있으며, 장부가액 대비 실제 청산가치가 최소 몇 배 이상, 최대 3조 원을 넘을 수 있다는 분석입니다.\n- 시가총액이 장부가 대비 30분의 1 수준에 불과해 '극단적 저평가 종목'으로 평가받으며, 자산주 테마의 핵심 수혜주로 떠올랐습니다.","date":"6 days ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBCdI0dVTZvCKIv-UhVim2GJekYEZzhItFA9ec9Zy04KkGCtd2-vE2YiWg-aPZnTHxSY_xQMGAbRpES7CphAXpdbiSz84caG1a0kAGepz_R-OUzXOEq9v_cICeGDYiyzWh5PkECwKFF-OqpX6gtHo7nGoUpMnDHQ=="},{"title":"댓글 : 12월 17일 수급특징주","summary":"- 세이브존I&C는 12월 12일 기관 순매수 규모 역대 3위를 기록하며 자산주 재평가 테마에서 주목받았습니다.\n- 신세계그룹의 반포 서울고속버스터미널 개발과 같은 구체적인 개발 계획이 있는 부동산 보유 기업들이 부각되는 흐름입니다.\n- 세이브존I&C는 16년간 자산재평가를 하지 않아 현재 시세로 최소 1조원 이상으로 추산되는 전국 역세권 요지 점포 및 자가보유 부동산을 보유하고 있습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBfrMIa8niogtR5BmxrJ5CAGdhtUdl8LUR4ajGN72-BsGuLLT4MU1UvGgullKb9MRIVPdrp46tChYc4FNSCiotUyg-lTNI518vow--nTWHFnOugEo-Hw4rsdzbKIxV8218DGIoT1IUUwMXqGe9wWalTHEEvpIhEf8A7XXp4qOxhDS-MWK_"}]}},{"id":"f2759de6-d0a5-4e29-bf4e-12102f195a07","code":"260970","name":"에스앤디","changeRate":23.24,"volume":269960,"rawOHLC":"69600 92000 69600 87500","ohlc":{"open":69600,"high":92000,"low":69600,"close":87500},"status":"COMPLETE","analysis":{"theme":"K-Food Ingredients & Health Functional Food Materials","leader":"삼양식품","promising":["농심","오뚜기"],"newsItems":[{"title":"에스앤디 주가, 급등세... 왜?","summary":"- 에스앤디 주가가 18일 급등세를 보이며 23.38% 상승한 8만 7600원에 거래되었다.\n- 회사는 1998년 설립되어 2021년 코스닥에 이전 상장했으며, 일반기능식품소재와 천연물 기반 건강기능식품소재를 개발·제조·판매한다.\n- 주요 생산 품목은 그릴농축액류, 치즈분말류, 매운맛베이스분말류 등이며, 생활용품 및 화장품 분야로도 사업을 다각화하고 있다.","date":"2025-12-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPeP1MkbHGPbQWneMhnu75JiAdVvYst0uYCUq-zf4dNru7WM4xw3mEN0u50oOXLZl4X2J8_OTqlU54g012K8aY78MeR2m8-0vatLOlSSBavhzdRhGJWJT9r8lSkt30nAKPxqSiISqQwoLelYQDG0lhd8tFW1E="},{"title":"식품·생활용품·화장품까지…에스앤디, 다각화 전략으로 기술 경쟁력 강화","summary":"- 에스앤디 주가가 18일 21.97% 상승한 8만 6600원에 거래되며 초강세를 보였다.\n- 오송생명과학단지로 본사를 이전하고 최신 생산 설비를 구축하여 품질 관리 및 생산 효율성을 강화, 실적 개선 기대감이 주가에 긍정적 영향을 미쳤다.\n- 식품 소재 외에도 생활용품 및 화장품용 천연물 소재 연구개발을 강화하며 사업 다각화를 추진하고 있으며, 31건의 특허권을 보유하여 기술 경쟁력을 확보하고 있다.","date":"2025-12-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHO2miFjZj4E4_-bqwsFI7tzLTKSYb-30MmBOeMuL7-SA0y5MIlf3pO4oKL-VfMcEfMBKoN-TNYyOJYldaDB8n1dzKimhe3N6pcki7PqmbvBVK9HswxsT0gh3jyvwqqdj5UL5qBgkTVDDueYegra9QCZdAYcb-8r6XZyrdU"}]}},{"id":"1e493051-5007-4f70-ab36-5a3389d705fd","code":"027360","name":"아주IB투자","changeRate":22.41,"volume":47698459,"rawOHLC":"2750 3480 2670 3305","ohlc":{"open":2750,"high":3480,"low":2670,"close":3305},"status":"COMPLETE","analysis":{"theme":"벤처캐피탈 (VC) / 스페이스X IPO 기대감","leader":"우리기술투자","promising":["미래에셋벤처투자","SBI인베스트먼트","DSC인베스트먼트"],"newsItems":[{"title":"[특징주] 아주IB투자, 스페이스X IPO 기대감 속 지분 보유 부각에 상승","summary":"- 아주IB투자가 스페이스X의 IPO 기대감에 힘입어 주가가 급등했습니다.\n- 스페이스X는 내년 IPO를 목표로 최대 1조5000억달러의 기업가치 전망이 나옵니다.\n- 아주IB투자는 스페이스X 지분을 보유한 대표적인 수혜 종목으로 부각되고 있습니다.","date":"3 days ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfwJpXfj0GjmxCPWy9BRTreayzkcCyhvkp8sLgj2dXdaP2c9eDOQHNpcDbkWEo3aIsMMuCvWzRD4W111p-tf40-2rne-O9bjLWZatPC0XyC7z1-F597_pxxAqmNzeHn_irBDBaBhXBPxieYl-XwT3u3QkiJ7xT"},{"title":"[특징주] 아주IB투자, 일론 머스크 최측근 NASA 국장 임명… 52주 신고가 경신","summary":"- 아주IB투자가 일론 머스크 최측근의 NASA 국장 임명 소식에 52주 신고가를 경신했습니다.\n- 스페이스X의 2026년 IPO 공식화와 함께 국내 우주·항공 관련주에 매수세가 유입되고 있습니다.\n- 아주IB투자는 벤처캐피탈로서 글로벌 유망 비상장 기업 투자 이력을 보유하고 있습니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH28cISBUg7ZKp3pd9CuK6KadpXj6I91orWFrradfrvyp2de-D6pv2gtAZyiqKixwnP5yyV-N7nDdNpGfmG2XZtA9S_SEqsT_pTo1yZHtB6rqDJtjhHvG6lWwf51nACytD8-e4wM3uD6QoipVSzdNMRyvgpaPdC"}]}},{"id":"d7029f94-2add-4d58-a12f-2d4dafeb8350","code":"484120","name":"도우인시스","changeRate":11.31,"volume":115730,"rawOHLC":"22250 25500 22100 25100","ohlc":{"open":22250,"high":25500,"low":22100,"close":25100},"status":"COMPLETE","analysis":{"theme":"폴더블폰 부품 (UTG)","leader":"도우인시스","promising":["파인엠텍","세경하이테크","이녹스첨단소재"],"newsItems":[{"title":"키움증권 \"도우인시스, 폴더블 시장 성장·듀얼 UTG 기술 개화 수혜 기대\"","summary":"- 키움증권은 도우인시스가 독보적인 초박막강화유리(UTG) 기술 경쟁력과 풍부한 양산 레퍼런스를 보유했다고 평가했습니다.\n- 폴더블 시장 확대와 듀얼 UTG 기술 개화로 수혜가 기대되며, 3단 폴더블 제품 등 고도화된 기술 요구에 동사의 경쟁력이 부각될 것으로 전망했습니다.\n- 2026년 말~2027년 초 폴더블 아이폰 출시 및 삼성디스플레이 패널 양산 본격화에 맞춰 추가 생산능력(Capa) 증설을 추진할 것으로 예상됩니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFyGGVka1LxEJxMBsQIiMaEypDiIxr3F49cqVO5HLWUfXppo4dLNxpD2qgsTsBDEFcPvP4C7bdHyfGpzuPRVf4pm4TjxN82WsDsZlWHegLqzXeCewRrPiEWhZkQfC25n0adhvOGOA=="},{"title":"삼성·구글이 선택한 유리… 도우인시스, 폴더블 독점의 비밀","summary":"- 도우인시스는 삼성과 구글 등 글로벌 빅테크 및 중국 제조사까지 고객군으로 확보하며 기술력과 품질 경쟁력을 인정받았습니다.\n- '폴더블 스마트폰 시대의 수혜 기업'을 넘어 차세대 IT·반도체 소재 기업으로 평가받고 있습니다.\n- 폴더블 디스플레이 장비 및 부품 관련주로 분류되며, 독점적인 기술력을 바탕으로 시장을 선도하고 있습니다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGshGOHH2SivwsDQDWPBqpjRbDB2XE6t3_fWXxMaVh1MjaRJ_EzLy3bbxp6idjRe1nggpjjtH5TDXJg-j3Bk_99pI7r4OXTIsvaaZqV98Hp9LoSvMz_-ASpQiFst70GOSvhCjWwrv1mLrgBdJ6EGWKkY0UQwvzkn4En-yih"}]}},{"id":"67adebfa-e0f5-4c4f-ade2-58f5d863649c","code":"051160","name":"지어소프트","changeRate":10.73,"volume":1314480,"rawOHLC":"7320 8600 7270 8150","ohlc":{"open":7320,"high":8600,"low":7270,"close":8150},"status":"COMPLETE","analysis":{"theme":"E-commerce / Dawn Delivery (새벽배송) / Online Grocery (마켓컬리 테마)","leader":"미래에셋벤처투자","promising":["지어소프트","미래에셋벤처투자"],"newsItems":[{"title":"특징주, 지어소프트-마켓컬리(kurly) 테마 상승세에 7.07% ↑ - 매일경제","summary":"- 12월 18일, 마켓컬리(kurly) 테마가 전일 대비 3.22% 상승했으며, 관련주인 지어소프트(051160)는 7.07% 급등했습니다.\n- 지어소프트는 모바일 플랫폼 솔루션 및 온라인 광고 대행업체로 알려져 있으며, 마켓컬리 테마는 최근 조정을 겪은 후 반등을 시도하고 있습니다.\n- 기관과 개인이 관련 종목을 꾸준히 순매수했으며, 지어소프트는 재무 성장성, 안정성, 수익성 모두 테마 평균을 상회하며 퀀트 재무 순위 2위를 기록했습니다.","date":"2025-12-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJN6kATdSCwq03H89r4DJkx6ESDEsVlCgKRrRs6oVytNg4haOVJCrglMTLfcewojHkA5EaV9FVZLILVrf-sDEBnToGUbgRRaXdmNUIAC-k0qDWUIL_AODVdSU="}]}},{"id":"4be59ee6-1580-4e07-bc10-cc1c3a4c120a","code":"435570","name":"에르코스","changeRate":6.61,"volume":2602301,"rawOHLC":"15730 17000 14280 14350","ohlc":{"open":15730,"high":17000,"low":14280,"close":14350},"status":"COMPLETE","analysis":{"theme":"저출산/출산장려 정책 및 엔젤산업 (Low Birth Rate/Birth Encouragement Policy & Angel Industry)","leader":"아가방컴퍼니","promising":["꿈비","제로투세븐"],"newsItems":[{"title":"에르코스, 출산율 반등 예상에 23%↑[특징주]","summary":"- 에르코스 주가가 영유아식품 관련주로 분류되며 장 초반 23%대 강세를 보였습니다.\n- 이는 정부의 강력한 복지 정책 드라이브와 출산율 반등 기대감에 따른 것으로 분석됩니다.\n- 에르코스는 영유아식품에서 대체식품, 고령친화식품으로 사업을 확대하는 푸드솔루션 기업입니다.","date":"8 hours ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEotEurSLD5Rr_SW9_ynJ51ZgBp2lb0lqhXVfChq1LJyoDV8ZFnepuoar_n3mEQmQv8Y8aGG1Wt3t-OmND_UbsjqV15Y0-hjhO8QdcydRugyK2EQ9IQN4ngaTNNTqQkrjgC6k3I_5WoTHif"},{"title":"\"머리 심고, 아이 낳고\"… 정부 지원 기대감에 관련주 들썩","summary":"- 국내 증시에서 정부의 복지 정책 드라이브에 힘입어 관련 테마주들이 강세를 보였습니다.\n- 이재명 대통령이 '탈모 치료 건강보험 적용'과 '출산 크레딧 확대' 등 구체적인 생활 밀착형 복지 정책을 주문했습니다.\n- 에르코스는 출산장려정책 및 엔젤산업 관련주로 분류되어 동반 상승세를 기록했습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG7yz2WHHr41i688Sz2xJ595MjuY42nZVzX645yGMOK1Ib5OKY3DWMYq81bOpR8nhYtzNUXoc8Bm-wCc6AAG2zDXphEyOL5Sm1jNvO3C5Q0_r9BwfpdYOR_NYf0NCr-r0sd4qAMgFFIdtAwb7Lm7821HWp2tbn5v_I0D4-vx0s="}]}},{"id":"12d46524-73c6-4ab6-a915-e262a587294a","code":"009780","name":"엠에스씨","changeRate":6.26,"volume":276947,"rawOHLC":"7890 8840 7870 8490","ohlc":{"open":7890,"high":8840,"low":7870,"close":8490},"status":"COMPLETE","analysis":{"theme":"K-Food 및 식품첨가물 (K-Food & Food Additives)","leader":"농심 (Nongshim)","promising":["우양 (Wooyang)","오뚜기 (Ottogi)","풀무원 (Pulmuone)"],"newsItems":[{"title":"[특징주] 엠에스씨 상한가, “K푸드 인기에 1456억 규모 설비투자” 식품 생산능력 확대","summary":"- 엠에스씨의 주가가 K-푸드 인기에 힘입어 상한가를 기록했습니다.\n- 회사는 1,456억 원 규모의 설비투자를 통해 식품 생산능력을 확대할 계획입니다.\n- 이번 투자는 건강기능식품, 향료, 음료 분야의 경쟁력 강화 및 장기 성장 기반 마련을 목표로 합니다.","date":"2025-08-28","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQECUPSpsbOLvwOg_bBleJzZKhrDE5DTFpmxMXA9cgHB95zy2l9tOnIWpkV4hjpsDnGaObAjnx6qCY6tG7_LieoNMwaMseK6_n6qaE_Zcsc05tEb0VvgxARe3TgLoD4kB2FDaVeoF8g3DNluBNeOkx0QpbI4hzS43A=="},{"title":"[특징주] 엠에스씨 상한가…K-푸드 모멘텀 재점화","summary":"- 엠에스씨가 K-푸드 모멘텀에 힘입어 상한가를 기록하며 시장의 주목을 받았습니다.\n- 넷플릭스 애니메이션 '케이팝 데몬 헌터스'의 흥행과 K-푸드 세계화 노력이 투자 심리를 자극했습니다.\n- 농심, 우양, 오뚜기 등 다른 식품 관련주들도 동반 강세를 보였습니다.","date":"2025-09-12","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHvWVXhspHa-l1FGXe7wQ67BhuXsayE6S2zwu1AJAC0JvjkYSvCnr-aKBB-vBEtex6OW8RTm_e3yB_w-L_o6FXIOq_PPYYUjx53SiXHiaqUoDcpF1A__gbU2s35dPcznUeO_kgP1-rIHAiZgejprWyfFP1h3hzj"}]}},{"id":"32d6cbe6-692f-4132-82e5-cf650b8da874","code":"0015G0","name":"그린광학","changeRate":3.73,"volume":1764477,"rawOHLC":"14170 15580 13870 14730","ohlc":{"open":14170,"high":15580,"low":13870,"close":14730},"status":"COMPLETE","analysis":{"theme":"초정밀 광학 시스템","leader":"정보 없음","promising":["정보 없음"],"newsItems":[{"title":"2025년 12월 11일 (목) 특징주 및 급등종목","summary":"- 그린광학은 방산, 디스플레이, 반도체, 우주항공 등 첨단 산업 분야에 초정밀 광학 시스템을 개발 및 제조하는 전문업체이다.\n- 국내 유일하게 렌즈 가공부터 전자제어까지 광학 전 공정을 내재화했으며, 황화아연(ZnS) 국산화에 성공하여 수출하고 있다.\n- 최근 하락 추세 전환 후 십자 도지로 숨고르기 후 재차 상승하며 기준봉 캔들을 형성, 매수 타점이 기대된다는 분석이 있었다.","date":"2025.12.12","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHTbfUjdmRf9xv_OirQWM4T6V-aZL1K7TVAJYzb0siKysLnGiT3IMJf89TTq2Gi9NIeblEK7GUXgt7B_YBynd3fftgyxGDc_qjFAdz-kXYn03k9fx4sGVRSGlEi4HasoAJoUKcAvKB1XvdowAPY6gtYJsaBK2ssHnAfVoG4vSkREh_-uxbCWRyMRzSnbw=="},{"title":"52주 신저가 - 코스닥","summary":"- 그린광학(0015G0)이 2025년 12월 17일 코스닥 시장에서 52주 신저가를 기록했다.\n- 이는 최근 주가 하락세를 반영하는 것으로, 투자자들의 주의가 요구된다.\n- 그린광학은 오가닉티코스메틱, 컴투스홀딩스 등 다른 종목들과 함께 신저가 목록에 포함되었다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFK5IC3Esc5uwr5bH2MPOL1Z-9U68R556nLUIA1G1KP0TzB2KzzL3rrbpU8zJ3yyDf98uDglnwxJbfKFGwu-CX61MAbqn4Nr74sZHt9vSa1oE6uM0FULLLGgfeHgCAVMF7ESb_E8grCrSCF"}]}},{"id":"4bc37908-59b1-4740-b41c-da404beb55f4","code":"064260","name":"다날","changeRate":2.82,"volume":14027925,"rawOHLC":"6600 7700 6540 6930","ohlc":{"open":6600,"high":7700,"low":6540,"close":6930},"status":"COMPLETE","analysis":{"theme":"스테이블코인 (Stablecoin)","leader":"카카오페이 (Kakao Pay)","promising":["한국정보인증 (Korea Information Certificate)","케이씨티 (KCT)"],"newsItems":[{"title":"다날, 국내 결제 기업 최초 서클 공식 파트너사 'CAP'로 합류… 제도화 맞춰 USDC 결제 인프라 구축 예정","summary":"- 다날이 글로벌 스테이블코인 발행사 서클(Circle)의 공식 파트너 프로그램 'CAP'에 국내 결제 기업 최초로 합류했습니다.\n- 서클과의 협력을 통해 USDC 기반의 차세대 결제 인프라 구축을 추진할 계획입니다.\n- 양사는 올해 초부터 국내 스테이블코인 결제 서비스 협력을 논의해왔으며, 발행·소각·송금 테스트를 완료했습니다.","date":"2025.12.18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHRAOducSntgW8c6yv32EVXCON-GubJOq6xBcnzktblCZxOcvxNLLEYV6sGy648SNiMJavBEvJxPsEdrJSIgf-QEQP_K2CD7ILtNccjwHYYg81ZQQ0Y-8MqGeBROr9VfIIyCg=="},{"title":"다날, 스테이블코인 최대 수혜 기대된다는 증권가 전망에 … 7% '쑥'","summary":"- 다날 주가가 장 초반 7% 이상 상승하며 강세를 보였습니다.\n- 증권가에서 다날이 스테이블코인 시대의 최대 수혜를 입을 것이라는 리포트가 발표되며 투자 심리를 자극했습니다.\n- 다날은 독보적인 결제 레퍼런스와 글로벌 네트워크를 바탕으로 원화 스테이블코인 도입 시 최대 수혜가 예상된다는 분석입니다.","date":"2025.12.17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPnKkp6w3jxB0ZvR0Mj0xPSXbIzOVO7ILmE1hhFyMjhoMO6lG_rhAvw2R059k51uRwLi9KYcGqLFgz2XwPi8GEfAwD79msvfThJihQm3u2566nPqOfKYyF89UZzkycQfseTVyj8LvhlDK3OuDhgQNXygpuyQ=="}]}},{"id":"a24bfb9a-1aac-4e38-9d42-c0ad6fd65fda","code":"082850","name":"우리바이오","changeRate":1.56,"volume":22241028,"rawOHLC":"2320 2565 2265 2280","ohlc":{"open":2320,"high":2565,"low":2265,"close":2280},"status":"COMPLETE","analysis":{"theme":"마리화나 (대마)","leader":"애머릿지","promising":["오성첨단소재","화일약품"],"newsItems":[{"title":"[특징주] 우리바이오, 트럼프 마리화나 3급 물질 재분류 행정명령 전망에 ↑ - 파이낸셜포스트","summary":"- 우리바이오 주가가 트럼프 대통령의 마리화나 3급 물질 재분류 행정명령 가능성으로 강세를 보였다.\n- 우리바이오는 대마 추출물 기반 기능성 원료 개발 및 해외 시장 진출을 추진 중이다.\n- 트럼프의 대선 공약이었던 마리화나 규제 완화에 대한 기대감이 주가 상승에 영향을 미쳤다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHxicmjVgJvQNoEGkziUF0uHzJ4OrUuEziRxKOk-hWDE8XDe7fWvloTLeYiZPAqJ98qmT98S_W6RpF-HaiFw7kIPtI3cRs1Qy63FtvmQd2_1Gwb5P98tLtaiJzI23ZzF-NPNo24zhYPjUo3y1DjtTrbPY1UI6fM87DXiNAv"},{"title":"유안타증권 시황: 트럼프 마리화나 규제 완화 기대감에 대마 테마 상승","summary":"- 이재명 대통령 관련 테마와 반도체 테마 등 다양한 이슈가 국내 증시에 영향을 주었다.\n- 트럼프 대통령의 마리화나 등급 재분류 행정명령 전망으로 애머릿지, 우리바이오 등 대마 관련주가 상승했다.\n- 트럼프는 과거 대선에서 마리화나 규제 완화를 공언하며 관련 정책에 대한 시장의 기대를 모았다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3O0ssYxmm-NzQBE5QnJDkqHntXFgx6IqGbtbhbNKWFBv8fQEyvAqQflybiOO8-UOr57Opy7ykWR-Wv2Q-LRwHCDqxibcXuM1o8m1bps1rJd87SMJu4cGu27gCBiGHmnGrPgCZbtRfal8JvNGPdWyWfcauqYU4iwbMFeeYjBj5C4wDgxNLJboknLs="}]}},{"id":"93b4619b-93db-46a6-af11-e4a5f7997ffa","code":"402490","name":"그린리소스","changeRate":-3.93,"volume":1128404,"rawOHLC":"7620 8380 7330 7330","ohlc":{"open":7620,"high":8380,"low":7330,"close":7330},"status":"COMPLETE","analysis":{"theme":"반도체 소재/부품 (Semiconductor Materials/Components)","leader":"솔브레인","promising":["동진쎄미켐","한미반도체","하나마이크론"],"newsItems":[{"title":"그린리소스, 미라클에너지와 44억원 규모 팜혼합물 단기 물품공급계약","summary":"- 그린리소스는 미라클에너지와 44억 9699만원 규모의 팜혼합물 단기 물품공급계약을 체결했습니다.\n- 계약 기간은 2025년 12월 18일부터 2026년 3월 17일까지 총 89일입니다.\n- 이번 계약 금액은 최근 매출액 대비 24.31%에 해당하며, 올해 누적 공급계약 금액은 전년 대비 155.4% 증가했습니다.","date":"2025-12-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAZ4GiQb9rLYEpdaaeXPRuPMdjfvVpFexDgzZ3lttVqOOUIMM_RXFsWlR85430jVysovQkT7yHwETu4of6x8bU-zX4g4wGzceli1-ppanGARh_SHX8eBHbbA4DQZ4bTrFHs9f9308xqeLbBSumNt5vGYPWrnQWWwo="},{"title":"메모리반도체 관련주 & 테마주 34종목 총정리 [2025년 최신] - 알파스퀘어","summary":"- 그린리소스는 반도체 및 디스플레이용 재료, 특히 메모리 반도체 생산에 필수적인 핵심 소재를 공급합니다.\n- AI 기술 발전과 고대역폭메모리(HBM) 수요 증가로 메모리 반도체 시장 회복이 예상되며, 그린리소스는 직접적인 수혜가 기대됩니다.\n- 첨단 반도체 공정용 소재 개발 및 국내외 반도체 기업들의 시설 투자 확대에 따른 성장 잠재력이 높습니다.","date":"2025-12-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFsk83rTHKYWlAyarDOv_oUkJYnzA5GuhR7KMYe3wfAi3RrOEzW9VBXapFgwEexc-JvyI2H0iUvum2Hzw05xnqQhNwvXS7j0SOjYSXYFVjOuEDkxSYxan19tWV972OzRTvtJII-qErcJvI2ppwbqhWZo_ockxcDOFJKVkA="}]}}];
+        let isThemeSorted = false;
+        let openNewsIds = new Set();
+
+        // Helper Functions
+        const getNaverFinanceUrl = (code) => `https://finance.naver.com/item/main.naver?code=${String(code).trim()}#`;
+        const getNaverSearchUrl = (keyword) => `https://search.naver.com/search.naver?query=${encodeURIComponent(keyword + ' 특징주')}`;
+
+        // Render Function
+        function render() {
+            const tbody = document.getElementById('tableBody');
+            const sortBtn = document.getElementById('sortBtn');
+            
+            // Update Sort Button UI
+            if (isThemeSorted) {
+                sortBtn.classList.add('text-blue-400');
+                sortBtn.title = "Show Original Order";
+            } else {
+                sortBtn.classList.remove('text-blue-400');
+                sortBtn.title = "Group by Theme";
+            }
+
+            // Sort Logic
+            let displayStocks = [...stocks];
+            if (isThemeSorted) {
+                displayStocks.sort((a, b) => {
+                    const aComplete = a.status === 'COMPLETE';
+                    const bComplete = b.status === 'COMPLETE';
+                    if (aComplete && !bComplete) return -1;
+                    if (!aComplete && bComplete) return 1;
+                    if (aComplete && bComplete) {
+                        const themeA = a.analysis?.theme || '';
+                        const themeB = b.analysis?.theme || '';
+                        const cmp = themeA.localeCompare(themeB, 'ko');
+                        if (cmp !== 0) return cmp;
+                    }
+                    return a.name.localeCompare(b.name, 'ko');
+                });
+            }
+
+            // HTML Generation
+            tbody.innerHTML = displayStocks.map(item => {
+                const isUp = item.changeRate > 0;
+                const txtColor = isUp ? 'text-red-400' : item.changeRate < 0 ? 'text-blue-400' : 'text-slate-400';
+                const hasNews = item.analysis?.newsItems?.length > 0;
+                const isNewsOpen = openNewsIds.has(item.id);
+
+                // Row HTML
+                let html = `
+                <tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition-colors ${isNewsOpen ? 'bg-slate-800/30' : ''}">
+                    <td class="p-4 align-top">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg text-slate-100">${item.name}</span>
+                            <span class="text-xs text-slate-500 font-mono">${item.code}</span>
+                            <div class="flex items-center mt-1 font-medium ${txtColor}">
+                                ${isUp ? '<i data-lucide="trending-up" class="w-3 h-3 mr-1 inline"></i>' : ''}
+                                ${item.changeRate.toFixed(2)}%
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="inline-block bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded text-xs font-semibold border border-indigo-500/30">
+                            ${item.analysis.theme}
+                        </div>` : '<span class="text-red-500 text-sm">Error</span>'}
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="text-sm">
+                            <div class="mb-2">
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Leader</span>
+                                <span class="font-semibold text-yellow-400">${item.analysis.leader}</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Promising</span>
+                                <div class="flex flex-wrap gap-1">
+                                    ${item.analysis.promising.map(p => `<span class="bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded text-xs">${p}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                         ${item.analysis ? `
+                         <button 
+                            onclick="toggleNews('${item.id}')"
+                            ${!hasNews ? 'disabled' : ''}
+                            class="flex items-center gap-2 px-3 py-2 rounded-lg border transition-all text-xs font-medium w-full justify-between ${
+                                isNewsOpen 
+                                ? 'bg-blue-600/20 border-blue-500/50 text-blue-300' 
+                                : 'bg-slate-700/30 border-slate-600 text-slate-300 hover:bg-slate-700'
+                            }"
+                         >
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="newspaper" class="w-3.5 h-3.5"></i>
+                                News (${item.analysis.newsItems.length})
+                            </span>
+                            <i data-lucide="${isNewsOpen ? 'chevron-up' : 'chevron-down'}" class="w-3 h-3"></i>
+                         </button>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                        <a href="${getNaverFinanceUrl(item.code)}" target="_blank" class="flex items-center justify-center gap-2 bg-green-600/20 hover:bg-green-600/30 text-green-400 border border-green-600/30 px-3 py-2 rounded-lg text-xs font-medium transition-all group w-full">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                            <span>Naver Chart</span>
+                            <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                        </a>
+                    </td>
+                </tr>
+                `;
+
+                // News Drawer HTML
+                if (isNewsOpen && hasNews) {
+                    html += `
+                    <tr class="bg-slate-800/20 border-b border-slate-700/50 fade-in">
+                        <td colSpan="5" class="p-4 pl-8">
+                            <div class="bg-slate-900/50 rounded-lg p-4 border border-slate-700/50">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-slate-400 text-xs uppercase tracking-wider font-bold flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                        Recent News
+                                    </h4>
+                                    <a href="${getNaverSearchUrl(item.name)}" target="_blank" class="text-[11px] flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors font-medium bg-green-400/10 px-2 py-1 rounded border border-green-400/20 hover:bg-green-400/20">
+                                        View on Naver <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+                                    </a>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4">
+                                    ${item.analysis.newsItems.map(news => `
+                                    <div class="relative pl-4 border-l-2 border-slate-700 hover:border-blue-500 transition-colors">
+                                        <div class="flex items-start justify-between gap-2 mb-1">
+                                            <a href="${news.url || getNaverSearchUrl(item.name)}" target="_blank" class="text-sm font-bold text-blue-400 hover:text-blue-300 leading-snug flex items-start gap-1 group">
+                                                ${news.title}
+                                                <i data-lucide="external-link" class="w-3 h-3 mt-0.5 opacity-50 group-hover:opacity-100"></i>
+                                            </a>
+                                            <span class="text-[10px] text-slate-500 whitespace-nowrap shrink-0 bg-slate-800 px-1.5 py-0.5 rounded">${news.date}</span>
+                                        </div>
+                                        <div class="text-xs text-slate-300 leading-relaxed whitespace-pre-line">${news.summary}</div>
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    `;
+                }
+                return html;
+            }).join('');
+
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        // Event Handlers
+        window.toggleSort = () => {
+            isThemeSorted = !isThemeSorted;
+            render();
+        };
+
+        window.toggleNews = (id) => {
+            if (openNewsIds.has(id)) {
+                openNewsIds.delete(id);
+            } else {
+                openNewsIds.add(id);
+            }
+            render();
+        };
+
+        // Initial Render
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>
