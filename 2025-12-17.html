@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Stock Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: { 850: '#1e293b', 900: '#0f172a' }
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+      .fade-in { animation: fadeIn 0.3s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased min-h-screen p-4 pb-20">
+    
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto mb-8 border-b border-slate-800 pb-4">
+        <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="p-2 bg-blue-600 rounded-lg shadow-lg shadow-blue-500/20">
+                    <i data-lucide="file-spreadsheet" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-white hidden sm:block">K-Stock Theme Analysis Report</h1>
+                    <h1 class="font-bold text-xl tracking-tight text-white sm:hidden">K-Stock Report</h1>
+                    <p class="text-xs text-slate-400">Generated on 2025-12-18</p>
+                </div>
+            </div>
+
+            <!-- Promotional Link Area -->
+            <div class="flex-1 flex justify-center px-2 sm:px-8">
+                <a href="https://cafe.naver.com/anesinformation" target="_blank" rel="noreferrer" class="group flex items-center gap-2 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 hover:from-yellow-500/20 hover:to-orange-500/20 border border-yellow-500/20 hover:border-yellow-500/40 px-4 py-2 rounded-xl transition-all duration-300">
+                    <span class="font-bold text-yellow-400 group-hover:text-yellow-300 text-sm sm:text-base whitespace-nowrap">투자도 개비공과 함께!</span>
+                    <span class="text-slate-600 hidden sm:inline">-</span>
+                    <span class="text-slate-300 group-hover:text-white text-xs sm:text-sm font-medium flex items-center gap-1 whitespace-nowrap">
+                        개비공 바로가기
+                        <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                    </span>
+                </a>
+            </div>
+
+            <div class="text-xs text-slate-500 shrink-0">
+                <span class="bg-slate-800 px-3 py-1 rounded-full border border-slate-700 whitespace-nowrap">
+                    Items: <span class="text-white font-bold">17</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Table Container -->
+    <main class="max-w-7xl mx-auto">
+        <div class="bg-slate-800/40 rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-800/90 text-slate-400 text-xs uppercase tracking-wider sticky top-0 z-10 backdrop-blur-md shadow-sm">
+                        <tr>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Stock Info</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[180px]">
+                                <button onclick="toggleSort()" id="sortBtn" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                    Theme <i data-lucide="list-filter" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[220px]">Market Leader & Peers</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Recent News</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Links</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-700/50">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Data & Script -->
+    <script>
+        // Embed Data
+        const stocks = [{"id":"8579c3ac-de33-40ba-b465-548628298ac6","code":"435570","name":"에르코스","changeRate":29.92,"volume":2764928,"rawOHLC":"12730 13460 11500 13460","ohlc":{"open":12730,"high":13460,"low":11500,"close":13460},"status":"COMPLETE","analysis":{"theme":"저출산/육아 관련주","leader":"아가방컴퍼니","promising":["제로투세븐","꿈비","뉴키즈온"],"newsItems":[{"title":"[특징주] 에르코스, 저출산 정책 기대감 속 출산 육아 제품 사업 부각에 상승","summary":"- 에르코스 주가가 저출산 정책 기대감에 힘입어 상승했습니다.\n- 정부의 저출산·고령사회 대응 재정 확대 공감대가 형성되며 관련 산업 전반에 긍정적 영향을 미쳤습니다.\n- 전문가들은 저출산 대응이 중장기 재정·산업 정책으로 이어질 가능성을 높게 보고 있습니다.","date":"2025-12-17"},{"title":"에르코스, 출산율 반등 예상에 23%↑[특징주]","summary":"- 영유아식품 관련주 에르코스가 출산율 반등 예상에 장 초반 강세를 보였습니다.\n- 우리나라 합계출산율이 2025년 잠정 0.8명대에 이어 내년에도 0.85명을 기록할 것으로 예상됩니다.\n- 이는 저출산 정책에 대한 기대감이 주가에 반영된 것으로 분석됩니다.","date":"2025-12-18"}]}},{"id":"fea3569a-2950-466c-acbf-710d4527892a","code":"002800","name":"신신제약","changeRate":22.32,"volume":17587025,"rawOHLC":"5510 6990 5410 6630","ohlc":{"open":5510,"high":6990,"low":5410,"close":6630},"status":"COMPLETE","analysis":{"theme":"탈모 치료제 (Hair Loss Treatment)","leader":"위더스제약 (Withus Pharmaceutical)","promising":["JW신약 (JW Shinwha)","쿼드메디슨 (Quadmedison)","알리코제약 (Allico Pharmaceutical)"],"newsItems":[{"title":"특징주, 신신제약-탈모 치료 테마 상승세에 7.01% ↑ - 매일경제","summary":"- 신신제약 주가가 탈모 치료 테마의 강세에 힘입어 전일 대비 7.01% 상승했다.\n- 신신제약은 첩부제 전문 제약회사로, 탈모 치료 테마의 상승 흐름 속에서 주목받고 있다.\n- 기관 투자자들이 957.03억원 순매수하며 탈모 치료 테마의 상승을 주도했다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH54i8BBpTtSHX-OwK1kJRxzBTdirpMYv_QYSq78LC59SDnW4Ai_UZQHGsO_LmlfoJvSaLUzfytY3PiQFJRCCl2g1SM1LKS9CHv7hBYtud_TQaVL0dvT6SkHohxMpyGPjm2n68="},{"title":"[특징주] 신신제약, 탈모폼치료제 위탁 생산에 상승 - 컨슈머타임스","summary":"- 신신제약 주가가 탈모 치료제 건강보험 적용 검토 지시와 함께 상승세를 보였다.\n- 신신제약은 미녹시딜 폼에어로졸 제형 일반의약품을 다수 제약사에 위탁생산(CMO)하고 있어 구조적 수혜주로 주목받는다.\n- 여러 제약사가 동일 제형을 출시할수록 신신제약의 위탁생산 매출이 누적되는 구조로, 정책 이슈와 별개로 실질적 매출 기반을 확보했다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFieRyIXVUz6W_L75EQBo1Kcq9attoD-SEaTYGyP9IQeX8bBuSoRAHMnJn1mP7_EyoRBQZ8GV58Z2GlxuSM-tSxn-1pLRKZpnm8VWn8J_Aux7dq87CWMhjco0uzBL9SJIa8CU4dV4BgPB4-UAWbYytQtKY7JDA="}]}},{"id":"ad02627f-86b6-4824-9d29-6482d7d9c48c","code":"195870","name":"해성디에스","changeRate":19.27,"volume":1274959,"rawOHLC":"50700 58800 50500 58500","ohlc":{"open":50700,"high":58800,"low":50500,"close":58500},"status":"COMPLETE","analysis":{"theme":"반도체 재료/부품 (메모리 패키징 기판 및 DDR5)","leader":"이수페타시스","promising":["하나마이크론","덕산하이메탈","지오엘리먼트"],"newsItems":[{"title":"해성디에스, '구조적 이익 개선' 전망에 7%대↑[특징주]","summary":"- 해성디에스 주가가 17일 장 초반 7%대 강세를 보였습니다.\n- 증권가에서는 메모리 패키징 기판 호황과 리드프레임 업황 회복이 동시에 반영되며 구조적 이익 개선이 전망된다고 분석했습니다.\n- SK증권은 4분기 영업이익이 컨센서스를 상회하는 250억원이 가능할 것으로 예상하며, 2026년까지 구조적 성장이 이어질 것으로 내다봤습니다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtJ64Ujcnkk5P5cRO7oo_xDGsmhef2SGZGcMNEwoTFrAVIaFUu9yeMXImFLVuDJH9WB6ct2jpxODaj4YnHlzlUS5r3b6M3m_fQn-omqdPvvXflgEPCVcjOJ2_MGXLdB0usMN1bD3ygAKCVYLnUYB7edSV4SFFS-0IB1zfoziMO47iLEOheaQ=="},{"title":"SK증권 “해성디에스, 예상보다 빠른 이익률 회복⋯신규 사업 기대”","summary":"- SK증권은 해성디에스에 대해 투자의견 '매수'와 목표주가 7만2000원을 제시했습니다.\n- 예상보다 빠른 이익률 회복과 신규 사업 기대감으로 매력적인 매수 타이밍이라고 분석했습니다.\n- 고환율 효과와 기판 사업의 높은 영업 레버리지 특성상 가동률 상승에 따른 이익 증가 폭이 시장 예상보다 클 것으로 전망했습니다.","date":"2025-12-16","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYucaeeTJaLqD1MNS2RPz4EGQ55Y4bbh31QY8NoQNw7CMkz_nVyoysNW5qAUG8qRQoCXQKBxODAIiMH-FYrmu35uWtZd6sBj0uSM5I3AJ3ZkJq0zKcUNhQicyUGVcs7Aq08402cA=="}]}},{"id":"1aab0c72-80ea-45c2-a354-f1da0b306b9e","code":"067290","name":"JW신약","changeRate":13.9,"volume":45876255,"rawOHLC":"1875 2365 1696 2155","ohlc":{"open":1875,"high":2365,"low":1696,"close":2155},"status":"COMPLETE","analysis":{"theme":"탈모 치료 (Hair Loss Treatment)","leader":"위더스제약 (Withus Pharmaceutical)","promising":["신신제약 (Shinshin Pharmaceutical)","현대약품 (Hyundai Pharm)"],"newsItems":[{"title":"[특징주] JW신약, '탈모 치료 건보 적용' 기대감에 이틀째 급등… 거래량 450배 폭발","summary":"- JW신약의 주가가 이재명 대통령의 탈모 치료 건보 적용 확대 검토 지시에 힘입어 이틀 연속 급등했다.\n- 12월 17일, JW신약은 전일 대비 13.90% 상승한 2155원에 거래를 마쳤으며, 장중 52주 신고가를 경신했다.\n- 특히 거래량이 450배 이상 폭발적으로 증가하여 4587만 주 이상 거래되었고, 거래대금은 958억 원을 넘어섰다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTHKILVyKwPxoChajsGn3Y3-JrjQAwOXwogYM1uvemYGg9dc_n8W1gRG5QnPN97uXg0O-TwfiFLGL-hSWn4zcIXbT79kvFUJ2Bm38VJhlnaR8wtzGtRXuimsTqptjD2w4aqjmBhVwt9NTBB3LB_ic_by8Um44="},{"title":"[특징주] 탈모 치료 건보 적용 거론한 이 대통령...관련 주가 급등","summary":"- 이재명 대통령이 탈모 치료제의 건강보험 적용 가능성을 언급하면서 위더스제약, JW신약 등 관련주들이 급등세를 보였다.\n- 이 대통령은 탈모를 '미용 문제'가 아닌 '생존의 문제'로 인식하며, 유전적 탈모에 대한 건보 적용 여부와 재정 부담 등을 검토할 것을 지시했다.\n- 건보 급여 적용 시 약가 인하 효과도 고려하여 검토를 요청했으며, 이는 2022년 대선 공약과도 연결된다.","date":"2025-12-16","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0QIb9zUc0crmIwjvPF68DZJk5t8RASKy4IudwdulEHzxS4p4vyoOVwkj-Jm3adgMulMSu-qvBLWe-LvwMM0jatcpmYjwN_evjw6isXDkY99xBYQUJdOH8FmFepR857yPCCDHjLvTdUMCwRpYTqbNxbPLT-uRaWx-EOUs="}]}},{"id":"52aad48e-bd56-47a9-b521-2cf3a3b2d594","code":"010780","name":"아이에스동서","changeRate":12.79,"volume":659220,"rawOHLC":"23150 25700 22750 24700","ohlc":{"open":23150,"high":25700,"low":22750,"close":24700},"status":"COMPLETE","analysis":{"theme":"부동산 자산 보유 (Real Estate Asset Holding) 및 건설/분양 실적 턴어라운드","leader":"동양고속","promising":["대성산업","천일고속"],"newsItems":[{"title":"[특징주] 아이에스동서, 증권가 목표주가 대폭 상향에 11% '급등'","summary":"- 아이에스동서 주가가 증권사의 목표주가 대폭 상향 조정에 힘입어 11% 이상 급등했습니다.\n- 신영증권은 아이에스동서에 대한 투자의견 '매수'를 유지하고 목표주가를 기존 2만6000원에서 5만원으로 상향 조정했습니다.\n- 이는 2026년 상반기 경산 중산지구 대형 자체사업 분양이 확정되면서 실적 턴어라운드와 자산가치 재평가가 동시에 진행될 것이라는 판단에 따른 것입니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHskC4EzpVxorQOWGVb8anx8nlQeVudlWCWPn3gv4LGBIq6fpI4RJNhecyF4WrUfasPmlL7Adspx3l-UEbOyednb9cDsVxwyR_JLMOnqBCqEzN__PZrDV4kOteYQlgYGalCmJmmaXVgDMmqhi5ECrP6k8Di8jJnHVKHMhf_Xur5-hQJiV-nQFtx1tMAQw=="},{"title":"[강세 토픽] 부동산 자산 보유 테마, 동양고속 +29.96%, 아이에스동서 +15.30%","summary":"- '부동산 자산 보유' 테마가 강세를 보이며 아이에스동서가 15.30% 상승했습니다.\n- 이 테마는 도심 요충지의 부동산을 자산으로 보유하거나 운용하여 임대수익을 얻는 기업들이 관련주로 묶입니다.\n- 서울 고속버스터미널 부지 재개발 소식 이후 관련 지분을 보유한 기업들의 자산 가치 재평가 기대감이 테마 상승을 이끌고 있습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHLGQG4jeY_YGFM7DNZw2IL4eIMHbs8rkowmKvxLf8C0ya4PvdKTya_sjfMf7-oOS3TVw8iuSroFp7y3Y6YCmz8TBrJInC7E-V9VqVyL_DIl50AKW1ax20mZ-lU5PKujdLIaVxFcRB5eMCVCBfstG1yDtbChsCFivi8HJxenvDiHQguEXkD-Kk2"}]}},{"id":"c71dd7ca-0d22-4b86-9b2b-c54b3ed43c5b","code":"220260","name":"켐트로스","changeRate":12.02,"volume":9277264,"rawOHLC":"5950 6800 5770 6430","ohlc":{"open":5950,"high":6800,"low":5770,"close":6430},"status":"COMPLETE","analysis":{"theme":"탄소배출권 테마","leader":"에코바이오","promising":[],"newsItems":[{"title":"특징주, 켐트로스-탄소배출권 테마 상승세에 3.75% ↑ - 매일경제","summary":"- 켐트로스 (220260) surged 3.75% on December 18th, driven by a strong performance in the carbon emission rights theme, which rose 7.77%.\n- The carbon emission rights theme rebounded after a recent correction, with foreigners and institutions net-selling while individuals net-bought.\n- ChemTros ranks 5th out of 16 stocks in the theme for financial soundness, surpassing the theme's average in growth, stability, and profitability.","date":"2024-12-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQAuf18S1N7gl8gMshcflvsRGmdtRWeZgu0QIjH84s6B1EsDsJrtcIcwJu_9s4blIkCWMLuSxKs9chuZ8ASqUAR-G3Z8Qf0jcrDcDWaUrIQ_Qd70Vj3kwGPdC2rWQwdChn9_w="},{"title":"[특징주] 온실가스 관련주 급등세… 에코바이오 23.47%↑","summary":"- Greenhouse gas related stocks are experiencing a rapid surge in the market.\n- EcoBio (에코바이오) demonstrated a significant increase of 23.47% within this sector.\n- ChemTros is also noted in news and analysis related to this broader environmental theme.","date":"Within last 7 days","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGVWbb8T3IJRHITwn74eOqtdovHje_Ou6vwY3HqhbmRZt0kWLbGT2fpyN-97xy105-6islL5uKwp0q8HQxCeEbSTVzBdUc5PkIXrxIx-JxWnpxz8mzRlcR9mF0U59SmVkIdCvIzBjbp7v72DGesFOz1iTw4NzNK4CI1OqbkHqHd"}]}},{"id":"72db7a08-7354-45fc-8f93-dfb8217f310f","code":"105630","name":"한세실업","changeRate":10.35,"volume":976562,"rawOHLC":"13530 15290 13480 15030","ohlc":{"open":13530,"high":15290,"low":13480,"close":15030},"status":"COMPLETE","analysis":{"theme":"의류 OEM·ODM","leader":"한세실업","promising":["한세예스24홀딩스","노브랜드"],"newsItems":[{"title":"한세실업, '2025 산업 맞춤형 혁신바우처 지원사업' 대상 수상","summary":"- 글로벌 패션 ODM 기업 한세실업이 '2025 산업 맞춤형 혁신바우처 지원사업' 대상을 수상했습니다.\n- 이 사업은 과학기술정보통신부와 정보통신산업진흥원(NIPA)이 주관하는 것입니다.\n- 이번 수상은 한세실업의 기술 혁신 및 디지털 전환 노력을 인정받은 결과로 평가됩니다.","date":"2025.12.11","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFhhA2pGVezkl-OgNsCmWXWSxyA0OstwyGylA5bA6mUc2YssmJAVZFVa5O6bwvbkKLyYKXx2D8yykSDG-b8Czi7r5eo-q0eEx570MH-qcc75T5PqtAWR0FvZUZsNgceXPPWZ4QrT7Y7T-1nEqvR1Ym8Spk2"},{"title":"[1217마감체크]코스피, 반도체주 강세에 4000선 회복... 코스닥은 하락","summary":"- 2025년 12월 17일 코스피 지수는 반도체주 강세에 힘입어 1.43% 상승한 4056.41에 마감하며 4000선을 회복했습니다.\n- 밤사이 뉴욕증시는 고용·소비지표 소화 속 혼조세를 보였고, 유럽 주요국 증시는 방산·에너지 관련주 급락으로 하락했습니다.\n- 코스닥 지수는 하락세를 보였으며, 한세실업의 주가 동향은 전체 시장 흐름 속에서 언급될 수 있습니다.","date":"2025.12.17"}]}},{"id":"06898124-5a82-47d9-8b49-cc62f27f3f04","code":"330350","name":"위더스제약","changeRate":9.27,"volume":21423906,"rawOHLC":"9430 11130 8950 9550","ohlc":{"open":9430,"high":11130,"low":8950,"close":9550},"status":"COMPLETE","analysis":{"theme":"탈모 치료 (Hair Loss Treatment)","leader":"위더스제약 (Withus Pharmaceutical)","promising":["JW신약 (JW Shinwha)","현대약품 (Hyundai Pharm)"],"newsItems":[{"title":"[특징주] '탈모' 테마에 불붙인 대통령… 위더스제약·JW신약 '급등'","summary":"- 이재명 대통령의 탈모 치료제 건강보험 급여 적용 검토 지시로 관련 주식 테마가 급부상했습니다.\n- 위더스제약은 장기지속형 탈모 치료제 개발 기대로 전일 대비 29.87% 상승하며 상한가를 기록했습니다.\n- JW신약과 현대약품 등 다른 관련 제약·바이오 기업들도 일제히 급등하며 시장의 뜨거운 반응을 보였습니다.","date":"2025-12-16","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDAYWSD9o7FO5JNJUDVN_DMnPCSO5t2v4ihxXWtWHePmsiRMpphRshTb3Rs8OBT3jRGm99mGVY5eSN7yxDHS7Z-ZyGUIUv9s5i8t3YbPtBnDkOQZoArxd2C_qbDEwD-Ie1OyF_MJ-Aci019jRBWTSIfBfYgw=="},{"title":"[주식] \"비만·탈모치료제 누가 만드나\" 관련주 이틀째 폭풍 매수","summary":"- 이재명 대통령의 탈모 및 비만 치료제 건강보험 급여 적용 검토 지시로 관련 제약·바이오 종목들이 이틀째 강세를 이어갔습니다.\n- 위더스제약과 JW신약은 전날 상한가에 이어 추가 급등하며 섹터 전반의 매수세를 견인했습니다.\n- 신신제약과 쿼드메디슨 등도 크게 상승하며 정책 수혜 기대감에 힘입어 주가 강세를 보였습니다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUYBDd9A_-PCFQHj1WTPnHSyF_1KRkeil2UsarvncbAAAg4agsvIOdC2l2SyHoOgicS9LLMaAFF0MDbZRwgspF-aQqgRMa1OuiegVU0uudmIWwnXQDdY1lrtThVCR8S_RPgLtd-0EiyV-1y457WW1ubYj1tuJg"}]}},{"id":"8136a1d8-0ddb-4869-b837-75b626887d81","code":"093050","name":"LF","changeRate":7.83,"volume":183716,"rawOHLC":"18850 20400 18790 20250","ohlc":{"open":18850,"high":20400,"low":18790,"close":20250},"status":"COMPLETE","analysis":{"theme":"Fashion & Lifestyle Retail","leader":"Not explicitly identified in search results","promising":[],"newsItems":[{"title":"[브리프]LF 바버, '2025 광화문 마켓'에서 크리스마스 팝업 개최","summary":"- LF의 영국 헤리티지 브랜드 '바버'가 '2025 광화문 마켓'에 글로벌 협업 파트너사로 참여하여 크리스마스 팝업을 운영하고 있습니다.\n- 팝업에서는 '월레스와 그로밋'과의 협업 캠페인, 체험 부스, 포토 스팟 등을 통해 영국식 크리스마스 분위기를 선보입니다.\n- 이 행사는 가족 단위 고객을 포함한 전 세대를 대상으로 하며, 브랜드의 가족 브랜드 확장 전략의 일환입니다.","date":"2025.12.15","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFo2pGe52MmUqecLKecFa2thPrO8gJrJh83u0Rf5WGzGp3uaHXP7BEE0Nqf9tvHdW_A3jeGrPPFDSZQvXuZu133rhSLjHWdpM9_C7RK00m6bgrw3v3SuKS6kW2c8jEyKccCsji_8JvHUnP3VW1IKOeyuhTNV_X5q4fNVg=="},{"title":"[특징주]LF, 수익성 개선 기대감에 이틀 연속 상승","summary":"- LF 주가가 수익성 개선에 대한 기대감으로 이틀 연속 상승세를 보였습니다.\n- 신한금융투자 연구원은 내년 LF의 연결 매출액과 영업이익이 각각 8.3%, 10.4% 성장할 것으로 전망했습니다.\n- 이러한 긍정적인 전망은 재고 자산 관리와 판매비 및 관리비 절감 노력에 기인합니다.","date":"2025.12.16","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnW5BugqckLcHiCd3ex-pijEpV4ViUtoTVGX-a83DQmjyr8eK-9nrI9Gq1sapL1mG77Xq8D2ogS3416rrMFspG-dgyaSZhNdK96TFllsd0QxVnYYJQ-N2zbNPPDTVXCOc="}]}},{"id":"e6dec0cd-90af-449d-9b6e-371ecce40054","code":"002990","name":"금호건설","changeRate":6.67,"volume":530583,"rawOHLC":"4125 4495 4125 4400","ohlc":{"open":4125,"high":4495,"low":4125,"close":4400},"status":"COMPLETE","analysis":{"theme":"건설 중소형 테마 (Small and Mid-cap Construction Theme)","leader":"금호건설","promising":["상지건설","동신건설","계룡건설"],"newsItems":[{"title":"특징주, 금호건설-건설 중소형 테마 상승세에 5.82% ↑","summary":"- 금호건설의 주가가 12월 11일 건설 중소형 테마의 강세에 힘입어 5.82% 상승했습니다.\n- 건설 중소형 테마는 전일 대비 6.15% 오르며 최근 하락세에서 반등하는 모습을 보였습니다.\n- 해당 테마에서 외국인과 기관은 최근 5일간 91.23억 원을 순매도했습니다.","date":"7 days ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJxtpJWoqTIKmmhDeOevYqASONDNPhIMSQC5wqG0G4-rR6eNOdHcf1mDcuxsfH48481mG2QsdWAF20--vNxSt7oO3kg42juhwVMoch-5APhOekuRiHCZ9gQvRNVH6KQ4xTKso="},{"title":"금호건설우 주가, 상한가 기록.... 호재는?","summary":"- 금호건설우 주가가 12월 16일 아시아나항공 합병 절차 마무리 임박 소식에 상한가를 기록했습니다.\n- 금호건설은 아시아나항공의 최대주주로서, 합병 완료 시 그룹의 재무 불확실성 해소 및 유동성 확보 기대감이 반영되었습니다.\n- 정부의 수도권 공공주택 공급 확대 방안 추진 소식 또한 관련 건설주에 긍정적인 영향을 미쳤습니다.","date":"2 days ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKb0AhUvregmHtx574bcdJUAQllw3-SnNXKkCyz_vIaUFSxSOpdELB0coAx0zh2UaLUTuBgjBuRciFg0XoHMCKLnnleXz6twQ4QWpTtHzr2nKfrOYPxzxaV71NbJvoFj44e7FSHN1-Gg_uQP-VqSmGq9nRAMs="}]}},{"id":"80988264-d0ba-4ebf-9b19-63b7f0773145","code":"082850","name":"우리바이오","changeRate":6.15,"volume":8626369,"rawOHLC":"2170 2460 2115 2245","ohlc":{"open":2170,"high":2460,"low":2115,"close":2245},"status":"COMPLETE","analysis":{"theme":"대마 (Cannabis)","leader":"애머릿지","promising":["화일약품","오성첨단소재"],"newsItems":[{"title":"마리화나(대마) - 트럼프 대통령, 마리화나 3급 물질로 재분류 행정명령 서명 전망 속 일부 관련주 상승.","summary":"- 도널드 트럼프 미국 대통령이 12월 18일(현지시간) 마리화나를 현행 1급 물질에서 3급 물질로 재분류하는 행정명령에 서명할 것으로 전망됩니다.\n- 이 재분류는 마리화나에 대한 규제를 완화하여, 남용 가능성이 낮거나 중간 단계로 분류되는 물질로 변경하는 것을 의미합니다.\n- 우리바이오는 이러한 정책 변화의 수혜를 입을 것으로 예상되는 관련주 중 하나로 언급되었습니다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFIpgAPefmc0p9JsLiITZGb5c3Erz2ionooyWM-tKAYqsfTL6jiqkOkrnkuS4RUme4--1yCmqU7SFW-OZM91p31Kr4bFQDwDP-wNmOdu32kR8hT4BKBkrb8S-1a8fijQEibznycOwFK"},{"title":"우리바이오, +12.29% VI 발동 - 조선비즈","summary":"- 우리바이오(082850)는 2025년 12월 17일 전일 대비 12.29% 상승하며 VI(변동성 완화장치)가 발동되었습니다.\n- 주가는 2,375원에 거래되며 급등세를 보였습니다.\n- 이는 시장의 강한 투자 심리와 특정 테마의 움직임에 따른 것으로 풀이됩니다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQFrb4wyFjiGVkul7za4a-Z9UKWNA3sY2iWufcIulanmD_OIaD52ZL0ckRG0eqr0CmebKqvS_tioQSht2UheSk-Zs-H5iu-IHkwR5KZK0j5FwbPmS9xHg1smMHlVioL_yOxRdYiwbY_almx_bi83ks8HQI_ffCgyhro7zxQlYN_XtRO_mSVQJR"}]}},{"id":"2643dd89-6e47-486a-a97d-79ca86dd85ff","code":"282880","name":"코윈테크","changeRate":5.9,"volume":1964220,"rawOHLC":"15250 18300 14800 16150","ohlc":{"open":15250,"high":18300,"low":14800,"close":16150},"status":"COMPLETE","analysis":{"theme":"2차전지 자동화 장비 및 스마트팩토리","leader":"피엔티 (PNT)","promising":["원익피앤이","하나기술","에이프로"],"newsItems":[{"title":"코윈테크, +9.97% VI 발동 - 조선비즈","summary":"- 코윈테크의 주가가 전일 대비 9.97% 상승하며 VI(변동성 완화장치)가 발동되었다.\n- 이는 2차전지 공정장비 테마와 연관되어 있으며, 외국인은 순매수, 기관은 순매도했다.\n- 최근 1주일간 주가는 3.05% 하락했으나, 이날 급등세를 보였다.","date":"2025-12-17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZK9Z5ovxrShWpTXRnvdTaUYG6ruxhOFURX0RVeOi-r3oYzjQPt4Shl5e08LhOEtZi6xsf9VMau7pjwQI0CG2zqeaY0b4MbO51FmhpJWPo-dq5kYId5jf6Y0jC_McecHHTZ-TKMkTLIMDEutpoIE8-3z_wkV_G2rwRgwpzCvi-2WZ-2Xpl0aQ="},{"title":"코윈테크, ESS 자동화 '연속 수주'… 시장 공략 가속","summary":"- 코윈테크가 ESS(에너지 저장 시스템) 자동화 분야에서 연속 수주를 기록하며 시장 공략을 가속화하고 있다.\n- 회사는 2차전지 공정 자동화 시스템 분야에서 세계 최초로 전체 공정 Full 자동화 개발에 성공했다.\n- 배터리 전/후공정 자동화 시스템 공급 레퍼런스와 고도화된 기술력을 바탕으로 해외 고객사 수주를 확대 중이다.","date":"2025.12.17","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHvyKmr_DDPbq0uV8BQOktFNtfAMW2n0YPiPP8gnKQsnZCL1psaYgBmPSqvUIV0gMMvHzaVwKtBTuKDepgge_nMYKqgPnd6iGJyDihiFhAKN6rWuM1aNP5wYEOCBGj6b1z2787aUfuAEbNqeOgjgxN25eg="}]}},{"id":"9de5dbc9-4845-4a76-831b-5628b485493a","code":"006040","name":"동원산업","changeRate":5.69,"volume":602105,"rawOHLC":"47200 49950 44800 46400","ohlc":{"open":47200,"high":49950,"low":44800,"close":46400},"status":"COMPLETE","analysis":{"theme":"Not available based on recent news (last 7 days)","leader":"Not available based on recent news (last 7 days)","promising":[],"newsItems":[{"title":"[동원산업] 주식선물 2단계 가격제한폭 확대요건 도달(상승) - KRX 공시","summary":"- 동원산업 주식선물이 2025년 12월 17일 기준 가격제한폭 확대 요건에 도달했습니다.\n- 이는 주식선물 가격제한폭 확대 판단 기준 종목의 체결가격이 기준가 대비 10% 상승했기 때문입니다.\n- 이에 따라 해당 주식선물의 가격제한폭이 다음 단계(20%)로 확대될 예정입니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2p8Yxsi0cvXDlrU2JCvKWQzkhB48a9FBDQoFlZ4n4YYPmOwGX7GuyKsWexPTut-OYLJVK63vmIYQnHF6PXRC_wiq4F-S1itaYV4Gus3_ZTao7MtHHnz6H2AIWSPorPQuCEklCFLYYuy5x3ve1YQOEX46DimgVwsQUXOo3JU8qjZVUcYLL7i_rxCiRdkvxZmMeOv6LkuZLpK2p"}]}},{"id":"fccabe1a-327e-4eb2-9bdf-3e079d88a191","code":"013990","name":"아가방컴퍼니","changeRate":4.04,"volume":1620497,"rawOHLC":"4795 4840 4505 4640","ohlc":{"open":4795,"high":4840,"low":4505,"close":4640},"status":"COMPLETE","analysis":{"theme":"저출산/엔젤산업","leader":"아가방컴퍼니","promising":["꿈비","제로투세븐","에르코스"],"newsItems":[{"title":"특징주, 아가방컴퍼니-엔젤산업 테마 상승세에 5.83% ↑ - 매일경제","summary":"- 아가방컴퍼니는 12월 17일 엔젤산업 테마의 상승세에 힘입어 주가가 5.83% 급등했습니다.\n- 엔젤산업 테마는 전일 대비 3.37% 상승하며 강세를 보였습니다.\n- 아가방컴퍼니는 재무적인 측면에서 테마 내 다른 종목들에 비해 투자 매력도가 높은 것으로 분석됩니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgpaN25dTSlQ5nzN2eTjr89n-SFQ2wmjL2NtGKO7rZqDZ2pHy5QN1B5RQDdwrV5negHgBmj-gTbkBI04xfjYmImFELsMBYooqrcrS_6aJjCnbohJ8yTyz26Rly9nxS2EZm4FA="},{"title":"\"머리 심고, 아이 낳고\"… 정부 지원 기대감에 관련주 들썩 - 알파스퀘어","summary":"- 정부의 저출산 대책 및 지원 확대에 대한 기대감으로 관련주들이 상승세를 보였습니다.\n- '머리 심고, 아이 낳고'와 같은 정책 기대감이 관련 주식 시장에 영향을 주었습니다.\n- 아가방컴퍼니 등 저출산 정책 수혜주들이 시장의 주목을 받았습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6yhXPouOKmg8l1mFP6ahAPPPdyUTTOyxL4AGWdIC0An68kuGk0jPL0sQmbpCkPw_pLVrYclATCYEjwk6OvjRjWCIc_WlMbjNObIwcQT-g_sYEyHwz4k9eS3ymgmmkqK7ZL9fQ2wSp7LFVQ1N7NB7enPWv"}]}},{"id":"de97e204-5053-41f9-a44c-ac5f4b787ac1","code":"077360","name":"덕산하이메탈","changeRate":3.49,"volume":1723022,"rawOHLC":"5730 6300 5730 5930","ohlc":{"open":5730,"high":6300,"low":5730,"close":5930},"status":"COMPLETE","analysis":{"theme":"AI 반도체 및 첨단 패키징 소재","leader":"덕산하이메탈","promising":["피에스케이홀딩스","이오테크닉스","두산테스나"],"newsItems":[{"title":"덕산하이메탈, 삼성·엔비디아 등 AI칩 필수재 'MSB' 세계 1위 독점 \"내년 캐파 50% 늘린다\"","summary":"- 덕산하이메탈은 AI 칩과 HBM 인터포저의 핵심 소재인 마이크로솔더볼(MSB) 시장에서 70%의 독점적 점유율을 보유하고 있습니다.\n- 삼성전자와 엔비디아 등 주요 AI 칩 제조사에 MSB를 공급하며 글로벌 1위 지위를 굳히고 있습니다.\n- 회사는 2026년 완료를 목표로 대규모 생산설비(CAPA)를 50% 이상 확장할 계획입니다.","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXYPeIa0Tdon3uH2oCbLUPqlokJ4DiHFqXgD0dC9UDOOKuj4rgVY0tlSKRFU06nIKL7knqS1krZTlBT-jNXVwP7aYewwQww6dXgZss0JAD1hjZCh3qv0hTMmuxW6HnaapwOfdN7YV5Im1Ql_XiYcXgKZsZISE="},{"title":"테라뷰, +0.54% VI 발동 - 조선비즈","summary":"- 덕산하이메탈은 반도체 후공정 장비 관련 테마에 속하는 기업으로 언급되었습니다.\n- 해당 기사는 테라뷰의 VI 발동 소식과 함께 반도체 후공정 관련주들을 나열했습니다.\n- 이 테마에는 디아이, 피에스케이홀딩스, 이오테크닉스 등 다양한 반도체 관련 기업들이 포함되어 있습니다.","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEf2JDRzsNoYeLAUeKhgLJv1n5x2_dSbRd9qizgDeZmFjQFj7tN3psGyOUT4-gcU33EionbZCKHTf46z1cw14nH8DP66vf4xJkOvJfXav8y38P3p5zow1vWmBsldWkDXWZ8mffBWXtMGSbH3BjYxUrvRaPUqdjWJ4HYcU0v5W6DC3Ei5wheylIEQhB1QYIQ5gXOVjlMaVsg"}]}},{"id":"f92b9aaa-edc3-4260-b3d2-6f174ee2e93c","code":"413630","name":"씨피시스템","changeRate":2.56,"volume":7433420,"rawOHLC":"4150 4765 4030 4210","ohlc":{"open":4150,"high":4765,"low":4030,"close":4210},"status":"COMPLETE","analysis":{"theme":"Robotics and Industrial Automation","leader":"Unknown","promising":[],"newsItems":[{"title":"[특징주] 씨피시스템, MASGA 조선사 특수케이블 체인 독점적 지위 공급 기대감에 상승세","summary":"- 씨피시스템의 주가가 미국 상선 및 함정 국내 건조 추진 소식에 상승세를 보였다.\n- 회사는 조선사에 특수케이블 체인을 독점적으로 공급할 것이라는 기대감에 주목받았다.\n- 이는 씨피시스템의 기술력이 해양 방위산업 분야에서도 인정받고 있음을 시사한다.","date":"34 days ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF9g35vMAp7rK1-HFn9ZQQd2UD45FbfZf3iE7c1Lp1eKmhWTdHm-uX2o8iLPl3iJDwXaT44TBgjyzk7lcKYFHO_7SbVa2cKjJ0_clWTpQsaTalx8wfpdMY9Jp0wbEIk6wE0kwX_IA=="},{"title":"[특징주] 씨피시스템, “무인 로봇주차 솔루션 개발” 소식에 케이블 기술 국산화 부각되며 수혜 기대감","summary":"- 씨피시스템의 주가가 현대건설의 무인 로봇주차 솔루션 공동 개발 소식에 급등했다.\n- 회사의 케이블 기술 국산화 역량이 부각되며 관련 시장 확대에 대한 수혜 기대감이 커졌다.\n- 현대건설은 국토부 개정안에 따라 내년부터 오토발렛 주차장치 설치를 확대할 방침이다.","date":"38 days ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGglY8Mf0oS6AOnv_0AHuyaiT2xfSQupkEyVGyvPUFe7I2wlwh40Ib-4_QyJeJnhDx8QnNfh5-UzEZ-lrlIbxXuoEG9uBLBUNmQg8dt01gpqJ5HJiGdneRg_U6UQtJczdDmwTyRTeEEFroaI29zdlMrfYYk1R1_8g=="}]}},{"id":"60b642f8-3167-4077-86d9-02cb41482b68","code":"214270","name":"FSN","changeRate":0.43,"volume":6090963,"rawOHLC":"1856 2305 1840 1864","ohlc":{"open":1856,"high":2305,"low":1840,"close":1864},"status":"COMPLETE","analysis":{"theme":"탈모 치료 (Hair Loss Treatment)","leader":"FSN","promising":[],"newsItems":[{"title":"FSN \"탈모 커뮤니티 '대다모닷컴' 회원 수 44만명 돌파\" - 딜사이트","summary":"- FSN의 자회사 부스터즈가 100% 지분을 확보한 탈모 커뮤니티 플랫폼 '대다모닷컴'의 회원 수가 44만 명을 돌파했습니다.\n- 대다모닷컴은 누적 탈모 관련 콘텐츠 455만 건과 비대면 견적 데이터 20만 건을 보유하며 10년 연속 의학 커뮤니티 부문 1위를 유지하고 있습니다.\n- 정부의 탈모 치료제 건강보험 급여 적용 확대 검토와 20·30대 회원 비중 60% 확대 등으로 플랫폼의 성장 기대감이 커지고 있습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpSRUkBdSf_kToQyk5nnb3RyOE9Uh5Jdo82VK-FHpTxn5vtX1aFmbUeRxuxxBgznwVUffn9UO6VXdQn90z6ruoGN24suxjZg-IAkNUlLqQlZ7JjPZ17yH5Z61SDRHRBnA="},{"title":"FSN, 李 대통령 \"탈모 건보 적용\" 지시에 자회사 '대다모' 국내 1위 455만 데이터 가치 조명","summary":"- 코스닥 상장사 FSN의 자회사 대다모닷컴이 운영하는 국내 최대 탈모 정보 플랫폼 '대다모'의 회원 수가 44만 명을 넘어섰습니다.\n- 정부 차원에서 탈모 치료제의 건강보험 급여 적용이 검토되면서 플랫폼의 성장세가 더욱 가팔라질 전망입니다.\n- 대다모는 88만 건의 후기 데이터를 영어·일본어·중국어로 실시간 번역 제공하고 일본 라인(Line) 채팅 기반 상담 서비스를 오픈하며 글로벌 사업 확장에 나섰습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFh1Mm-c8BW0AoxSmCkh-MHhdJO4rbBVuApdV3D1QNr1lWD3BwcA72VBwAppA15AM_MRGl06vWCEQxSRNiQCXTmVEgFsYLKUUfnjJo5qUsYR2n3WdCyyWOGJ0sLQ8bLw1QRFM-KPemDcl38ovFBPKDPggfRWQ=="}]}}];
+        let isThemeSorted = false;
+        let openNewsIds = new Set();
+
+        // Helper Functions
+        const getNaverFinanceUrl = (code) => `https://finance.naver.com/item/main.naver?code=${String(code).trim()}#`;
+        const getNaverSearchUrl = (keyword) => `https://search.naver.com/search.naver?query=${encodeURIComponent(keyword + ' 특징주')}`;
+
+        // Render Function
+        function render() {
+            const tbody = document.getElementById('tableBody');
+            const sortBtn = document.getElementById('sortBtn');
+            
+            // Update Sort Button UI
+            if (isThemeSorted) {
+                sortBtn.classList.add('text-blue-400');
+                sortBtn.title = "Show Original Order";
+            } else {
+                sortBtn.classList.remove('text-blue-400');
+                sortBtn.title = "Group by Theme";
+            }
+
+            // Sort Logic
+            let displayStocks = [...stocks];
+            if (isThemeSorted) {
+                displayStocks.sort((a, b) => {
+                    const aComplete = a.status === 'COMPLETE';
+                    const bComplete = b.status === 'COMPLETE';
+                    if (aComplete && !bComplete) return -1;
+                    if (!aComplete && bComplete) return 1;
+                    if (aComplete && bComplete) {
+                        const themeA = a.analysis?.theme || '';
+                        const themeB = b.analysis?.theme || '';
+                        const cmp = themeA.localeCompare(themeB, 'ko');
+                        if (cmp !== 0) return cmp;
+                    }
+                    return a.name.localeCompare(b.name, 'ko');
+                });
+            }
+
+            // HTML Generation
+            tbody.innerHTML = displayStocks.map(item => {
+                const isUp = item.changeRate > 0;
+                const txtColor = isUp ? 'text-red-400' : item.changeRate < 0 ? 'text-blue-400' : 'text-slate-400';
+                const hasNews = item.analysis?.newsItems?.length > 0;
+                const isNewsOpen = openNewsIds.has(item.id);
+
+                // Row HTML
+                let html = `
+                <tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition-colors ${isNewsOpen ? 'bg-slate-800/30' : ''}">
+                    <td class="p-4 align-top">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg text-slate-100">${item.name}</span>
+                            <span class="text-xs text-slate-500 font-mono">${item.code}</span>
+                            <div class="flex items-center mt-1 font-medium ${txtColor}">
+                                ${isUp ? '<i data-lucide="trending-up" class="w-3 h-3 mr-1 inline"></i>' : ''}
+                                ${item.changeRate.toFixed(2)}%
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="inline-block bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded text-xs font-semibold border border-indigo-500/30">
+                            ${item.analysis.theme}
+                        </div>` : '<span class="text-red-500 text-sm">Error</span>'}
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="text-sm">
+                            <div class="mb-2">
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Leader</span>
+                                <span class="font-semibold text-yellow-400">${item.analysis.leader}</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Promising</span>
+                                <div class="flex flex-wrap gap-1">
+                                    ${item.analysis.promising.map(p => `<span class="bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded text-xs">${p}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                         ${item.analysis ? `
+                         <button 
+                            onclick="toggleNews('${item.id}')"
+                            ${!hasNews ? 'disabled' : ''}
+                            class="flex items-center gap-2 px-3 py-2 rounded-lg border transition-all text-xs font-medium w-full justify-between ${
+                                isNewsOpen 
+                                ? 'bg-blue-600/20 border-blue-500/50 text-blue-300' 
+                                : 'bg-slate-700/30 border-slate-600 text-slate-300 hover:bg-slate-700'
+                            }"
+                         >
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="newspaper" class="w-3.5 h-3.5"></i>
+                                News (${item.analysis.newsItems.length})
+                            </span>
+                            <i data-lucide="${isNewsOpen ? 'chevron-up' : 'chevron-down'}" class="w-3 h-3"></i>
+                         </button>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                        <a href="${getNaverFinanceUrl(item.code)}" target="_blank" class="flex items-center justify-center gap-2 bg-green-600/20 hover:bg-green-600/30 text-green-400 border border-green-600/30 px-3 py-2 rounded-lg text-xs font-medium transition-all group w-full">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                            <span>Naver Chart</span>
+                            <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                        </a>
+                    </td>
+                </tr>
+                `;
+
+                // News Drawer HTML
+                if (isNewsOpen && hasNews) {
+                    html += `
+                    <tr class="bg-slate-800/20 border-b border-slate-700/50 fade-in">
+                        <td colSpan="5" class="p-4 pl-8">
+                            <div class="bg-slate-900/50 rounded-lg p-4 border border-slate-700/50">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-slate-400 text-xs uppercase tracking-wider font-bold flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                        Recent News
+                                    </h4>
+                                    <a href="${getNaverSearchUrl(item.name)}" target="_blank" class="text-[11px] flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors font-medium bg-green-400/10 px-2 py-1 rounded border border-green-400/20 hover:bg-green-400/20">
+                                        View on Naver <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+                                    </a>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4">
+                                    ${item.analysis.newsItems.map(news => `
+                                    <div class="relative pl-4 border-l-2 border-slate-700 hover:border-blue-500 transition-colors">
+                                        <div class="flex items-start justify-between gap-2 mb-1">
+                                            <a href="${news.url || getNaverSearchUrl(item.name)}" target="_blank" class="text-sm font-bold text-blue-400 hover:text-blue-300 leading-snug flex items-start gap-1 group">
+                                                ${news.title}
+                                                <i data-lucide="external-link" class="w-3 h-3 mt-0.5 opacity-50 group-hover:opacity-100"></i>
+                                            </a>
+                                            <span class="text-[10px] text-slate-500 whitespace-nowrap shrink-0 bg-slate-800 px-1.5 py-0.5 rounded">${news.date}</span>
+                                        </div>
+                                        <div class="text-xs text-slate-300 leading-relaxed whitespace-pre-line">${news.summary}</div>
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    `;
+                }
+                return html;
+            }).join('');
+
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        // Event Handlers
+        window.toggleSort = () => {
+            isThemeSorted = !isThemeSorted;
+            render();
+        };
+
+        window.toggleNews = (id) => {
+            if (openNewsIds.has(id)) {
+                openNewsIds.delete(id);
+            } else {
+                openNewsIds.add(id);
+            }
+            render();
+        };
+
+        // Initial Render
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>
