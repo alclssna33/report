@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Stock Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: { 850: '#1e293b', 900: '#0f172a' }
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+      .fade-in { animation: fadeIn 0.3s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased min-h-screen p-4 pb-20">
+    
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto mb-8 border-b border-slate-800 pb-4">
+        <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="p-2 bg-blue-600 rounded-lg shadow-lg shadow-blue-500/20">
+                    <i data-lucide="file-spreadsheet" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-white hidden sm:block">K-Stock Theme Analysis Report</h1>
+                    <h1 class="font-bold text-xl tracking-tight text-white sm:hidden">K-Stock Report</h1>
+                    <p class="text-xs text-slate-400">Generated on 2025-12-24</p>
+                </div>
+            </div>
+
+            <!-- Promotional Link Area -->
+            <div class="flex-1 flex justify-center px-2 sm:px-8">
+                <a href="https://cafe.naver.com/anesinformation" target="_blank" rel="noreferrer" class="group flex items-center gap-2 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 hover:from-yellow-500/20 hover:to-orange-500/20 border border-yellow-500/20 hover:border-yellow-500/40 px-4 py-2 rounded-xl transition-all duration-300">
+                    <span class="font-bold text-yellow-400 group-hover:text-yellow-300 text-sm sm:text-base whitespace-nowrap">투자도 개비공과 함께!</span>
+                    <span class="text-slate-600 hidden sm:inline">-</span>
+                    <span class="text-slate-300 group-hover:text-white text-xs sm:text-sm font-medium flex items-center gap-1 whitespace-nowrap">
+                        개비공 바로가기
+                        <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                    </span>
+                </a>
+            </div>
+
+            <div class="text-xs text-slate-500 shrink-0">
+                <span class="bg-slate-800 px-3 py-1 rounded-full border border-slate-700 whitespace-nowrap">
+                    Items: <span class="text-white font-bold">10</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Table Container -->
+    <main class="max-w-7xl mx-auto">
+        <div class="bg-slate-800/40 rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-800/90 text-slate-400 text-xs uppercase tracking-wider sticky top-0 z-10 backdrop-blur-md shadow-sm">
+                        <tr>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Stock Info</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[180px]">
+                                <button onclick="toggleSort()" id="sortBtn" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                    Theme <i data-lucide="list-filter" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[220px]">Market Leader & Peers</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Recent News</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Links</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-700/50">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Data & Script -->
+    <script>
+        // Embed Data
+        const stocks = [{"id":"5db1a899-9e0b-49d3-bfac-1b8b2ce818f8","code":"101170","name":"우림피티에스","changeRate":29.92,"volume":5438151,"rawOHLC":"11610 13850 11500 13850","ohlc":{"open":11610,"high":13850,"low":11500,"close":13850},"status":"COMPLETE","analysis":{"theme":"휴머노이드 로봇 / 로봇용 정밀감속기","leader":"우림피티에스","promising":["에스피시스템스","현대무벡스","에이테크솔루션"],"newsItems":[{"title":"[특징주] 우림피티에스·에스피시스템스 등 로봇 관련주 강세... 보스턴 다이내믹스 '아틀라스' 관심↑","summary":"- 우림피티에스 등 로봇 관련주가 보스턴 다이내믹스의 '아틀라스' 로봇 공개 기대감에 강세를 보였다.\n- 현대차그룹이 인수한 보스턴 다이내믹스의 차세대 전동식 휴머노이드 로봇 '아틀라스'가 CES 2026에서 실물 시연될 예정이다.\n- 우림피티에스 주가는 전 거래일 대비 29.92% 상승한 1만3850원에 거래되었다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSDi4krmiYsv3-PuVHl3HdcvOWI37gMQN22j50eDxLoKX7oLwwqS4QAdrxe0yKX_O-08aPDSc3YdkGVGtS2KfD7r1rhPc8DMmiyTHphQDMK9R1GAFyqqDgS1Em27gksN66Fm9plEbIRVNgEruGiFdjPpmKqj0rfnRZ8Q=="},{"title":"[특징주] 우림피티에스, 아틀라스 첫 공개 기대감에 상한가","summary":"- 우림피티에스가 현대차그룹의 휴머노이드 로봇 '아틀라스' 첫 공개 기대감에 상한가를 기록했다.\n- 우림피티에스는 보스턴 다이내믹스에 휴머노이드 로봇용 정밀감속기를 공급한 이력이 있는 산업용 감속기 전문기업이다.\n- 회사는 삼성중공업과 로봇용 정밀감속기 국산화 국책과제를 공동 수행하며 기술력을 인정받았다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEIKO4wRgc3IgpD9TTL5KB7EEgUvzY3kAe4WBkrNsoD26MjiRdUBeINDMfz9zEFBDSJSHlWUlPhY6gak4EmexMihXtJBIn2NqtfdGUECsn6eUiOOkGBPFDYtbISlGCGK769snegaI89D5RRLatCclKXbLrz8bxF"}]}},{"id":"f2b4a963-9ef4-4086-8ba3-f57d130296fd","code":"010580","name":"에스엠벡셀","changeRate":18.3,"volume":32030116,"rawOHLC":"1902 2470 1873 2250","ohlc":{"open":1902,"high":2470,"low":1873,"close":2250},"status":"COMPLETE","analysis":{"theme":"Automotive Parts & Secondary Batteries","leader":"Not directly available from search results for '에스엠벡셀 특징주'","promising":[],"newsItems":[{"title":"[특징주] 에스엠벡셀, 최대주주 지분 취득 공시에 강세 - 서울와이어","summary":"- 에스엠벡셀 주가가 최대주주 측의 대규모 지분 취득 공시로 급등세를 보였다.\n- 최대주주 측은 발행주식 총수의 22.45%에 해당하는 2498만1000주를 취득했다고 밝혔다.\n- 에스엠벡셀은 자동차 부품 및 배터리 사업을 영위하며 신사업 확대를 추진 중이다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3560G2U26TFnYMHQpbbKaoSmMD0LgJadeZNNwpNeAA_pvI2j6SgiMrdKZTRpHwRp8Z7A5SKzirhh0i98a2e_pAKC9k3ST05AKVe0Ta6jy_13PfraC58VTniUUfPf0ZBbsvP9bQYy2x-E7F-puFfDjbLJyJFc="},{"title":"에스엠벡셀 주가, 급등세... 최근 공시는? - 금강일보","summary":"- 에스엠벡셀 주가가 최대주주인 에스엠상선의 지분 취득 공시로 급등했다.\n- 에스엠상선은 지난 19일 장외매수를 통해 2498만1000주를 주당 2358원에 취득했다.\n- 이는 지난 19일 종가에 최대주주 할증 20%를 적용한 가격으로, 지분율은 22.45%로 증가했다.","date":"Today","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHORTm8g6CaN5azMH8-62YARfQFruR2nVdWLgQZmNJzaWOLz7V4IJUwUBtYx7-tItMVcW8g-NMHyGLAXYC0G-z5FfQRH6z1t84bdMEMOwDU0JiVTCvYF_sohXSNNRUwYGlXNaSpVY-Gn_4LQDfis3SWetU="}]}},{"id":"0298f3ed-badd-493b-92f6-66115cbdd3d1","code":"125490","name":"한라캐스트","changeRate":11.69,"volume":23578081,"rawOHLC":"17070 20000 17060 18730","ohlc":{"open":17070,"high":20000,"low":17060,"close":18730},"status":"COMPLETE","analysis":{"theme":"AI, Autonomous Driving, Robotics, and Lightweight Automotive/Robot Components","leader":"휴림로봇","promising":["클로봇","서진오토모티브"],"newsItems":[{"title":"[특징주] 한라캐스트, 전장·휴머노이드 수혜 기대에 강세","summary":"- 한라캐스트 주가가 자동차 전장화, 자율주행 고도화 및 휴머노이드 로봇 부품 진출 기대감에 강세를 보였다.\n- 글로벌 AI 자동차 업체 대상 1186억원 규모의 수주를 확보했으며, 휴머노이드 로봇용 구조 부품 3종 수주도 확보했다.\n- 알루미늄·마그네슘 다이캐스팅 기반 경량 소재부품 전문기업으로, 자율주행 센서 하우징 등을 주력 생산한다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHd8G12pwsKZXc2HNt5mXaebhY6Y3T3TcNGFUS5HRMpnrzqSylwScI2o-lQZCRpfs9o0XdOH54HLI3uNrSrb_kULTPTvsw8eOiyHmqWCWzBM-moV-k4vdSQuEPdEl1zNFbuplu8AJwRX05EaHXiiY3nDas79TD71g=="},{"title":"[오늘의 급등주] “자율주행차·로봇 경량 부품 수요 확대” 전망에 한라캐스트 강세","summary":"- 한라캐스트가 자율주행차 및 로봇 경량 부품 수요 확대 전망에 힘입어 강세를 보였다.\n- 대신증권은 한라캐스트의 경량화 기술 우위를 언급하며, 글로벌 AI 자동차 업체향 수주와 휴머노이드 로봇 시장 진출로 중장기 성장 동력을 확보했다고 분석했다.\n- 누적 수주 잔고 1조1500억원을 돌파했으며, 2026년부터 본격적인 매출 레버리지 구간에 진입하여 이익 성장이 가팔라질 것으로 예상된다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRAxV4SiNouQhrC_3LVQyq1827Dy7HMzyN89INtJMGSTlRdA9Nm_R3-us3mYVKKFnN_7eGS-c2kUFaEKvTPFc4TLqH1MtzFNGHEdPVTe2aKFqI-r7zEv-kSzB8QzIdGczb"}]}},{"id":"6d176d7b-b46b-4e00-bbea-54ad597abebb","code":"004310","name":"현대약품","changeRate":11.24,"volume":26678356,"rawOHLC":"6770 8780 6620 7520","ohlc":{"open":6770,"high":8780,"low":6620,"close":7520},"status":"COMPLETE","analysis":{"theme":"탈모 치료 (Hair Loss Treatment)","leader":"현대약품 (Hyundai Pharm)","promising":["피플바이오","프롬바이오"],"newsItems":[{"title":"현대약품 주가 장중 16%대 상승, 당뇨병 신약·탈모약 건강보험 기대감 반영","summary":"- 현대약품 주가가 12월 24일 장중 16% 이상 급등하며 7900원을 기록했다.\n- 상승의 주요 원인은 제2형 당뇨병 치료제 후보물질 'HDNO-1605'의 임상 2a상 결과가 국제 학술지에 게재된 것에 대한 기대감이다.\n- 탈모약 건강보험 적용 검토에 대한 기대감 또한 투자 심리를 자극하여 주가 상승에 기여했다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7YRIklTMMgTsiD9HgiA5gOEwuk_SXsDDmbmlgkyiX7Vgp89uTXwLYh95VLdcf7reroiFmSII4xk5adpOCuOkSbGS3JKveTi9gZ4TigsXv7lLTUBtMdRUkiUlasyov5JF-39LjgJm8gDZoHnqii76qQRsHGgro7P47n-eL"},{"title":"마이녹실·버물리 뒤에 숨은 카드…현대약품, 신약으로 재평가 시동","summary":"- 현대약품은 안정적인 기존 제품 매출과 함께 신약 개발 성과를 통해 중장기 성장 전략을 구체화하고 있다.\n- 당뇨 혁신신약 후보물질 'HDNO-1605'의 임상 진전이 사업 구조 고도화에 긍정적인 영향을 미치고 있다.\n- 회사는 탈모 치료 관련주로도 언급되며, 향후 HDNO-1605 임상 결과 및 순환기 개량신약 성과에 따라 기업 가치 재평가 가능성이 기대된다.","date":"2025-12-23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGi_8vcaY8pnyPNt1ghvbJzgiV3BH8NxwHccNQeM3Hpj6-za_6v3Z_AJGUv-sv1JHy23pFkCXOCSkJPotRCSUAccQHDnXsT7l2KDlu02eODK1onH0XN1rldCDmL53YlADuxBS15zh_dsuxHjKQXDdIv5YPdrvKimu2Idk1F"}]}},{"id":"26de11ae-1f6d-4290-9fb2-3178fc7c91a4","code":"298830","name":"슈어소프트테크","changeRate":10.91,"volume":10413660,"rawOHLC":"7480 8130 7310 7930","ohlc":{"open":7480,"high":8130,"low":7310,"close":7930},"status":"COMPLETE","analysis":{"theme":"Software Verification and Testing for High-Reliability Systems (e.g., Autonomous Vehicles)","leader":"Not identified in recent news within the specified timeframe","promising":[],"newsItems":[]}},{"id":"5e1d3bdf-a8a7-454e-b3f3-a9a05dafeea7","code":"489790","name":"한화비전","changeRate":10.27,"volume":2712232,"rawOHLC":"40050 44900 40000 43500","ohlc":{"open":40050,"high":44900,"low":40000,"close":43500},"status":"COMPLETE","analysis":{"theme":"AI Vision Solutions & Semiconductor Equipment","leader":"한미반도체","promising":["퓨런티어","SK하이닉스"],"newsItems":[{"title":"[특징주] 한화비전, ”삼성 미래차 키운다” 2.6조 인수에 AI 영상보안 부각되며 '급등'","summary":"- 한화비전의 주가가 삼성전자의 하만 ADAS 사업 2.6조원 인수 소식에 급등했습니다.\n- 이는 한화비전의 AI 영상보안 기술이 미래차 관련주로 부각되며 매수세가 몰린 것으로 분석됩니다.\n- 12월 24일 오전 기준 전일 대비 11.91% 상승한 4만4150원에 거래되었습니다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHuBjeb2zSx9UGpQ7Sh3i9-pzjVhkaAqsIiUR9CbSL-nqzHk5bWwdPfdBI7KQsv77QsR5ll8ClgFqDcqHt0dG14Q_9kUMScGPqWaAVHNVRe4pujuogpKdQjCXANyxlH1FoLykLLCEO3vuUUyveIrqCANonw-Q3Tw=="},{"title":"카메라 회사가 아니다… AI·반도체 품은 한화비전","summary":"- 한화비전은 AI, 반도체, 영상 보안 기술을 아우르는 지능형 솔루션 사업으로 그룹의 기술 축을 재편하고 있습니다.\n- 4차 산업혁명 기술 융합을 통해 지능형 솔루션을 고도화하고 글로벌 시장 확대를 목표로 합니다.\n- 주가는 장기 하락 추세에서 벗어나 20일 이평선을 돌파하며 강세를 보이고 있습니다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWXA4g9loSuOnDZ3ExEEkLLzAKDzYY3yzKwi9dp8zlg50pQ58MOu6pfA3lSyCL5UKBN_tlWbY-XHOQkFHQ02zqOXsHY3YSBEL0cR8FihM4B5NZKSVzBgxuLBB3pfwDko49SJim1XuWq0CRVjjpwIY0vz4e5Zzarl8Xjtby"}]}},{"id":"05b7528f-29f4-43c2-ae96-58a27bab8aed","code":"053350","name":"이니텍","changeRate":7.5,"volume":2669871,"rawOHLC":"4050 4960 4050 4660","ohlc":{"open":4050,"high":4960,"low":4050,"close":4660},"status":"COMPLETE","analysis":{"theme":"사이버 보안 (Cybersecurity)","leader":"시큐레터","promising":["한국정보인증","라온시큐어","모니터랩"],"newsItems":[{"title":"“피해 환급금 받아가세요”...쿠팡 정보유출 악용한 스미싱 활개","summary":"- 최근 쿠팡 해킹 사고를 악용한 스미싱 및 보이스피싱 공격이 활발하게 발생하고 있습니다.\n- '피해 보상', '명의 도용', '카드 배송' 등의 키워드를 사용해 개인정보 탈취 및 악성 앱 설치를 유도합니다.\n- 한국인터넷진흥원(KISA)은 이커머스 개인정보 유출을 악용한 스미싱 및 피싱에 대한 대국민 주의를 당부했습니다.","date":"2025-12-20","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHjteRtskWDuByduSjQXP-Z0r6dsrVVdXh8SiBz6aXklJ_S8FKVF_g5kY-fOSiUzsSOUiW9MbP38PEXLSKynmYNN9c9xAYKDxh8q6CBCu_BVtwKV96PlM0H10jzBrgFlJWYIfJqao2n3Yq3FHhLk-ZvcA=="},{"title":"⚡ Weekly Recap: Firewall Exploits, AI Data Theft, Android Hacks, APT Attacks, Insider Leaks & More.","summary":"- 지난주 사이버 위협은 방화벽 익스플로잇, AI 데이터 절도, 안드로이드 해킹 등 다양한 형태로 발생했습니다.\n- 공격자들은 방화벽, 브라우저 애드온, 스마트 TV 등 일상적인 도구를 악용하여 심각한 침해를 일으키고 있습니다.\n- Fortinet, SonicWall, Cisco, WatchGuard 등 여러 네트워크 보안 제품에서 제로데이 취약점이 실제 공격에 악용되었습니다.","date":"2025-12-22","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE6vIHFWi4NKW_rx51T0SPcefWoU-5uPNA7erGdhMTcFPsPaov-yjaixn7kamN__LJM42NLzjJKcqfufwscqqwYuTygyq_NMQO72H7kmgidbLVDZ2pY"}]}},{"id":"9a1b661c-fbfd-41d9-a48e-920fdf1d67c0","code":"054920","name":"한컴위드","changeRate":7.1,"volume":14896262,"rawOHLC":"4210 4820 4160 4450","ohlc":{"open":4210,"high":4820,"low":4160,"close":4450},"status":"COMPLETE","analysis":{"theme":"우주/위성 (군집위성)","leader":"한컴위드","promising":[],"newsItems":[{"title":"한컴위드, 보안 넘어 우주까지… 군집위성 사업 부각","summary":"- 한컴위드 주가가 자회사 한컴인스페이스의 군집위성 사업 부각으로 크게 상승하고 있습니다.\n- 한컴인스페이스는 스페이스X 등 글로벌 기업과 협력하여 군집위성 운영 기술을 확보, 미래 우주 산업 성장 가능성을 내포합니다.\n- 기존 보안 솔루션 사업과 군집위성 운영 사업 간 시너지를 통해 새로운 성장동력을 확보하고 기업 가치 상승이 기대됩니다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFerM2h-iaMsi7U8kkYjN2VPJkQ9PAQXAWDy4XX3s8OYSYUhIrUheczBw7oLsEkYRIRhaEmD5sI7r8rUKyPEKKqAn4JRMOj4TMZv8J3g_OfJNVD0Nkt9DQ5Gd33yfyPWzMADNGHrUwY4HCBJaOba96xUkCYllsB8VedqVmT"},{"title":"한컴위드 주가, 힘찬괴성... 왜?","summary":"- 한컴위드 주가가 최근 가파른 상승 곡선을 그리고 있습니다.\n- 이는 일론 머스크의 스페이스X가 내년 하반기 IPO를 통해 미국 증시에 상장한다는 소식에 관련주로 부각된 것으로 풀이됩니다.\n- 한컴위드는 우주항공 관련주로 편입되며 주가에 긍정적인 영향을 받고 있습니다.","date":"2025-12-21","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFDHMm8kp3RahYuY3RByMN3A-89hhsu2feOJhz9HccpmiYEBf-eKlTRRGsCFXePa22w6j_RNfloDdx8YCZSXr_9dDS8ogrZYHPHRTNJWm60qBnukdlHTVi2gHZ4DCkaLzYBErYAODxW1Op6XkM2Pwl4dnZkzv4="}]}},{"id":"79e72c5f-4df6-45cd-80bc-b8c175a889ec","code":"003520","name":"영진약품","changeRate":5.22,"volume":4766209,"rawOHLC":"2005 2205 1986 2115","ohlc":{"open":2005,"high":2205,"low":1986,"close":2115},"status":"COMPLETE","analysis":{"theme":"제약 (Pharmaceuticals)","leader":"삼성바이오로직스","promising":["셀트리온","유한양행","압타바이오"],"newsItems":[]}},{"id":"e93c0bfa-ef8d-439c-b808-3543ed9576ab","code":"452400","name":"이닉스","changeRate":-11.99,"volume":1430626,"rawOHLC":"14260 14400 11220 11520","ohlc":{"open":14260,"high":14400,"low":11220,"close":11520},"status":"COMPLETE","analysis":{"theme":"전기차 배터리 안전 부품 (EV Battery Safety Components)","leader":"정보 없음 (No explicit leader identified in search results for this specific niche)","promising":["나노팀","신흥에스이씨","상신이디피"],"newsItems":[{"title":"[특징주] 이닉스, 현대차·기아 전기차 부품 수주에 상승 - 컨슈머타임스(Consumertimes)","summary":"- 이닉스는 현대차·기아 전기차 일부 차종에 적용될 신규 배터리 안전부품 공급 사업을 수주하며 주가가 상승했습니다.\n- 공급될 부품은 '내화면압패드'로, 현대차·기아 포터 2세대 및 목적기반차량(PBV) 차종에 적용됩니다.\n- 2027년 6월부터 약 12년간 장기 공급될 예정이며, 중장기적인 매출 기여가 기대됩니다.","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1Q0pTAi-R_CpqFjrDYdZkkfiSvdnCQBgnKrWz86djDD_xwcsdVpFWgWtB3zUU2cPqeR3tz8x9USYWVqGYq5TVJjXJTnRLlOTlFhzPdUcZmlWHj4uTo8ziueFeajj3Pov4co69CsB1Sh-W4iCsf-aQE5NbdQ=="},{"title":"이닉스, 차세대 전기차 안전부품 공급망 진입 - 아시아경제 CORE","summary":"- 이닉스가 현대차·기아 전기차 일부 차종에 적용되는 신규 배터리 안전부품 공급을 수주하며 완성차 공급망에 본격 진입했습니다.\n- 이닉스가 공급하는 내화면압패드는 전기차 화재 시 '골든타임 확보'에 중요한 역할을 하는 차세대 안전 부품입니다.\n- 이번 수주를 통해 이닉스는 전기차 안전부품 분야에서 차별화된 경쟁력을 확보하고 중장기적인 수익성 개선을 기대하고 있습니다.","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG3i1Z7joHycy_706zRr0S8pnh4NwE_QitqC93XOle-QUI-XQw3uRXJv6vk8CZYJmHGMehZgHJVDFdMTwMOeBfX0CszhXZVi_xx-o4qmWo0zDn394u3izwFfI-BPubPPSzBvPPRWMjya-cRpKVGjQ=="}]}}];
+        let isThemeSorted = false;
+        let openNewsIds = new Set();
+
+        // Helper Functions
+        const getNaverFinanceUrl = (code) => `https://finance.naver.com/item/main.naver?code=${String(code).trim()}#`;
+        const getNaverSearchUrl = (keyword) => `https://search.naver.com/search.naver?query=${encodeURIComponent(keyword + ' 특징주')}`;
+
+        // Render Function
+        function render() {
+            const tbody = document.getElementById('tableBody');
+            const sortBtn = document.getElementById('sortBtn');
+            
+            // Update Sort Button UI
+            if (isThemeSorted) {
+                sortBtn.classList.add('text-blue-400');
+                sortBtn.title = "Show Original Order";
+            } else {
+                sortBtn.classList.remove('text-blue-400');
+                sortBtn.title = "Group by Theme";
+            }
+
+            // Sort Logic
+            let displayStocks = [...stocks];
+            if (isThemeSorted) {
+                displayStocks.sort((a, b) => {
+                    const aComplete = a.status === 'COMPLETE';
+                    const bComplete = b.status === 'COMPLETE';
+                    if (aComplete && !bComplete) return -1;
+                    if (!aComplete && bComplete) return 1;
+                    if (aComplete && bComplete) {
+                        const themeA = a.analysis?.theme || '';
+                        const themeB = b.analysis?.theme || '';
+                        const cmp = themeA.localeCompare(themeB, 'ko');
+                        if (cmp !== 0) return cmp;
+                    }
+                    return a.name.localeCompare(b.name, 'ko');
+                });
+            }
+
+            // HTML Generation
+            tbody.innerHTML = displayStocks.map(item => {
+                const isUp = item.changeRate > 0;
+                const txtColor = isUp ? 'text-red-400' : item.changeRate < 0 ? 'text-blue-400' : 'text-slate-400';
+                const hasNews = item.analysis?.newsItems?.length > 0;
+                const isNewsOpen = openNewsIds.has(item.id);
+
+                // Row HTML
+                let html = `
+                <tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition-colors ${isNewsOpen ? 'bg-slate-800/30' : ''}">
+                    <td class="p-4 align-top">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg text-slate-100">${item.name}</span>
+                            <span class="text-xs text-slate-500 font-mono">${item.code}</span>
+                            <div class="flex items-center mt-1 font-medium ${txtColor}">
+                                ${isUp ? '<i data-lucide="trending-up" class="w-3 h-3 mr-1 inline"></i>' : ''}
+                                ${item.changeRate.toFixed(2)}%
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="inline-block bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded text-xs font-semibold border border-indigo-500/30">
+                            ${item.analysis.theme}
+                        </div>` : '<span class="text-red-500 text-sm">Error</span>'}
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="text-sm">
+                            <div class="mb-2">
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Leader</span>
+                                <span class="font-semibold text-yellow-400">${item.analysis.leader}</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Promising</span>
+                                <div class="flex flex-wrap gap-1">
+                                    ${item.analysis.promising.map(p => `<span class="bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded text-xs">${p}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                         ${item.analysis ? `
+                         <button 
+                            onclick="toggleNews('${item.id}')"
+                            ${!hasNews ? 'disabled' : ''}
+                            class="flex items-center gap-2 px-3 py-2 rounded-lg border transition-all text-xs font-medium w-full justify-between ${
+                                isNewsOpen 
+                                ? 'bg-blue-600/20 border-blue-500/50 text-blue-300' 
+                                : 'bg-slate-700/30 border-slate-600 text-slate-300 hover:bg-slate-700'
+                            }"
+                         >
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="newspaper" class="w-3.5 h-3.5"></i>
+                                News (${item.analysis.newsItems.length})
+                            </span>
+                            <i data-lucide="${isNewsOpen ? 'chevron-up' : 'chevron-down'}" class="w-3 h-3"></i>
+                         </button>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                        <a href="${getNaverFinanceUrl(item.code)}" target="_blank" class="flex items-center justify-center gap-2 bg-green-600/20 hover:bg-green-600/30 text-green-400 border border-green-600/30 px-3 py-2 rounded-lg text-xs font-medium transition-all group w-full">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                            <span>Naver Chart</span>
+                            <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                        </a>
+                    </td>
+                </tr>
+                `;
+
+                // News Drawer HTML
+                if (isNewsOpen && hasNews) {
+                    html += `
+                    <tr class="bg-slate-800/20 border-b border-slate-700/50 fade-in">
+                        <td colSpan="5" class="p-4 pl-8">
+                            <div class="bg-slate-900/50 rounded-lg p-4 border border-slate-700/50">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-slate-400 text-xs uppercase tracking-wider font-bold flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                        Recent News
+                                    </h4>
+                                    <a href="${getNaverSearchUrl(item.name)}" target="_blank" class="text-[11px] flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors font-medium bg-green-400/10 px-2 py-1 rounded border border-green-400/20 hover:bg-green-400/20">
+                                        View on Naver <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+                                    </a>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4">
+                                    ${item.analysis.newsItems.map(news => `
+                                    <div class="relative pl-4 border-l-2 border-slate-700 hover:border-blue-500 transition-colors">
+                                        <div class="flex items-start justify-between gap-2 mb-1">
+                                            <a href="${news.url || getNaverSearchUrl(item.name)}" target="_blank" class="text-sm font-bold text-blue-400 hover:text-blue-300 leading-snug flex items-start gap-1 group">
+                                                ${news.title}
+                                                <i data-lucide="external-link" class="w-3 h-3 mt-0.5 opacity-50 group-hover:opacity-100"></i>
+                                            </a>
+                                            <span class="text-[10px] text-slate-500 whitespace-nowrap shrink-0 bg-slate-800 px-1.5 py-0.5 rounded">${news.date}</span>
+                                        </div>
+                                        <div class="text-xs text-slate-300 leading-relaxed whitespace-pre-line">${news.summary}</div>
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    `;
+                }
+                return html;
+            }).join('');
+
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        // Event Handlers
+        window.toggleSort = () => {
+            isThemeSorted = !isThemeSorted;
+            render();
+        };
+
+        window.toggleNews = (id) => {
+            if (openNewsIds.has(id)) {
+                openNewsIds.delete(id);
+            } else {
+                openNewsIds.add(id);
+            }
+            render();
+        };
+
+        // Initial Render
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>

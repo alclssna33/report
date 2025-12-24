@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Stock Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: { 850: '#1e293b', 900: '#0f172a' }
+            }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+      .fade-in { animation: fadeIn 0.3s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased min-h-screen p-4 pb-20">
+    
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto mb-8 border-b border-slate-800 pb-4">
+        <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="p-2 bg-blue-600 rounded-lg shadow-lg shadow-blue-500/20">
+                    <i data-lucide="file-spreadsheet" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl tracking-tight text-white hidden sm:block">K-Stock Theme Analysis Report</h1>
+                    <h1 class="font-bold text-xl tracking-tight text-white sm:hidden">K-Stock Report</h1>
+                    <p class="text-xs text-slate-400">Generated on 2025-12-24</p>
+                </div>
+            </div>
+
+            <!-- Promotional Link Area -->
+            <div class="flex-1 flex justify-center px-2 sm:px-8">
+                <a href="https://cafe.naver.com/anesinformation" target="_blank" rel="noreferrer" class="group flex items-center gap-2 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 hover:from-yellow-500/20 hover:to-orange-500/20 border border-yellow-500/20 hover:border-yellow-500/40 px-4 py-2 rounded-xl transition-all duration-300">
+                    <span class="font-bold text-yellow-400 group-hover:text-yellow-300 text-sm sm:text-base whitespace-nowrap">투자도 개비공과 함께!</span>
+                    <span class="text-slate-600 hidden sm:inline">-</span>
+                    <span class="text-slate-300 group-hover:text-white text-xs sm:text-sm font-medium flex items-center gap-1 whitespace-nowrap">
+                        개비공 바로가기
+                        <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                    </span>
+                </a>
+            </div>
+
+            <div class="text-xs text-slate-500 shrink-0">
+                <span class="bg-slate-800 px-3 py-1 rounded-full border border-slate-700 whitespace-nowrap">
+                    Items: <span class="text-white font-bold">16</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Table Container -->
+    <main class="max-w-7xl mx-auto">
+        <div class="bg-slate-800/40 rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-800/90 text-slate-400 text-xs uppercase tracking-wider sticky top-0 z-10 backdrop-blur-md shadow-sm">
+                        <tr>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Stock Info</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[180px]">
+                                <button onclick="toggleSort()" id="sortBtn" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                    Theme <i data-lucide="list-filter" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[220px]">Market Leader & Peers</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Recent News</th>
+                            <th class="p-4 font-semibold border-b border-slate-700 min-w-[150px]">Links</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-700/50">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Data & Script -->
+    <script>
+        // Embed Data
+        const stocks = [{"id":"fa389151-2685-4ca8-bb9f-c9b387db6a42","code":"003520","name":"영진약품","changeRate":0,"volume":0,"rawOHLC":"0 0 0 2010","ohlc":{"open":0,"high":0,"low":0,"close":2010},"status":"COMPLETE","analysis":{"theme":"면역항암제","leader":"에이비엘바이오","promising":["유틸렉스","지씨셀","이뮨온시아"],"newsItems":[{"title":"경북보건대-영진약품, 인재 양성 체계 구축 협약","summary":"- 경북보건대학교와 영진약품이 지역 산업 수요에 부합하는 경력 연계형 인재 양성 체계를 구축하기 위한 업무협약을 체결했습니다.\n- 이번 협약은 제약 및 바이오 분야의 전문 인력 양성을 목표로 합니다.\n- 이를 통해 학생들의 현장 실무 능력 강화 및 취업 기회 확대가 기대됩니다.","date":"2025.12.08","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7u3iNj_TdWiBM55XVPT3KFeYHh4WIdQJqKpnaVO3MBxPTthIquIgReZKekuLK8JAKMUEBD3WpVrQQwXNxovSE1jgXultrwwT7mQhuxyKuJoDWb0nJF6nndQ3DIBJVjHQnkv_F4UHt5oq6ywFwwgOzmvw="},{"title":"영진약품, 신규 제품과 긍정적 시장 전망으로 주가 상승세 지속","summary":"- 영진약품은 2025년 2분기 동안 15%의 매출 증가와 신규 항암제의 긍정적인 임상 연구 결과로 주가에 긍정적인 영향을 받았습니다.\n- 최근 3일간 주가는 안정적인 상승세를 보였으며, 글로벌 제약 시장의 호조와 함께 강한 거래량을 유지했습니다.\n- 일부 투자자들은 예상보다 더딘 주가 상승에 불만을 표하고 있어, 향후 주가 변동성에 영향을 줄 수 있습니다.","date":"2025-08-18","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFN3BpWhUnI0shF9QJFp41kUSd8eiRcpoIwMfFbHbc3mKzSarEllkhjck6QkZOCjeb6S0FqE8ErVJbO5AbLGppm7aBHJS1Llb1w61RLiC3zQMV4wzPcj5Ar5w1Lx7J0FO7N_MAwpj595dALcbgds6ncsq2fYXZLv7c0"}]}},{"id":"1bb6056e-fe9b-448a-8ffe-7f6515cf3e51","code":"008700","name":"아남전자","changeRate":0,"volume":0,"rawOHLC":"0 0 0 1387","ohlc":{"open":0,"high":0,"low":0,"close":1387},"status":"COMPLETE","analysis":{"theme":"전장사업 (Automotive Electronics)","leader":"LG이노텍","promising":["현대모비스","HL만도","퓨런티어"],"newsItems":[{"title":"[특징주] 재영솔루텍, “삼성전자 ADAS 1위 2.6조 빅딜” 전장사업 진출 본격화에 상승","summary":"- 재영솔루텍 주가가 삼성전자의 자회사 하만이 ADAS 사업을 2.6조원에 인수한다는 소식에 급등했습니다.\n- 삼성전자의 이번 인수는 하만 인수에 이어 8년 만의 전장 관련 기업 인수로, 미래 전장 시장 주도 의지를 보여줍니다.\n- 재영솔루텍은 고화소 카메라 핵심 부품을 삼성전자 갤럭시 시리즈에 공급하며, 삼성 전장사업 확대의 수혜주로 부각되었습니다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHM4Pd8EsB4iitb6fKA-nN0p5m9khWgKYGdMZMnPuQITaI0btDRXSfbxWnLDUIX0CbB_j8kM6-kxWZnwzg_4_NLL7qvqJdMbgknfs2B9DZABAeKMmuhP885iZJ6hv7uBNPMUH12zDhz1WjMdVY3MOsA_g42GzhfShSgdi6n-p3or4nbSBPRjz19g60pdqWyEGFubzWc30Twbe9Ced7ieLXSZ8iLbz_1iAnPM_YVTva45GXqPmgmZ65mluc1-CMF2MGqzRfgo9k-1cuiQr3PAtJTO1z9Uz7qDm8ahDiYrnx0S0FwIjMadGce4_jMfgs="},{"title":"에이테크솔루션, 삼성 전장 자율주행 확장 기대 28%↑","summary":"- 에이테크솔루션 주가가 삼성전자의 자율주행 관련 사업 인수 소식에 27% 이상 급등했습니다.\n- 삼성전자는 하만을 통해 독일 ZF프리드리히스하펜의 ADAS 사업부를 인수하며 전장 포트폴리오를 자율주행 영역까지 확장했습니다.\n- 에이테크솔루션은 삼성전자 금형사업부에서 분사한 기업으로, 삼성전자가 지분을 보유하고 있으며 차량용 광부품 분야를 영위하여 자율주행 관련주로 분류됩니다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEO1kDmgemFWIi4R6vTT9P-M_rK_UnI9EOIfynwSKKjEeW7bGiFBodEKb3rZapJ3zLESCkpmIe-qe_Ycu0P_QXg1chdaK1L0cC0kQCCosIDv1ngFMq015zKdaPhta1FpSxQOrf29kDlQCBRdnQkxewjteAchmnf"}]}},{"id":"6a7d32d1-c8f0-451b-a5ff-412db7b0ec49","code":"009070","name":"KCTC","changeRate":0,"volume":0,"rawOHLC":"0 0 0 6150","ohlc":{"open":0,"high":0,"low":0,"close":6150},"status":"COMPLETE","analysis":{"theme":"부동산 자산 보유 테마","leader":"동양고속","promising":["아이에스동서","경방"],"newsItems":[{"title":"KCTC, +1.09% 상승폭 확대 - 조선비즈","summary":"- KCTC의 주가가 전일 대비 1.09% 상승하여 6,490원에 거래되고 있습니다.\n- 이 종목은 '부동산 자산 보유 테마'와 연관되어 있습니다.\n- 지난 1주일간 외국인과 기관의 순매수에 힘입어 주가가 2.23% 상승했습니다.","date":"2025-12-23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPrtqBU-gXgavWrg4MoY6gFfZ2Sn9GTFpJ7MMwuJNlPGVww1FOpB92MaAy_QV7tNA6Caw0HZXmauoIOICrHo8w5Tj4mCa5CPTyYGTJuFl1ay4j961D6V_x3tzoceiiiBGaiQCe3kXnmWgjvmu7yCv3-pd7qZPaMSjQXIe-_k9kA-U_1uB1T6bw"},{"title":"화물 손상, 복합운송이면 다 같은 책임?⋯대법 “육상·해상 구분” - 이투데이","summary":"- 대법원은 KCTC가 연루된 화물 손상 사건에서 육상 및 해상 운송인의 책임을 구분하는 판결을 내렸습니다.\n- 두산로보틱스의 온도 조절 컨테이너 운송 요청 과정에서 HMM 직원의 실수로 온도가 잘못 설정되어 화물 손상이 발생했습니다.\n- 대법원은 HMM에 대해 해상운송인의 책임제한을 적용한 원심 판단에 법리 오해가 있다며 파기환송했습니다.","date":"2025-12-21","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGjr-4oQbB2cIzKqhTzm857AVjdlJnB6fJGmBZCKMDzp8MoeZaV_HFwgKfROU60bqitTVhEyUvEvVHp7VLUKQk9Q-LyGbGx4KhAP3TkyH7QFnY5bQLUB0pPpZqrywoAcJQTfs76Vg=="}]}},{"id":"f35921c0-6634-4cd0-8096-7bd487c425bf","code":"009240","name":"한샘","changeRate":0,"volume":0,"rawOHLC":"0 0 0 49250","ohlc":{"open":0,"high":0,"low":0,"close":49250},"status":"COMPLETE","analysis":{"theme":"기업 밸류업 프로그램 및 주주환원 정책 (Corporate Value-up Program & Shareholder Return Policy)","leader":"한샘 (Hansem) - (Key player in proactive treasury stock incineration)","promising":["신영증권 (Shinyoung Securities)","SNT다이내믹스 (SNT Dynamics)","대웅 (Daewoong)"],"newsItems":[{"title":"[특징주] 한샘, 3400억 규모 자사주 전량 소각 소식에 상승세 - 이투데이","summary":"- 한샘은 3400억 원 규모의 자사주 전량 소각 소식에 주가가 강세를 보였다.\n- 자사주 소각은 주당순이익(EPS)과 자기자본이익률(ROE) 개선을 기대하게 한다.\n- 최대주주 IMM PE의 한샘 지분율이 35.44%에서 50% 수준으로 높아질 것으로 예상된다.","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-eGV2Mp-b0cSxVxKFKh5UcHZpgQ02SkUv4Hfak8sv6o0RVXli2pN44NMgxdgUwWu8MH4CUVpSyxfr-lH3cSLHDe3_pV8ecgVdw8HjGYRpvQyqoMBPWrcmeMVEYXGE6x_z5ReCqA=="},{"title":"정공법 택한 IMM PE…3400억 규모 한샘 자사주 전량 소각 - 아시아경제 CORE","summary":"- IMM PE는 한샘의 3400억 원 규모 자사주 전량 소각을 결정하며 주가 부양 및 경영권 매각 용이성을 확보했다.\n- 이번 결정은 자사주 소각 의무화가 담긴 3차 상법 개정안 추진 상황에서 선제적으로 이루어졌다.\n- 자사주 소각으로 IMM PE의 한샘 지분율은 35.4%에서 50.2%로 상승할 예정이다.","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGs9wcEHkU-ee35kMxv3fOMGuS2Vfm3PPd2osGTdU5_q9rqh89IhT8fHbU22b8xWc_xuP-DsGBx891EDV7neZ5v8vtxndUffVAdL4UxzLRbuXZwHx7Ia0A1wIPD3QgLF319tHDsBUtPL9W6yQ3rotI="}]}},{"id":"8783060b-7def-4813-9955-04e4bb2e72b5","code":"012610","name":"경인양행","changeRate":0,"volume":0,"rawOHLC":"0 0 0 4170","ohlc":{"open":0,"high":0,"low":0,"close":4170},"status":"COMPLETE","analysis":{"theme":"포토레지스트 (Photoresist)","leader":"동진쎄미켐 (Dongjin Semichem)","promising":["켐트로스 (Chemtros)","삼양엔씨켐 (Samyang ENC Chem)"],"newsItems":[{"title":"경인양행, +6.95% 상승폭 확대","summary":"- 경인양행의 주가가 전일 대비 6.95% 상승한 4230원에 거래되며 상승폭을 확대했습니다.\n- 연관 테마로 그래핀(Graphene)이 언급되었습니다.\n- 최근 1주일간 외국인과 기관은 순매도했으나, 주가는 11.41% 상승했습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFsxbWk9-lRajX1V_1gacgZZqV0g96BtXcRo42bqF_kPtXhyTHjYB-iNDEOe-bZyH7ZqmF3Wz28EsSIch2aD_gHTDUFHvz30ONTKYg9GfcmfTWo5VSm-t1dT0G0Kg2snI10aXl5kARUQB7vDKmZqBTn5Ma7s-8uoHz5Pu27kXpSwifeORQVT9s="},{"title":"AI라씨로 속보: 경인양행 특징주","summary":"- 경인양행이 52주 신고가를 경신하며 투자자들의 관심을 받고 있습니다.\n- 전일 기관이 대량 순매수를 기록했으며, 지난 한 달간 기관과 개인은 순매수했습니다.\n- 반면 외국인은 지난 한 달간 순매도했으며, 최근 5일 연속 순매도세를 보였습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHVSj0nWcwlj8B3fXxs5-uDSov_kRhGFVavcDF1DAjJN6A5gOaXz9cqnPVOpgDXa-ll60ea-9o4Qje6fYcsDWUO0GErFCROMWiun6XMymndxSKJVpNPc-5c9yORhYgHNvYbzuM6V7PJWHya9YY_N3wQZn1nhHs3N3ID9zYO7_GxPbJGOGGuTdNvxSHQlrjurBH85U7X-86stKZqg4pv8Bnh5KkRY5c0ld5hJK3iyMu0lw=="}]}},{"id":"9fb05f4b-29d2-4035-bfde-680641bb92c9","code":"022100","name":"포스코DX","changeRate":0,"volume":0,"rawOHLC":"0 0 0 29750","ohlc":{"open":0,"high":0,"low":0,"close":29750},"status":"COMPLETE","analysis":{"theme":"산업용 휴머노이드 로봇 및 스마트 팩토리","leader":"포스코DX","promising":["에스피지","모비스"],"newsItems":[{"title":"[특징주] 포스코DX, 美 로봇 개발사와 산업용 로봇 공동 개발 소식에 6%↑ - 이투데이","summary":"- 포스코DX가 미국 산업용 휴머노이드 로봇 기업 '페르소나 AI'에 200만 달러를 투자했습니다.\n- 이번 투자를 통해 그룹 계열사의 위험도 높은 수작업 업무를 휴머노이드 로봇으로 대체하는 프로젝트를 본격화합니다.\n- 포스코DX의 산업용 AI 기술과 페르소나 AI의 로봇공학 기술을 결합하여 피지컬 AI 사업 확대를 가속할 방침입니다.","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFrd-Vk9MKFqunwHi4TK6XR-53sbYnAnigQs8dBH2an7UHjy9Vo_6Cxa-EpyJ0mcXuoxunCzIYBqH_HdEoCxGU9TVz_k9XLeaXMVxgi18c849fkuzUiifkgcwJ9Au0HimE66-QKZQ=="},{"title":"[특징주]포스코DX, 美 휴머노이드 기업 투자에 강세 - 아시아경제 CORE","summary":"- 포스코DX가 미국 휴머노이드 로봇 기업 '페르소나 AI' 투자 소식에 주가가 강세를 보였습니다.\n- 포스코DX는 페르소나 AI에 200만 달러를 투자하고 로봇 공동 개발 및 현장 적용을 위해 협력하기로 했습니다.\n- 이는 그룹사 산업 현장의 고위험 수작업 공정을 휴머노이드 로봇으로 대체하는 협력 방안을 구체화하기 위함입니다.","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGngULqChmTnDtppk-ygFj1FwfU0InfQUSFp7Vr83llin9rk-gNscmbZBH-IM49lscaeQQiXQRA7EeCwQRJLtc6PSHC5vR-FG5L2Q6iNbbsu-6WmxgarPQmJ3K2K3rtJpTqZdhw36HT2pH8Toj9LIg="}]}},{"id":"32929ed2-cf01-42b7-9a6b-2d2a1bb7d3df","code":"039860","name":"나노엔텍","changeRate":0,"volume":0,"rawOHLC":"0 0 0 5440","ohlc":{"open":0,"high":0,"low":0,"close":5440},"status":"COMPLETE","analysis":{"theme":"체외진단 및 커넥티드 헬스케어","leader":"인성정보","promising":["비트컴퓨터","유비케어"],"newsItems":[{"title":"[특징주] 나노엔텍, 차세대 '바이오 로봇' 기대감...3연속 랠리","summary":"- 나노엔텍 주가가 차세대 바이오 로봇 출시 기대감과 본업 성장세에 힘입어 3일 연속 강세를 보였다.\n- 23일 코스닥 시장에서 9.35% 상승하며 5440원에 거래를 마쳤고, 장중 52주 신고가를 경신했다.\n- 주가 상승의 주요 요인은 차세대 바이오 로봇에 대한 기대감과 체외진단 의료기기 사업의 성장이다.","date":"2025.12.23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEFTOpPER89FRsyJhXNoSiWarqeteTSqXNhMnkHkQZL8vm58UDOg0oKDwFVV0gqVtAZcZtuwUJ9_DaUswusA-L7z3eZOHx-grXRDj-GEGLXIFrdNl7REblk1oEJftbRfKCqms2j_FxM7YFbg6mwSEyCIopv"},{"title":"나노엔텍, 커넥티드 헬스케어 본격화…2%↑","summary":"- 나노엔텍이 유투바이오, AAI헬스케어와 POCT-EMR-사용자 플랫폼 연동 협업 MOU를 체결하며 커넥티드 헬스케어 사업을 본격화한다.\n- 이번 협약으로 진단부터 의료데이터, EMR, 맞춤형 솔루션까지 제공하는 커넥티드 헬스케어 서비스를 개발하고 시장에 진출할 계획이다.\n- 회사 관계자는 커넥티드 헬스케어가 일차의료기관의 검사 환경 변화에 적합하며, 유투바이오의 의료 네트워크를 통해 국내 매출 확대가 기대된다고 밝혔다.","date":"2025-12-16","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGSYpuvipI2jmOibvLEpqoD_Q3KlHdyaI9XpHkuW0XeUhllV31xu7vS3KDfc1mMN_X21trMiPkwSOtlXKCqGT-NUbdbHEPmf70o6sSGhdh1amqbt4PYj4I_Da_AB22vGXiGs7H3t1U6N1GAdQ-TxB6ufmWnW28SApp1Jv0="}]}},{"id":"31799ec2-0d31-48ae-aa78-941026909384","code":"042660","name":"한화오션","changeRate":0,"volume":0,"rawOHLC":"0 0 0 123400","ohlc":{"open":0,"high":0,"low":0,"close":123400},"status":"COMPLETE","analysis":{"theme":"조선/방산 및 미국 시장 진출 (Shipbuilding/Defense & US Market Entry)","leader":"HD한국조선해양 (HD Hyundai Heavy Industries)","promising":["삼성중공업 (Samsung Heavy Industries)","HD현대중공업 (HD Hyundai Heavy Industries)"],"newsItems":[{"title":"'마스가' 띄운 한화, 미국 현지 조선·방산 영토 확장","summary":"- 한화그룹은 '마스가(MASGA)' 프로젝트를 통해 미국 시장 공략을 가속화하고 있습니다.\n- 이는 한미 조선 협력의 핵심으로, 미국 현지 조선 및 방산 분야 영토 확장을 목표로 합니다.\n- 한화오션은 미 해군 관련 수주 및 기술 협력 가능성을 확보하며 주력 조선 파트너로 자리매김하고 있습니다.","date":"방금 전","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGaRm8rfQc8Uj9H4YxSlmRdFr0-jah70TDokr2NyVojCu_h-OSM-w-IHe0sRkck1RVTfoFITO0926C3mu1pf2BS-E41T11tzWjrXWzeUJQSRYC9UK31vqDgUzCe9GsmacucD2ilRVm9OY9FMFd_GmTg"},{"title":"[투데이's 특징주] 트럼프 美 해군 호위함 건조 협력 발언에···조선주 장 초반 '강세'","summary":"- 도널드 트럼프 전 미국 대통령의 미 해군 호위함 건조 협력 발언으로 국내 조선주가 강세를 보였습니다.\n- 이 발언은 한화오션 등 국내 조선사들의 미국 방산 시장 진출 기대감을 높였습니다.\n- 특히 한화오션은 필리 조선소와의 협력을 통해 미 해군 함정 건조 사업 참여 가능성이 부각되고 있습니다.","date":"22시간 전","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGyxkPmB8HDmmWS695ML9Xi2Yx0P-dWIG4Y7ONCfoivDoO_v_C9dEhiYsn8w1Chbo7D49K5vrLE2iBo8fn4DYcrsXBfplD7GqrDODhzfd_KzAIGQvRh1j9OMo3fBn8NyFLHKWaNNXD_bz8yg2eotLAsF44kuyc="}]}},{"id":"f5fc9ed5-75bb-4357-9d13-b91083a9b643","code":"054540","name":"삼영엠텍","changeRate":0,"volume":0,"rawOHLC":"0 0 0 15900","ohlc":{"open":0,"high":0,"low":0,"close":15900},"status":"COMPLETE","analysis":{"theme":"No recent theme identified (no news in the last 7 days)","leader":"No recent market leader identified (no news in the last 7 days)","promising":[],"newsItems":[]}},{"id":"e55b14ab-aa13-4ef5-b349-ca7ff1c8bc4c","code":"083450","name":"GST","changeRate":0,"volume":0,"rawOHLC":"0 0 0 29300","ohlc":{"open":0,"high":0,"low":0,"close":29300},"status":"COMPLETE","analysis":{"theme":"반도체 냉각 시스템 (액침냉각)","leader":"GST","promising":["케이엔솔","유니셈","SK이노베이션"],"newsItems":[{"title":"[특징주] GST, TSMC 공정 테스트 통과에 상승","summary":"- GST 주가가 전기식 칠러 제품의 TSMC 공정 테스트 통과 소식에 상승했습니다. [cite: 1 (from previous search)]\n- TSMC 내 총 10개 공정 중 2개 공정에서 전기식 칠러 제품의 개별 평가를 완료했습니다. [cite: 1 (from previous search)]\n- 이는 중장기 수주 확대 기대감과 함께 GST가 글로벌 파운드리 핵심 냉각 장비 공급사로 자리매김할 가능성을 높이고 있습니다. [cite: 1 (from previous search)]","date":"Yesterday","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE3In_O3YymNvO6ieHQjkPR0evYlHbngjY2Fn_HcnZiKe7AEAFT8OgxztPqr59qbIVlDFibotXVdvFccyMvG-rtKI1BvACkJxS1bZdXcyyQ8Wm7jQ3MKjAaFE84C3zEEUuYZBfYcLl6ZHklMnZh9RzDB1GYQM4XuFKvBTiQ"},{"title":"환경·냉각 장비의 힘…GST, 글로벌 수주 기대감 '쑥 쑥'","summary":"- GST는 반도체 공정의 필수 장비인 스크러버와 칠러를 공급하며 글로벌 고객사 확대를 추진 중입니다.\n- TSMC 공정 테스트 통과는 단기 이벤트를 넘어 기술 신뢰도를 한 단계 높이는 중요한 레퍼런스 확보로 평가됩니다.\n- 시장은 GST의 기술력이 실제 수주와 실적으로 얼마나 빠르게 연결될지에 주목하고 있습니다.","date":"Yesterday"}]}},{"id":"992024b1-543c-4d43-a259-a78306550c56","code":"084010","name":"대한제강","changeRate":0,"volume":0,"rawOHLC":"0 0 0 20800","ohlc":{"open":0,"high":0,"low":0,"close":20800},"status":"COMPLETE","analysis":{"theme":"AI 스마트팜 (AI Smart Farm)","leader":"대동 (Daedong)","promising":[],"newsItems":[{"title":"[특징주] 대한제강, 무상증자 소식에 14%대 '질주'","summary":"- 대한제강 주가가 무상증자 결정 소식에 14% 넘게 급등했다.\n- 보통주 1주당 0.66주의 신주를 배정하며, 신주 재원은 주식발행초과금이다.\n- 무상증자는 유통 주식 수 증가로 주가 착시 효과를 일으켜 단기적으로 강세를 보인다.","date":"2025-12-23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtkVK4cUGbZJFM5trfRfXgj2se1Et_ucsrAcpHRB-2k6kgdK1m_0dmLylDxsXfJ6xFq7YXYMogueKZnwNJDqLB6D0eGwp37xWqZiWo7quMBrxU3wV6hFOIX7I9MZB3pbni-JWrNRB252bR76P6C-GGGcU="},{"title":"[특징주] 대한제강, AI 스마트팜 기술 협력·무상증자 맞물려 상승세","summary":"- 대한제강 주가가 무상증자 결정과 AI 스마트팜 기술 협력 소식에 상승세를 보였다.\n- 회사는 보통주 1주당 0.66주의 신주를 배정하는 무상증자를 공시했다.\n- 대한제강은 대동과 AI 스마트팜 솔루션 사업 확대를 위한 업무협약을 체결했다.","date":"2025-12-23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6S8xk5zVzUE_lYrA7HFShil3xvZJ5zFqdEvCCVlZ-WH_BQHcR_vxb0nYk3d4bAD2AOLA9wcw10Jlxrnj81HsSxpJpkEuVcDg_yV3ycUxWSaLLP74lr5THBktXBx428HGPUpgm-p-Ko02OxOu8he2MHZDJkPgsEveFido9wZ6UPIR6DGYaIujOP5Xb"}]}},{"id":"899e8331-24d7-4918-a2d2-0debee6c3cbc","code":"122900","name":"아이마켓코리아","changeRate":0,"volume":0,"rawOHLC":"0 0 0 8190","ohlc":{"open":0,"high":0,"low":0,"close":8190},"status":"COMPLETE","analysis":{"theme":"Global Industrial Supply Chain & Procurement","leader":"Not identified in recent news","promising":["Not identified in recent news"],"newsItems":[{"title":"아이마켓코리아, +29.94% 상한가","summary":"- 아이마켓코리아 (122900)가 전일 대비 29.94% 상승하며 상한가를 기록했습니다.\n- 주가는 10,330원에 거래되었으며, 이는 단기적인 급등세를 나타냅니다.\n- 해당 기사는 주가 상승의 구체적인 원인보다는 결과적인 움직임을 보도했습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFkYEyVXJjvM0vLUMEaxwUoSERl48inRkd7C0hgmCA9OECQ4_7CypXbdFafNT7vLtPYi7mzAv-MCtVvGjy30t0esL-1m1Mrp2gseNaX-k9WqL4HHlZIBu8EUhoIcMyazhdtD_LBqHZ7S_d2ItcOwomze8e4-0y7pJsTyNJeufkae6jt0WsrIfq1"},{"title":"아이마켓코리아, +29.43% 52주 신고가","summary":"- 아이마켓코리아 (122900)가 전일 대비 29.43% 상승하며 52주 신고가를 경신했습니다.\n- 주가는 10,290원에 도달하여 최근 1년 중 가장 높은 가격을 기록했습니다.\n- 기사는 주가 급등 사실을 전달하며 외국인과 기관의 매매 동향을 함께 언급했습니다.","date":"1 day ago","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQ_jFu_P_BpQZTEmgu7STgUn_9RbIwiRIU5IcfNW1JlZS4TFU5xF54rAnaiOrXw__jEBqrkrRU-zT0x6LtC4rpfnDXr8iCk32AGADnAX9MJNma4JafSNf2Q-Exhw_jH5BlbuqWltvomftinA4W1k5NMRAmTpWXsZzsnnkMhcSW6WUGRLpFm51e"}]}},{"id":"13e12232-b3f4-4d24-87b2-fe35b60f62a1","code":"125020","name":"티씨머티리얼즈","changeRate":0,"volume":0,"rawOHLC":"0 0 0 4800","ohlc":{"open":0,"high":0,"low":0,"close":4800},"status":"COMPLETE","analysis":{"theme":"전력 인프라","leader":"HD현대일렉트릭","promising":["LS ELECTRIC","효성중공업","대한전선"],"newsItems":[{"title":"[특징주]티씨머티리얼즈, 美전력인프라 사이클 대응 생산량 2배 확장 소식에↑","summary":"- 티씨머티리얼즈는 미국 등 글로벌 전력인프라 사이클에 대응하기 위해 생산량을 확장한다.\n- 내년 각동선과 동도금강선(CTC)의 생산량을 현재의 두 배 수준인 총 2만1200톤으로 늘릴 계획이다.\n- 회사는 HD현대일렉트릭, 대한전선, LS전선 등 글로벌 톱티어 고객사를 확보하고 있다.","date":"2025-12-22","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHKdHms4fhqbstCWPUJT_VzT5TgCcILthGkpBUzMZ9pwFrtoKAIOMZETapDqRk4COq3jylG0_SRHDKMz6Jaz6f2W_8rF8DfbM1mXIG50QrBZUh9hK1-j6C5RuQ7nfC0q13jLEqcIqUuz6oBkgkU95rL3-IjIdL7"},{"title":"[고래사냥] '이닉스, 티씨머티리얼즈, 쎄크, PS일렉트로닉스, 화성밸브!' 오늘 장 궁금종목 분석","summary":"- 티씨머티리얼즈는 북미·유럽 노후 전력망 교체 주기 도래와 AI 데이터센터 수요 확대의 수혜를 기대한다.\n- 향후 SMR 등 원전 관련 제품 보급 확대로 내년 본격적인 실적 개선이 전망된다.\n- 전기차에 내연기관차 대비 4배 많은 구리가 필요해 구리 수요 급증이 이어질 것으로 보인다.","date":"2025-12-24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVA8nXKr5hVvhCmBs5pmtZKnlvokiFy4sfmlyl4jTu92aeLZP7k5TI9RUHjVThujLn8GRlGORmuuhgJwAUoYmEZm3cqXiMUagc8Nc0cM-nNT3t6kpCxRKTSjrLZsPS61brq0MY8RKLgVEMxtCLufK7z4hfbCPRXFOasjZE"}]}},{"id":"4f6eea11-7f96-4923-b031-c8273bb1ed51","code":"217590","name":"티엠씨","changeRate":0,"volume":0,"rawOHLC":"0 0 0 23650","ohlc":{"open":0,"high":0,"low":0,"close":23650},"status":"COMPLETE","analysis":{"theme":"조선기자재 (Shipbuilding Equipment)","leader":"티엠씨 (TMC)","promising":["삼영엠텍 (Samyang M-Tech)","캐리 (Carry)"],"newsItems":[{"title":"[강세 토픽] 조선 기자재 테마, 티엠씨 +18.68%, 삼영엠텍 +12.37%","summary":"- 조선 기자재 테마가 강세를 보이며, 티엠씨가 18.68% 상승으로 테마 상승을 이끌고 있습니다.\n- 이 테마는 선박 발주량 증가와 2025년 조선업황 개선 지속에 따른 기자재 업체들의 낙수 효과 기대로 설명됩니다.\n- 친환경, 스마트, 고부가가치 중심으로 변화하는 조선산업 패러다임에 따라 기자재 기술 경쟁력이 요구됩니다.","date":"2025-12-23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHZ97j4aEH5_V0XHfyj_GYKLi_O1nh3tLO9bBjUIh9EDxPYeuAX6nzBBcjEsnRxb0LvF8K-xKnRZr7dQo4hXaTKBqO6BoSDDCUgQBWZMRTMjzxvCl3tnn6Y-nDc0BtS2ZrXFS14hbKgejfqXvHhLn_8VW5ZKe77XWS_2wwdB1dA-lpAAiVIAyiX"},{"title":"[티엠씨] 주가전망 217590 11조원이 선택한 글로벌 회사! 무주공산으로 진입 기대되는 조선주!","summary":"- 티엠씨는 2025년 IPO 시장의 대미를 장식하며 상장 첫날 공모가 대비 100% 상승을 기록했습니다.\n- 회사 매출의 70%가 LNG선, 암모니아선 등 친환경 선박에 사용되는 선박·해양 케이블에서 발생하며, 국내 빅3 조선사의 수주 잔고가 확정된 미래 수익을 보장합니다.\n- 티엠씨는 원자재 가격 상승 시 판매가도 함께 올리는 에스컬레이션 조항을 계약에 포함하여 인플레이션에 강한 비즈니스 모델을 가지고 있습니다.","date":"2025-12-23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEA7W8WbhyDEZpaS2zoC_oK-aKiOrkgRY8rGgKyBzyUC7TFoSd-EjztUq7jR4RgAN6NeJyJipXaVhIB6pkHqzVOURIvc6W8D7_sSen_A2PgyAGOhNUDOZ1sGk511fPVUC1EHwFxJZk="}]}},{"id":"5476783f-6429-487d-a427-d6746e95e2df","code":"413630","name":"씨피시스템","changeRate":0,"volume":0,"rawOHLC":"0 0 0 4620","ohlc":{"open":0,"high":0,"low":0,"close":4620},"status":"COMPLETE","analysis":{"theme":"로봇 (Robots)","leader":"우림피티에스","promising":["현대무벡스","에스피시스템스"],"newsItems":[{"title":"[특징주] 우림피티에스 등 휴머노이드株 강세…아틀라스 CES 공개 기대감","summary":"- 휴머노이드 로봇 공개 기대감에 로봇 관련주들이 장 초반 강세를 보였습니다.\n- 보스턴 다이내믹스의 차세대 휴머노이드 로봇 '아틀라스'가 CES 2026에서 처음 공개될 예정입니다.\n- 씨피시스템은 관련 부품·솔루션 공급 이력으로 매수세가 유입되며 동반 상승했습니다.","date":"2025.12.24","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPSq-2RBqyYjaRnIbY8GwcwwXxduDM_p2f_wMjo71hJkzaY0-QU5gAzLTwb22GDv7nhsFVtMwyb33xnuLHsE9ROvLey1TgCwaXg5lkROKiR50hatlJL5PKz2focqedGMjumqQnjZNUF1-wl-19sH5PfEEfRbt0"},{"title":"\"한화와 美 해군 프리깃함 건조\"…트럼프 한마디에 조선 주 ↑","summary":"- 도널드 트럼프 전 미국 대통령의 한화와 미 해군 프리깃함 건조 협력 발언에 조선주가 일제히 상승했습니다.\n- 조선기자재 업체인 씨피시스템도 8.55% 오르며 강세를 보였습니다.\n- 이는 조선주 투자심리를 자극하며 관련 종목들의 동반 상승을 이끌었습니다.","date":"2025.12.23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJumbcDs-YKd7MmCEgonKt7Fix0T3GA4ZOHwPLwuF4o-QGxIH09VdAjhGIuA9y_UWnNc1pxBeJQdzQyNJToOl-fw6_z0BuZTmCsWqe9UHrtwDm15t_SVJf_iv_bFWomCvLtDZSy6WX6qHgJFxQy5F1M3PP"}]}},{"id":"40f5307a-02e8-4e30-a152-caaab9a38903","code":"452400","name":"이닉스","changeRate":0,"volume":0,"rawOHLC":"0 0 0 13090","ohlc":{"open":0,"high":0,"low":0,"close":13090},"status":"COMPLETE","analysis":{"theme":"전기차 배터리 안전 부품 (EV Battery Safety Components)","leader":"이닉스","promising":["신흥에스이씨","상신이디피","테이팩스"],"newsItems":[{"title":"[특징주] 이닉스, 현대차·기아 전기차 부품 수주에 상승 - 컨슈머타임스(Consumertimes)","summary":"- 이닉스는 현대차·기아 전기차 일부 차종에 적용될 신규 배터리 안전부품인 내화면압패드 공급 사업을 수주했습니다.\n- 이번 수주는 현대차 공식 입찰을 통해 이뤄졌으며, 2027년 6월부터 약 12년간 장기 공급될 예정입니다.\n- 내화면압패드는 단일 폼 구조로 조립성이 우수하고, 높은 압축반발력과 내화 성능을 동시에 확보하여 전기차 화재 위험을 억제합니다.","date":"2025-12-23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8VOg1Ej28XQXG4INCm5UokaeqrOTbF-9u5AnWHNo5a-NbAb-77K-4OMuU63n5prX6P86ZTYp7EAH3oTbEDZ1lY879zHOvznq892S_RM3RgxUTyASvG2rlAk5pomu3IN6ldZ6Q1sh8sLyqf4Sh3lr__5hTYD4="},{"title":"이닉스, 배터리 열폭주 차단 필수 내화면압패드 현대차·기아 양산 모델 최초 적용…경쟁력 인정 - 프라임경제","summary":"- 이닉스는 현대차·기아 포터2세대 및 목적기반차량(PBV)에 적용될 내화면압패드 공급을 수주했으며, 수주 규모는 약 3500억 원 수준으로 예상됩니다.\n- 해당 부품은 2027년 6월부터 12년간 납품될 예정이며, 배터리 열폭주 차단에 필수적인 기술로 평가받습니다.\n- 내화면압패드는 단일 폼 구조로 우수한 조립성과 높은 압축반발력, 내화 성능을 갖춰 경쟁력을 인정받았습니다.","date":"2025-12-23","url":"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGZAKXZZ9lw-4N1Ieg9eBbTHT8bzkiwSzn9fT_BQiRlRPO5nvtUe6n6SCFnvkT6edukHYQybkDml7upasiaoEzNYMm01bnTexwFW7CB0CQwTJ20mdsPmolORZeX34bq7IxVEeSLP19UjAS8XVaGJ_OIovpVIfQlQQ=="}]}}];
+        let isThemeSorted = false;
+        let openNewsIds = new Set();
+
+        // Helper Functions
+        const getNaverFinanceUrl = (code) => `https://finance.naver.com/item/main.naver?code=${String(code).trim()}#`;
+        const getNaverSearchUrl = (keyword) => `https://search.naver.com/search.naver?query=${encodeURIComponent(keyword + ' 특징주')}`;
+
+        // Render Function
+        function render() {
+            const tbody = document.getElementById('tableBody');
+            const sortBtn = document.getElementById('sortBtn');
+            
+            // Update Sort Button UI
+            if (isThemeSorted) {
+                sortBtn.classList.add('text-blue-400');
+                sortBtn.title = "Show Original Order";
+            } else {
+                sortBtn.classList.remove('text-blue-400');
+                sortBtn.title = "Group by Theme";
+            }
+
+            // Sort Logic
+            let displayStocks = [...stocks];
+            if (isThemeSorted) {
+                displayStocks.sort((a, b) => {
+                    const aComplete = a.status === 'COMPLETE';
+                    const bComplete = b.status === 'COMPLETE';
+                    if (aComplete && !bComplete) return -1;
+                    if (!aComplete && bComplete) return 1;
+                    if (aComplete && bComplete) {
+                        const themeA = a.analysis?.theme || '';
+                        const themeB = b.analysis?.theme || '';
+                        const cmp = themeA.localeCompare(themeB, 'ko');
+                        if (cmp !== 0) return cmp;
+                    }
+                    return a.name.localeCompare(b.name, 'ko');
+                });
+            }
+
+            // HTML Generation
+            tbody.innerHTML = displayStocks.map(item => {
+                const isUp = item.changeRate > 0;
+                const txtColor = isUp ? 'text-red-400' : item.changeRate < 0 ? 'text-blue-400' : 'text-slate-400';
+                const hasNews = item.analysis?.newsItems?.length > 0;
+                const isNewsOpen = openNewsIds.has(item.id);
+
+                // Row HTML
+                let html = `
+                <tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition-colors ${isNewsOpen ? 'bg-slate-800/30' : ''}">
+                    <td class="p-4 align-top">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-lg text-slate-100">${item.name}</span>
+                            <span class="text-xs text-slate-500 font-mono">${item.code}</span>
+                            <div class="flex items-center mt-1 font-medium ${txtColor}">
+                                ${isUp ? '<i data-lucide="trending-up" class="w-3 h-3 mr-1 inline"></i>' : ''}
+                                ${item.changeRate.toFixed(2)}%
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="inline-block bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded text-xs font-semibold border border-indigo-500/30">
+                            ${item.analysis.theme}
+                        </div>` : '<span class="text-red-500 text-sm">Error</span>'}
+                    </td>
+                    <td class="p-4 align-top">
+                        ${item.analysis ? `
+                        <div class="text-sm">
+                            <div class="mb-2">
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Leader</span>
+                                <span class="font-semibold text-yellow-400">${item.analysis.leader}</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 uppercase tracking-wider block mb-1">Promising</span>
+                                <div class="flex flex-wrap gap-1">
+                                    ${item.analysis.promising.map(p => `<span class="bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded text-xs">${p}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                         ${item.analysis ? `
+                         <button 
+                            onclick="toggleNews('${item.id}')"
+                            ${!hasNews ? 'disabled' : ''}
+                            class="flex items-center gap-2 px-3 py-2 rounded-lg border transition-all text-xs font-medium w-full justify-between ${
+                                isNewsOpen 
+                                ? 'bg-blue-600/20 border-blue-500/50 text-blue-300' 
+                                : 'bg-slate-700/30 border-slate-600 text-slate-300 hover:bg-slate-700'
+                            }"
+                         >
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="newspaper" class="w-3.5 h-3.5"></i>
+                                News (${item.analysis.newsItems.length})
+                            </span>
+                            <i data-lucide="${isNewsOpen ? 'chevron-up' : 'chevron-down'}" class="w-3 h-3"></i>
+                         </button>` : '-'}
+                    </td>
+                    <td class="p-4 align-top">
+                        <a href="${getNaverFinanceUrl(item.code)}" target="_blank" class="flex items-center justify-center gap-2 bg-green-600/20 hover:bg-green-600/30 text-green-400 border border-green-600/30 px-3 py-2 rounded-lg text-xs font-medium transition-all group w-full">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                            <span>Naver Chart</span>
+                            <i data-lucide="external-link" class="w-3 h-3 opacity-50 group-hover:opacity-100"></i>
+                        </a>
+                    </td>
+                </tr>
+                `;
+
+                // News Drawer HTML
+                if (isNewsOpen && hasNews) {
+                    html += `
+                    <tr class="bg-slate-800/20 border-b border-slate-700/50 fade-in">
+                        <td colSpan="5" class="p-4 pl-8">
+                            <div class="bg-slate-900/50 rounded-lg p-4 border border-slate-700/50">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-slate-400 text-xs uppercase tracking-wider font-bold flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                        Recent News
+                                    </h4>
+                                    <a href="${getNaverSearchUrl(item.name)}" target="_blank" class="text-[11px] flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors font-medium bg-green-400/10 px-2 py-1 rounded border border-green-400/20 hover:bg-green-400/20">
+                                        View on Naver <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+                                    </a>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4">
+                                    ${item.analysis.newsItems.map(news => `
+                                    <div class="relative pl-4 border-l-2 border-slate-700 hover:border-blue-500 transition-colors">
+                                        <div class="flex items-start justify-between gap-2 mb-1">
+                                            <a href="${news.url || getNaverSearchUrl(item.name)}" target="_blank" class="text-sm font-bold text-blue-400 hover:text-blue-300 leading-snug flex items-start gap-1 group">
+                                                ${news.title}
+                                                <i data-lucide="external-link" class="w-3 h-3 mt-0.5 opacity-50 group-hover:opacity-100"></i>
+                                            </a>
+                                            <span class="text-[10px] text-slate-500 whitespace-nowrap shrink-0 bg-slate-800 px-1.5 py-0.5 rounded">${news.date}</span>
+                                        </div>
+                                        <div class="text-xs text-slate-300 leading-relaxed whitespace-pre-line">${news.summary}</div>
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    `;
+                }
+                return html;
+            }).join('');
+
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        // Event Handlers
+        window.toggleSort = () => {
+            isThemeSorted = !isThemeSorted;
+            render();
+        };
+
+        window.toggleNews = (id) => {
+            if (openNewsIds.has(id)) {
+                openNewsIds.delete(id);
+            } else {
+                openNewsIds.add(id);
+            }
+            render();
+        };
+
+        // Initial Render
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+</body>
+</html>
